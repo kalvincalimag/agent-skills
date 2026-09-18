@@ -1,40 +1,38 @@
 # Claude Skills
 
-Reusable **Claude Code / agent skills** pack for cross-project use.
+Reusable [Claude Code](https://docs.anthropic.com/en/docs/claude-code) skills pack for cross-project use.
 
-## Install
+## Skills
 
-Copy into a project's `.claude/skills` directory, or symlink this repo there:
+| Folder | Purpose |
+| --- | --- |
+| `investigate` | Structured investigation |
+| `plan` | Planning / design exploration |
+| `implement` | Implementation discipline |
+| `test-design` | Test design |
+| `bugfix` | Debugging / bugfix |
+| `verify` | Verification / blast radius |
+| `ship` | Shipping / PR mechanics |
+| `writing-discipline` | Writing quality |
+| `bro` | Upstream `bro` skill (near-verbatim) |
+| `slack-reply` | Slack reply helper |
 
-```bash
-# copy
-cp -R /path/to/claude-skills/* /path/to/project/.claude/skills/
+## Use in a project
 
-# or symlink (Unix)
-ln -s /path/to/claude-skills /path/to/project/.claude/skills
+Copy (or symlink) the skill folders you need into that project's `.claude/skills/`, and keep `NOTICE.md` with them — these are MIT-derived works and the notice must travel along.
+
+Example:
+
+```powershell
+$pack = 'C:\path\to\claude-skills'
+$proj = 'C:\path\to\your-project\.claude\skills'
+New-Item -ItemType Directory -Force -Path $proj | Out-Null
+foreach ($s in 'investigate','plan','implement','test-design','bugfix','verify','ship','writing-discipline','bro','slack-reply') {
+  Copy-Item -Recurse -Force (Join-Path $pack $s) (Join-Path $proj $s)
+}
+Copy-Item -Force (Join-Path $pack 'NOTICE.md') (Join-Path $proj 'NOTICE.md')
 ```
-
-On Windows, copy the skill folders into `%USERPROFILE%\.claude\skills` or the project's `.claude\skills`.
-
-## Keep NOTICE.md
-
-`NOTICE.md` documents MIT attribution for upstream skill sources. Keep it when you copy or redistribute this pack.
-
-## Skill folders
-
-| Folder | Role |
-|--------|------|
-| `bro/` | Sibling / pairing workflows |
-| `bugfix/` | Systematic debugging |
-| `implement/` | Implementation execution |
-| `investigate/` | Investigation / root-cause |
-| `plan/` | Planning |
-| `ship/` | Shipping / finishing |
-| `slack-reply/` | Slack reply drafting |
-| `test-design/` | Test design |
-| `verify/` | Verification before done |
-| `writing-discipline/` | Writing discipline |
 
 ## License
 
-MIT (see `LICENSE`). Upstream attributions live in `NOTICE.md`.
+See `NOTICE.md` and `LICENSE` (MIT). Upstream attributions are required.
