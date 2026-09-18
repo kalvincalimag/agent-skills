@@ -29,80 +29,164 @@ When a dev server starts, use agent-browser to verify it's working:
 # After starting a dev server (next dev, vite, etc.)
 agent-browser open http://localhost:3000
 agent-browser wait --load networkidle
+agent-browser screenshot dev-check.png
 agent-browser snapshot -i
-# Check for errors, verify content is showing
 ```
 
-If the page is blank or shows an error, check: `agent-browser console` and `agent-browser errors`.
-
-## Commands
+## Essential Commands
 
 ```bash
 # Navigation
-agent-browser open <url>
-agent-browser back
-agent-browser forward
-agent-browser reload
+agent-browser open <url>              # Navigate (aliases: goto, navigate)
+agent-browser close                   # Close browser
 
-# Snapshot (always use -i for interactive elements with refs)
-agent-browser snapshot -i
-agent-browser snapshot -i -c          # compact
-agent-browser snapshot -i -s "#main"  # scoped
+# Snapshot
+agent-browser snapshot -i             # Interactive elements with refs
+agent-browser snapshot -i -C          # Include cursor-interactive elements
+agent-browser snapshot -s "#selector" # Scope to CSS selector
 
-# Interactions (use refs from snapshot)
-agent-browser click @e1
-agent-browser fill @e2 "text"
-agent-browser select @e3 "option"
-agent-browser check @e4
-agent-browser press Enter
-agent-browser hover @e5
+# Interaction (use @refs from snapshot)
+agent-browser click @e1               # Click element
+agent-browser fill @e2 "text"         # Clear and type text
+agent-browser type @e2 "text"         # Type without clearing
+agent-browser select @e1 "option"     # Select dropdown option
+agent-browser check @e1               # Check checkbox
+agent-browser press Enter             # Press key
+agent-browser scroll down 500         # Scroll page
 
 # Get information
-agent-browser get text @e1
-agent-browser get value @e2
-agent-browser get url
-agent-browser get title
+agent-browser get text @e1            # Get element text
+agent-browser get url                 # Get current URL
+agent-browser get title               # Get page title
 
 # Wait
-agent-browser wait @e1
+agent-browser wait @e1                # Wait for element
+agent-browser wait --load networkidle # Wait for network idle
+agent-browser wait --url "**/page"    # Wait for URL pattern
+agent-browser wait 2000               # Wait milliseconds
+
+# Capture
+agent-browser screenshot              # Screenshot to temp dir
+agent-browser screenshot --full       # Full page screenshot
+agent-browser screenshot --annotate   # Annotated screenshot with numbered labels
+agent-browser pdf output.pdf          # Save as PDF
+
+# Diff (compare page states)
+agent-browser diff snapshot           # Compare current vs last snapshot
+agent-browser diff screenshot --baseline before.png  # Visual pixel diff
+```
+
+## Common Patterns
+
+### Form Submission
+
+```bash
+agent-browser open http://localhost:3000/signup
+agent-browser snapshot -i
+agent-browser fill @e1 "Jane Doe"
+agent-browser fill @e2 "jane@example.com"
+agent-browser click @e5
 agent-browser wait --load networkidle
+```
+
+### Authentication with State Persistence
+
+```bash
+# Login once and save state
+agent-browser open http://localhost:3000/login
+agent-browser snapshot -i
+agent-browser fill @e1 "$USERNAME"
+agent-browser fill @e2 "$PASSWORD"
+agent-browser click @e3
 agent-browser wait --url "**/dashboard"
+agent-browser state save /tmp/raise-browser-auth.json
 
-# Diagnostics
-agent-browser console
-agent-browser errors
-agent-browser screenshot /tmp/shot.png
-
-# Network
-agent-browser network requests
-agent-browser network route "**/api/**"
+# Reuse in future sessions
+agent-browser state load /tmp/raise-browser-auth.json
+agent-browser open http://localhost:3000/dashboard
 ```
 
-## Semantic Locators
+Never place credential values in commands, tracked files, screenshots, or logs. Use an authorized secure input mechanism and remove temporary authentication state after QA.
 
-Prefer when the element has accessible names:
+### Data Extraction
 
 ```bash
-agent-browser find role button click --name "Submit"
+agent-browser open http://localhost:3000/products
+agent-browser snapshot -i
+agent-browser get text @e5
+agent-browser get text body > page.txt
+```
+
+### Visual Debugging
+
+```bash
+agent-browser --headed open http://localhost:3000
+agent-browser highlight @e1
+agent-browser record start demo.webm
+```
+
+## Ref Lifecycle (Important)
+
+Refs (`@e1`, `@e2`, etc.) are invalidated when the page changes. Always re-snapshot after:
+
+- Clicking links or buttons that navigate
+- Form submissions
+- Dynamic content loading (dropdowns, modals)
+
+```bash
+agent-browser click @e5              # Navigates to new page
+agent-browser snapshot -i            # MUST re-snapshot
+agent-browser click @e1              # Use new refs
+```
+
+## Annotated Screenshots (Vision Mode)
+
+Use `--annotate` for screenshots with numbered labels on interactive elements:
+
+```bash
+agent-browser screenshot --annotate
+# Output: [1] @e1 button "Submit", [2] @e2 link "Home", ...
+agent-browser click @e2
+```
+
+## Semantic Locators (Alternative to Refs)
+
+```bash
 agent-browser find text "Sign In" click
-agent-browser find label "Email" fill "user@example.com"
+agent-browser find label "Email" fill "user@test.com"
+agent-browser find role button click --name "Submit"
 ```
 
-## Parallel Sessions
-
-Use `--session` for concurrent testing of multiple pages:
+## JavaScript Evaluation
 
 ```bash
-agent-browser --session page1 open localhost:3000
-agent-browser --session page2 open localhost:3000/other
+# Simple expressions
+agent-browser eval 'document.title'
+
+# Complex JS: use --stdin with heredoc
+agent-browser eval --stdin <<'EVALEOF'
+JSON.stringify(
+  Array.from(document.querySelectorAll("img"))
+    .filter(i => !i.alt)
+    .map(i => ({ src: i.src.split("/").pop(), width: i.width }))
+)
+EVALEOF
 ```
 
-## Screenshots for Evidence
-
-When verification claims visual state, save a screenshot:
+## Session Management
 
 ```bash
-agent-browser screenshot /tmp/verify-$(date +%s).png
+agent-browser --session site1 open http://localhost:3000
+agent-browser --session site2 open http://localhost:3001
+agent-browser session list
+agent-browser close  # Always close when done
 ```
 
-Include the path in your verification report.
+## Timeouts and Slow Pages
+
+```bash
+agent-browser wait --load networkidle  # Best for slow pages
+agent-browser wait "#content"          # Wait for specific element
+agent-browser wait --url "**/dashboard"  # Wait for URL pattern
+agent-browser wait 5000                # Fixed wait (last resort)
+```
