@@ -14,8 +14,9 @@ Reusable [Claude Code](https://docs.anthropic.com/en/docs/claude-code) skills pa
 | `verify` | Verification / blast radius |
 | `ship` | Shipping / PR mechanics |
 | `writing-discipline` | Writing quality |
-| `bro` | Upstream `bro` skill (near-verbatim) |
 | `slack-reply` | Slack reply helper |
+| `plain` | Plain-English responses |
+| `handoff` | In-progress session handoffs |
 
 ## Use in a project
 
@@ -27,7 +28,7 @@ Example:
 $pack = 'C:\path\to\claude-skills'
 $proj = 'C:\path\to\your-project\.claude\skills'
 New-Item -ItemType Directory -Force -Path $proj | Out-Null
-foreach ($s in 'investigate','plan','implement','test-design','bugfix','verify','ship','writing-discipline','bro','slack-reply') {
+foreach ($s in 'investigate','plan','implement','test-design','bugfix','verify','ship','writing-discipline','slack-reply','plain','handoff') {
   Copy-Item -Recurse -Force (Join-Path $pack $s) (Join-Path $proj $s)
 }
 Copy-Item -Force (Join-Path $pack 'NOTICE.md') (Join-Path $proj 'NOTICE.md')
