@@ -100,7 +100,7 @@ Do not mix modes. Split and link instead.
 
 - Keep "only" and "not" next to the word they change.
 - Break up long noun strings. "the proto import budget check script" becomes "the script that checks the proto-import budget".
-- Make every "it", "they", and "this" point at one obvious thinc. Never point "this" at a whole clause.
+- Make every "it", "they", and "this" point at one obvious thing. Never point "this" at a whole clause.
 - Do not drop verbs from a parallel clause.
 - Periods, not semicolons.
 - Parenthetical text is a full grammatical unit or its own sentence. Never "(s)" plurals.
