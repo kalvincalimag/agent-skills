@@ -99,10 +99,10 @@ agent-browser fill @e1 "$USERNAME"
 agent-browser fill @e2 "$PASSWORD"
 agent-browser click @e3
 agent-browser wait --url "**/dashboard"
-agent-browser state save /tmp/raise-browser-auth.json
+agent-browser state save /tmp/browser-auth.json
 
 # Reuse in future sessions
-agent-browser state load /tmp/raise-browser-auth.json
+agent-browser state load /tmp/browser-auth.json
 agent-browser open http://localhost:3000/dashboard
 ```
 

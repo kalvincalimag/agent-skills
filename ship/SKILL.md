@@ -106,6 +106,8 @@ Only when deployed QA is in scope. "Done" requires runtime evidence when deploym
 
 Use the project's actual hosting and DNS providers. Do not assume a provider the project does not use; derive the stack from repository and deployment truth. For a Vercel plus GoDaddy stack specifically, `deploy-vercel-godaddy.md` in this skill directory has the command-level detail.
 
+Not every project deploys to a host. A browser extension ships as a packaged build uploaded to its store (the Chrome Web Store for Chrome), or is loaded unpacked for personal use. A mobile app ships through a test track such as TestFlight or Play internal testing before a store release. Each upload, store submission, and release is a separate outward action under 4.1, and the uploaded build must be the exact verified commit.
+
 ## 4.1 Hard boundaries
 
 - Preview deployment, production deployment, domain attachment, DNS mutation, CI changes, and repository creation are separate actions with separate authorization.

@@ -113,6 +113,8 @@ Do not run a single check. Infer the complete user story being built and verify 
 3. Scan the package scripts and route structure. Inspect environment-variable names and configuration presence without printing secret values.
 4. State the story in one sentence: *"The user is building X which flows from [UI entry point] to [API route] to [data source] to [response rendering]."*
 
+Name the boundaries the project actually has; not every project is a web app with server routes. A browser extension runs through the host page, content script, background service worker, extension storage, and any external API. A mobile app runs through the screen, app state, native or device APIs, and the backend.
+
 **Do not skip this.** Every subsequent check anchors to the inferred story. Use `investigate` when a boundary is genuinely unclear.
 
 ## 3.2 Establish the evidence baseline
@@ -173,6 +175,9 @@ Common breaks at each boundary: a missing `await`; a method mismatch (GET handle
 Run `command -v agent-browser` before the first browser action. If the CLI is unavailable, use an already-available repository-approved browser or Playwright workflow that gives equivalent visual, console, and interaction evidence. If no equivalent runtime exists, report manual browser QA as **blocked** — do not claim it passed, and do not install a dependency without the required approval.
 
 Command reference: `agent-browser.md` in this skill directory.
+
+- **Browser extension.** Load the unpacked build into a real Chrome profile (Playwright: a persistent context launched with `--load-extension`) and run the checklist on the host page. When the host page needs the user's own login, that check is user-side: name exactly what to open, click, and expect to see.
+- **Mobile app.** The equivalent is a run on a simulator, emulator, or device, with screenshots and device logs as the evidence.
 
 ## 4.1 Checklist
 
