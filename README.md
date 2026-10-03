@@ -22,7 +22,7 @@ Reusable [Claude Code](https://docs.anthropic.com/en/docs/claude-code) skills pa
 
 ## Brains
 
-A brain is a local folder that holds curated knowledge for one purpose, such as personal taxes or a software project. Starting Claude in that folder loads the brain's rules and memory index, and the session writes durable knowledge back before it answers. `new-brain` builds brains from [brain-template](https://github.com/kalvincalimag/brain-template), which holds the shared layout, the optional profiles, and the rules for improving the template. A software-project brain uses the skills in this pack rather than copies of them.
+A brain is a local folder that holds curated knowledge for one purpose, such as personal taxes or a software project. Starting Claude in that folder loads the brain's rules and memory index, and the session writes durable knowledge back before it answers. `new-brain` builds brains from [brain-template](https://github.com/kalvincalimag/brain-template), which holds the shared layout, the optional profiles, and the rules for improving the template. Brains hold knowledge only. Skills are out of scope for them: Claude Code loads the skills installed in `~/.claude/skills` in every session, including sessions in a brain.
 
 ## Install
 

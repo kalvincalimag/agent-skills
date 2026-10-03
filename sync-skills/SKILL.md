@@ -10,7 +10,7 @@ Request: $ARGUMENTS
 
 ## Purpose
 
-Skills are edited in the install directory. The skills pack on GitHub is the source of truth that every machine and every new brain draws from. This skill keeps the two the same without losing an edit from either side, and it keeps project-specific content out of the pack.
+Skills are edited in the install directory. The skills pack on GitHub is the source of truth that every machine draws from. Skills are the user's own tools. They are not part of any project or brain. This skill keeps the two the same without losing an edit from either side, and it keeps project-specific content out of the pack.
 
 ## Locations
 
@@ -48,12 +48,10 @@ Never synced: the install's `synced/` folder, which the Claude app manages; dot 
    - No machine paths except defaults under `~` that can be overridden. `status` prints a `warning` line for each absolute path it finds.
    - No credentials, tokens, or account emails.
    - Provider-specific or tool-specific detail lives in a reference file the skill reads only when the project uses that provider. It is never an assumption in `SKILL.md`.
-   - A skill that only makes sense for one project does not go in the pack. Add its name to `.sync-ignore`, and suggest moving it to that project's `.claude/skills/` or that brain's `skills/`.
+   - A skill that only makes sense for one project does not go in the pack. Add its name to `.sync-ignore` so it stays installed locally but unsynced.
 3. **Resolve.** For each conflict, show the user both versions. Use the side they choose, or merge by hand into the install and treat it as local. Confirm each deletion with the user.
 4. **Apply.** Run `sync.sh apply`, adding `--take-local <name>`, `--take-remote <name>`, or `--allow-delete` as resolved.
 5. **Update the pack's docs.** In the clone, keep the skills table in `README.md` matching the skill folders. `NOTICE.md` lists only skills derived from upstream sources. Add a skill there only if it is derived.
 6. **Test.** For each pushed skill with a `tests/` folder, run its tests. `sync-skills` has `bash tests/test-sync.sh`.
 7. **Ask.** Show `git -C <clone> status --short` and a one-line summary per skill. Ask to commit and push.
 8. **Publish.** On approval, commit with a message naming the skills, push to `origin main`, then run `sync.sh record`. Without approval, leave the clone as it is and tell the user that the next `status` refuses to run until the clone is committed or discarded.
-
-Other skills may run `sync.sh status` on its own to check that skills they depend on are installed and current. That command changes nothing except fast-forwarding the clone.

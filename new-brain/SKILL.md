@@ -25,6 +25,7 @@ The template is never assumed to fit. Every run reviews it against the new purpo
 - Read only the template. Never read from or write to another brain, including work brains, unless the user names it for a scoped transfer.
 - Never put facts about the new brain's subject into the template. `TEMPLATE.md` in the clone defines what may go there.
 - The new brain gets no Git remote.
+- Skills are out of scope. A brain never contains a skill, and creating one never installs, checks, or copies skills. The user's skills live in `~/.claude/skills`, load in every session including sessions in a brain, and sync with GitHub through `sync-skills`. A procedure the brain needs is recorded as knowledge in its `memory/`.
 - Committing or pushing the template, and the brain's first commit, each need the user's authorization in this session. Ask once, at the end, for all of them together.
 - Use plain `git` for the template. If `gh` is needed, first confirm `gh auth status` shows the personal account, not the work account.
 
@@ -32,8 +33,7 @@ The template is never assumed to fit. Every run reviews it against the new purpo
 
 1. **Get the purpose.** If the request states it, restate it in one sentence and confirm it during the interview. Otherwise ask what the brain is for, what it should help decide or do, and what is out of scope. Do not continue without a purpose.
 2. **Sync the template.** In the clone, `git status --porcelain` must print nothing. Then run `git pull --ff-only`. If the clone is missing, clone the remote to the clone path. If the clone has uncommitted changes or has diverged from the remote, stop and ask.
-3. **Review fitness.** Read `TEMPLATE.md`, then follow its "Fitness review" section for this purpose. Read every core file and every `PROFILE.md`. A profile does not fit because its name sounds right. It fits when its "Use when" matches and its "Do not use when" does not. The output is a short fit report: chosen profiles, and each gap with its level, which is core, profile, or brain. If a chosen profile's `PROFILE.md` lists skills it needs from the skills pack, run `bash ~/.claude/skills/sync-skills/sync.sh status`. Each listed skill must be installed and `in-sync`. If one is missing or behind, bring it in with the `sync-skills` skill before creating the brain.
-4. **Improve the template.** For each core or profile gap, follow "Changing the template" in `TEMPLATE.md`. When no profile fits and the purpose is a class other brains will share, add a profile. Otherwise use core alone and handle the gaps in the brain. Run `bash tests/test-template.sh` until it passes, and add the changelog line. If every gap is brain-level, change nothing.
+3. **Review fitness.** Read `TEMPLATE.md`, then follow its "Fitness review" section for this purpose. Read every core file and every `PROFILE.md`. A profile does not fit because its name sounds right. It fits when its "Use when" matches and its "Do not use when" does not. The output is a short fit report: chosen profiles, and each gap with its level, which is core, profile, or brain.4. **Improve the template.** For each core or profile gap, follow "Changing the template" in `TEMPLATE.md`. When no profile fits and the purpose is a class other brains will share, add a profile. Otherwise use core alone and handle the gaps in the brain. Run `bash tests/test-template.sh` until it passes, and add the changelog line. If every gap is brain-level, change nothing.
 5. **Interview.** Ask in one batch. Include the brain's name, its location with the default offered, and the "Interview" questions of each chosen profile. Skip anything the request already answered. Use the question tool where there are real options, and plain questions where the answer is free text.
 6. **Create.** From the clone, run:
 
@@ -46,7 +46,7 @@ The template is never assumed to fit. Every run reviews it against the new purpo
    - Fill `memory/overview.md` with scope, out of scope, and authority.
    - Record the interview answers in the files each profile names. Record only what the user stated, dated, and mark anything uncertain as unverified.
    - Do not research external rules now unless the user asks. Sourced research belongs in the brain's first real session.
-   - Handle the brain-level gaps from the fit report, such as a brain-local skill or memory file this purpose needs.
+   - Handle the brain-level gaps from the fit report, such as a memory file this purpose needs.
    - Update the "Active context" in `memory/MEMORY.md`.
    - Write `sessions/YYYY/MM/YYYY-MM-DD-brain-created.md` from `templates/session-summary.md`, with the fit report.
 8. **Verify.**
