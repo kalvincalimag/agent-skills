@@ -14,7 +14,6 @@ Reusable skills in the open [Agent Skills](https://agentskills.io) format. They 
 | `verify` | Verification and blast radius |
 | `ship` | Shipping and pull-request mechanics |
 | `writing-discipline` | Writing quality |
-| `slack-reply` | Slack reply helper |
 | `plain` | Plain-English responses |
 | `handoff` | In-progress session handoffs |
 | `new-brain` | Create a local knowledge brain from brain-template, improving the template first |
@@ -32,15 +31,15 @@ Clone the repository straight into your agent's skills folder:
 On macOS or Linux, or in Git Bash on Windows:
 
 ```bash
-git clone https://github.com/kalvincalimag/claude-skills.git ~/.claude/skills    # Claude Code
-git clone https://github.com/kalvincalimag/claude-skills.git ~/.agents/skills    # Codex
+git clone https://github.com/kalvincalimag/agent-skills.git ~/.claude/skills    # Claude Code
+git clone https://github.com/kalvincalimag/agent-skills.git ~/.agents/skills    # Codex
 ```
 
 In PowerShell on Windows:
 
 ```powershell
-git clone https://github.com/kalvincalimag/claude-skills.git "$HOME\.claude\skills"    # Claude Code
-git clone https://github.com/kalvincalimag/claude-skills.git "$HOME\.agents\skills"    # Codex
+git clone https://github.com/kalvincalimag/agent-skills.git "$HOME\.claude\skills"    # Claude Code
+git clone https://github.com/kalvincalimag/agent-skills.git "$HOME\.agents\skills"    # Codex
 ```
 
 If the skills folder already exists and has skills in it, `git clone` refuses. Turn the folder into a clone in place instead. These commands change no files:
@@ -48,7 +47,7 @@ If the skills folder already exists and has skills in it, `git clone` refuses. T
 ```bash
 cd ~/.claude/skills
 git init -b main
-git remote add origin https://github.com/kalvincalimag/claude-skills.git
+git remote add origin https://github.com/kalvincalimag/agent-skills.git
 git fetch origin
 git reset origin/main
 git branch -u origin/main
@@ -74,6 +73,10 @@ New-Item -ItemType Directory -Force "$HOME\.agents" | Out-Null
 New-Item -ItemType Junction -Path "$HOME\.agents\skills" -Target "$HOME\.claude\skills"
 ```
 
+### What else lands in the skills folder
+
+The clone also brings this README, the license files, `AGENTS.md`, and Git's own `.git` folder. That is safe. An agent loads a folder as a skill only when it contains a `SKILL.md`, so it ignores top-level files and `.git`. Extra files inside a skill's folder, such as `sync-skills/check.sh`, are allowed by the Agent Skills format.
+
 ### Keep the clone somewhere else
 
 Clone the repository wherever you like, then link your agent's skills folder to it with the same commands, swapping in your clone's path as the target.
@@ -95,4 +98,6 @@ A brain is a local folder that holds curated knowledge for one purpose, such as 
 
 ## License
 
-See `NOTICE.md` and `LICENSE` (MIT). Upstream attributions are required.
+This repository is licensed under the PolyForm Noncommercial License 1.0.0, in `LICENSE`. You may use, change, and share it for any noncommercial purpose. Commercial use is not permitted.
+
+Several skills are derived from MIT-licensed upstream work. `NOTICE.md` lists them and carries the upstream MIT notices, which must stay with any copy.
