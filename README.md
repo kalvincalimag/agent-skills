@@ -14,6 +14,7 @@ Reusable skills in the open [Agent Skills](https://agentskills.io) format. They 
 | `verify` | Verification and blast radius |
 | `ship` | Shipping and pull-request mechanics |
 | `writing-discipline` | Writing quality |
+| `slack-reply` | Slack reply helper |
 | `plain` | Plain-English responses |
 | `handoff` | In-progress session handoffs |
 | `new-brain` | Create a local knowledge brain from brain-template, improving the template first |
@@ -98,6 +99,4 @@ A brain is a local folder that holds curated knowledge for one purpose, such as 
 
 ## License
 
-This repository is licensed under the PolyForm Noncommercial License 1.0.0, in `LICENSE`. You may use, change, and share it for any noncommercial purpose. Commercial use is not permitted.
-
-Several skills are derived from MIT-licensed upstream work. `NOTICE.md` lists them and carries the upstream MIT notices, which must stay with any copy.
+See `NOTICE.md` and `LICENSE` (MIT). Upstream attributions are required.

@@ -1,11 +1,8 @@
 # Notice
 
-This repository is licensed under the PolyForm Noncommercial License 1.0.0. See `LICENSE`.
-
-The skills listed below are derived works. They are rewritten, reorganized, and
-consolidated, but their substance comes from MIT-licensed upstream sources, and the MIT
-license requires this notice to travel with them. The upstream works themselves remain
-available under MIT from their original sources.
+The skills in this directory are derived works. They are rewritten, reorganized, and
+consolidated, but their substance comes from MIT-licensed upstream sources and the license
+requires this notice to travel with them.
 
 ## Derived skills
 
