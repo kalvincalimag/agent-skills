@@ -1,0 +1,12 @@
+# Folders an agent's app manages inside the skills folder
+synced/
+.trash/
+.system/
+
+# Leftovers from the old copy-based sync
+.sync-base
+.sync-ignore
+
+# Operating-system files
+.DS_Store
+Thumbs.db

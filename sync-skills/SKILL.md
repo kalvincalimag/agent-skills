@@ -1,61 +1,50 @@
 ---
 name: sync-skills
-description: "Use when the user wants their installed Claude skills and their skills pack on GitHub brought in line, after editing, adding, or deleting a skill locally, or to check whether the installed skills are current. Pushes local edits, pulls remote edits, stops on conflicts, and checks that every pushed skill stays general across projects."
-argument-hint: "[status]"
+description: "Use when the user wants their skills folder and their skills repository brought in line: after editing, adding, or deleting a skill locally, to pull skill changes made elsewhere, or to set up the skills on a new machine. Pushes local edits, pulls remote ones, stops on conflicts, and checks that every skill stays general across projects and agents."
 ---
 
 # Sync skills
 
-Request: $ARGUMENTS
-
 ## Purpose
 
-Skills are edited in the install directory. The skills pack on GitHub is the source of truth that every machine draws from. Skills are the user's own tools. They are not part of any project or brain. This skill keeps the two the same without losing an edit from either side, and it keeps project-specific content out of the pack.
+The skills repository is the source of truth. The skills folder the agent loads is a Git clone of that repository, so skills are edited where the agent reads them, and syncing is Git: pull what changed remotely, commit and push what changed locally.
 
-## Locations
+## The skills folder
 
-- Install, where edits happen: `~/.claude/skills`.
-- Pack remote: `https://github.com/kalvincalimag/claude-skills`, a private repository on the personal account.
-- Pack clone: `~/Desktop/Master/Code/Personal/claude-skills`. Set `SKILLS_CLONE` to use another path. `sync.sh` clones it there if it is missing.
+This skill lives inside the skills folder, so the folder is the parent of this skill's folder. Agents look for personal skills here:
 
-Edit skills in the install, never in the clone. `sync.sh` refuses to run while the clone has uncommitted or unpushed changes.
+| Agent | Skills folder |
+| --- | --- |
+| Claude Code | `~/.claude/skills` |
+| OpenAI Codex | `~/.agents/skills` |
 
-On a new machine, run `bash sync-skills/sync.sh apply` from a fresh clone of the pack. With no install yet, every skill shows as `pull`, so `apply` installs them all. Then run `record`.
-
-Never synced: the install's `synced/` folder, which the Claude app manages; dot entries such as `.trash/`; and any skill named in `~/.claude/skills/.sync-ignore`, one name per line.
+A user of both agents keeps one clone and links the other folder to it. The repository's `README.md` shows how on macOS, Linux, and Windows.
 
 ## Boundaries
 
 - Commit and push only with the user's authorization in this session. Ask once, after the review.
-- Push straight to `main` of the pack. Pull requests are `ship`'s job, not this one.
-- Use plain `git`. If `gh` is needed, first confirm `gh auth status` shows the personal account, not a work account.
-- Delete a skill on either side only after the user confirms that deletion.
+- Push to the branch the clone tracks, normally `main`. Pull requests are not this skill's job.
+- Delete a skill only after the user confirms.
+- If `gh` is needed, first confirm `gh auth status` shows the account that owns the repository.
+- The repository's `.gitignore` covers folders an agent's app manages, such as `synced/` and `.trash/`. A skill the user keeps on one machine only goes in `.git/info/exclude`.
 
-## How it decides
+## Set up
 
-`sync.sh` compares three versions of each skill: the install, the pack on GitHub, and the base, which is the pack commit at the last successful sync. Line endings are ignored.
-
-| Status | Meaning | What `apply` does |
-| --- | --- | --- |
-| `in-sync` | Install and pack match | Nothing |
-| `push` | Changed or added locally | Copies it into the clone |
-| `pull` | Changed or added on GitHub | Copies it into the install |
-| `conflict` | Changed on both sides, or differs on the first sync | Refuses until told which side wins |
-| `local-deleted` | Deleted locally | Deletes it from the clone, only with `--allow-delete` |
-| `remote-deleted` | Deleted on GitHub | Deletes it from the install, only with `--allow-delete` |
+- **Empty or missing folder:** `git clone <repository> <skills folder>`.
+- **Folder that already has skills:** in the folder, run `git init -b main`, `git remote add origin <repository>`, `git fetch origin`, `git reset origin/main`, and `git branch -u origin/main`. This changes no files. `git status` then shows how the folder differs from the repository. Treat those differences as local changes in step 2.
 
 ## Steps
 
-1. **Check.** Run `bash ~/.claude/skills/sync-skills/sync.sh status`. If every line is `in-sync`, say so and stop.
-2. **Review generality.** Read every `push` and `conflict` skill in full, and diff it against the clone. A skill in the pack must work in any project. Fix problems in the install, then rerun `status`.
-   - No names of a specific project, client, organization, repository, or person. The exception is a skill whose job is managing one of the user's own repositories, such as this one or `new-brain`.
-   - No machine paths except defaults under `~` that can be overridden. `status` prints a `warning` line for each absolute path it finds.
+1. **Check.** In the skills folder, run `git fetch`. Local changes are in `git status --short`. Remote changes are in `git log --oneline HEAD..@{u}` and `git diff --stat HEAD...@{u}`. If neither side changed, say so and stop.
+2. **Review local changes.** Run `bash sync-skills/check.sh`. It must pass. A warning names a frontmatter field that only some agents understand, so keep it only when the skill needs it. Then read each changed skill in full and check that it stays general:
+   - No names of a specific project, client, organization, repository, or person. The exception is a skill whose job is managing one of the user's own repositories.
+   - No machine paths except defaults under `~` that the user can override.
    - No credentials, tokens, or account emails.
-   - Provider-specific or tool-specific detail lives in a reference file the skill reads only when the project uses that provider. It is never an assumption in `SKILL.md`.
-   - A skill that only makes sense for one project does not go in the pack. Add its name to `.sync-ignore` so it stays installed locally but unsynced.
-3. **Resolve.** For each conflict, show the user both versions. Use the side they choose, or merge by hand into the install and treat it as local. Confirm each deletion with the user.
-4. **Apply.** Run `sync.sh apply`, adding `--take-local <name>`, `--take-remote <name>`, or `--allow-delete` as resolved.
-5. **Update the pack's docs.** In the clone, keep the skills table in `README.md` matching the skill folders. `NOTICE.md` lists only skills derived from upstream sources. Add a skill there only if it is derived.
-6. **Test.** For each pushed skill with a `tests/` folder, run its tests. `sync-skills` has `bash tests/test-sync.sh`.
-7. **Ask.** Show `git -C <clone> status --short` and a one-line summary per skill. Ask to commit and push.
-8. **Publish.** On approval, commit with a message naming the skills, push to `origin main`, then run `sync.sh record`. Without approval, leave the clone as it is and tell the user that the next `status` refuses to run until the clone is committed or discarded.
+   - It works for any agent that reads the Agent Skills format. Detail for one agent or one provider lives in a reference file the skill reads only when needed.
+
+   Fix problems in place and run the check again. A skill that only makes sense for one project stays out of the repository: add it to `.git/info/exclude`.
+3. **Test.** For each changed skill with a `tests/` folder, run its tests. This skill's are `bash sync-skills/tests/test-check.sh`.
+4. **Ask.** Show `git status --short`, one line per changed skill, and the incoming remote commits. Ask to commit and push.
+5. **Sync.** On approval, run `git add -A`, commit with a message that names the skills, then `git pull --rebase` and `git push`. With no local changes, `git pull --ff-only` is enough and needs no approval.
+6. **Resolve conflicts.** If the rebase stops on a conflict, show the user both versions and ask which to keep, or merge them by hand. Never discard either side without the user's choice. Then run `git rebase --continue`.
+7. **Report.** Say what was pushed and what was pulled. Agents load changed skills in their next session, and some sooner.

@@ -7,7 +7,7 @@ disable-model-invocation: true
 
 # Plain English
 
-Request: $ARGUMENTS
+The request is whatever the user typed after the command. It may be empty.
 
 ## What to do
 
