@@ -22,16 +22,21 @@ Reusable [Claude Code](https://docs.anthropic.com/en/docs/claude-code) skills pa
 
 ## Brains
 
-A brain is a local folder that holds curated knowledge for one purpose, such as personal taxes or a software project. Starting Claude in that folder loads the brain's rules and memory index, and the session writes durable knowledge back before it answers. `new-brain` builds brains from [brain-template](https://github.com/kalvincalimag/brain-template), which holds the shared layout, the optional profiles, and the rules for improving the template. Brains hold knowledge only. Skills are out of scope for them: Claude Code loads the skills installed in `~/.claude/skills` in every session, including sessions in a brain.
+A brain is a local folder that holds curated knowledge for one purpose, such as life admin or a software project. Starting an AI agent in that folder loads the brain's rules and memory index, and the session writes durable knowledge back before it answers. `new-brain` builds brains from [brain-template](https://github.com/kalvincalimag/brain-template), which holds the shared layout, the optional profiles, and the rules for improving the template. Brains hold knowledge only. Skills are out of scope for them: Claude Code loads the skills installed in `~/.claude/skills` in every session, including sessions in a brain.
 
 ## Install
 
-Install the skills user-wide so every project and every brain uses the same copies:
+Install the skills user-wide in `~/.claude/skills`, so every session uses the same copies. On a new machine, clone this repository and let `sync-skills` pull every skill into place:
 
-```powershell
-git clone https://github.com/kalvincalimag/claude-skills.git "$HOME\Desktop\Master\Code\Personal\claude-skills"
-Copy-Item -Recurse -Force "$HOME\Desktop\Master\Code\Personal\claude-skills\*" "$HOME\.claude\skills\" -Exclude README.md,LICENSE
+```bash
+git clone https://github.com/kalvincalimag/claude-skills.git ~/Desktop/Master/Code/Personal/claude-skills
+cd ~/Desktop/Master/Code/Personal/claude-skills
+bash sync-skills/sync.sh status
+bash sync-skills/sync.sh apply
+bash sync-skills/sync.sh record
 ```
+
+Run these in Git Bash on Windows. The script works with bash 3.2 or later.
 
 Do not copy these skills into a project's `.claude/skills/`. A second copy goes stale and clashes with the installed one by name. A procedure that only one project needs belongs in that project.
 

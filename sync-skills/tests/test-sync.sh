@@ -88,7 +88,9 @@ run apply >/dev/null
 expect_file "apply copied local edit into clone" "$clone/alpha/SKILL.md" "alpha v2"
 expect_file "apply copied remote edit into install" "$install/beta/SKILL.md" "beta v2"
 expect_refusal "record before commit" "uncommitted" run record
-commit_and_push_clone
+git -C "$clone" add -A && git -C "$clone" commit -qm sync
+expect_refusal "record before push" "not pushed" run record
+git -C "$clone" push -q origin main
 run record >/dev/null
 out="$(run status)"
 expect_line "after record alpha" "$out" "in-sync alpha"
@@ -138,6 +140,30 @@ printf 'delta\n' > "$install/delta/SKILL.md"
 # Machine paths in a skill about to be pushed are flagged.
 printf 'Open C:\\%s\\someone\\notes.md first.\n' Users > "$install/alpha/SKILL.md"
 expect_line "absolute path warning" "$(run status)" "warning alpha/SKILL.md: machine-specific path"
+
+# Taking the remote side of "changed here, deleted there" deletes it here and carries on.
+printf 'alpha v1\n' > "$install/alpha/SKILL.md"
+run apply --take-local alpha >/dev/null; commit_and_push_clone; run record >/dev/null
+printf 'alpha edited locally\n' > "$install/alpha/SKILL.md"
+printf 'delta edited locally\n' > "$install/delta/SKILL.md"
+git -C "$seed" pull -q --ff-only && git -C "$seed" rm -rq alpha && git -C "$seed" commit -qm "drop alpha" && git -C "$seed" push -q origin main
+expect_line "changed here, deleted there" "$(run status)" "conflict alpha"
+if run apply --take-remote alpha >/dev/null 2>&1; then pass; else fail "apply --take-remote on a remote deletion errored"; fi
+if [[ ! -e "$install/alpha" ]]; then pass; else fail "--take-remote did not delete alpha locally"; fi
+expect_file "apply carried on to the next skill" "$clone/delta/SKILL.md" "delta edited locally"
+commit_and_push_clone; run record >/dev/null
+
+# A new machine: no install directory and no clone yet. Everything is pulled.
+fresh_install="$work/fresh/.claude/skills"
+fresh_clone="$work/fresh/code/nested/clone"
+fresh() { bash "$sync" --install "$fresh_install" --clone "$fresh_clone" --remote "$remote" "$@"; }
+out="$(fresh status 2>&1)"
+expect_line "new machine pulls delta" "$out" "pull delta"
+expect_line "new machine pulls NOTICE.md" "$out" "pull NOTICE.md"
+fresh apply >/dev/null 2>&1
+expect_file "new machine got delta" "$fresh_install/delta/SKILL.md" "delta edited locally"
+fresh record >/dev/null 2>&1
+if [[ -s "$fresh_install/.sync-base" ]]; then pass; else fail "new machine record wrote no base"; fi
 
 # A dirty clone stops everything.
 printf 'stray\n' > "$clone/stray.txt"

@@ -18,6 +18,10 @@ Skills are edited in the install directory. The skills pack on GitHub is the sou
 - Pack remote: `https://github.com/kalvincalimag/claude-skills`, a private repository on the personal account.
 - Pack clone: `~/Desktop/Master/Code/Personal/claude-skills`. Set `SKILLS_CLONE` to use another path. `sync.sh` clones it there if it is missing.
 
+Edit skills in the install, never in the clone. `sync.sh` refuses to run while the clone has uncommitted or unpushed changes.
+
+On a new machine, run `bash sync-skills/sync.sh apply` from a fresh clone of the pack. With no install yet, every skill shows as `pull`, so `apply` installs them all. Then run `record`.
+
 Never synced: the install's `synced/` folder, which the Claude app manages; dot entries such as `.trash/`; and any skill named in `~/.claude/skills/.sync-ignore`, one name per line.
 
 ## Boundaries
