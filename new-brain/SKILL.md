@@ -14,8 +14,9 @@ The procedure lives in the template's `TEMPLATE.md`, so it improves with the tem
 
 ## Locations
 
-- Template clone: the folder named by the `BRAIN_TEMPLATE_DIR` environment variable, or a location the user's own agent instructions give. Otherwise ask the user where their brain-template clone is. If they have none, offer to clone their template repository into a folder they choose. The original template is `https://github.com/kalvincalimag/brain-template`. Suggest setting `BRAIN_TEMPLATE_DIR` so the next run does not ask.
-- Where to create the brain: ask. Suggest a `brains` folder next to the template clone, and use whatever the user picks.
+- Template copy: a local clone of the user's template repository, kept wherever the user wants it. Look in this order: the `BRAIN_TEMPLATE_DIR` environment variable, a location the user's own agent instructions give, then the default `~/Desktop/Brains/brain-template`. If none exists, offer to clone the template repository to the default or to a folder the user names. The original template is `https://github.com/kalvincalimag/brain-template`. If the user picks a non-default folder, suggest setting `BRAIN_TEMPLATE_DIR` so the next run finds it.
+- Every run updates the template copy from GitHub before using it, so it always starts from the latest version. The copy stays on disk, because template improvements are made and published from it.
+- Where to create the brain: ask, offering `~/Desktop/Brains/<name>` as the default, and use whatever the user picks.
 
 ## Boundaries
 
