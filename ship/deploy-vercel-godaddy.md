@@ -7,7 +7,7 @@ Loaded from `ship` Part 4 only when the project actually uses these providers. T
 
 Take a web project from a verified local build to a verified Vercel deployment, then optionally connect a GoDaddy-managed domain without exposing credentials or disturbing unrelated DNS records.
 
-Repository instructions and explicit user direction take precedence. This skill coordinates deployment work; it does not itself authorize creating a repository, pushing commits, changing DNS, deploying production, modifying CI, or promoting traffic.
+Repository instructions and explicit user direction take precedence. This guide coordinates deployment work; it does not itself authorize creating a repository, pushing commits, changing DNS, deploying production, modifying CI, or promoting traffic.
 
 ## Hard boundaries
 
@@ -44,7 +44,7 @@ Do not ask the user to paste credential values into chat or a repository file.
 4. Confirm the relevant CLIs are installed and authenticated without printing tokens:
 
 ```bash
-command -v gh
+command -v gh        # only when the code host is GitHub; otherwise check its own CLI
 gh auth status
 command -v vercel
 vercel whoami
@@ -139,8 +139,8 @@ Verification should distinguish provider state, authoritative DNS, public resolv
 
 ```bash
 vercel domains inspect example.com
-dig example.com A
-dig www.example.com CNAME
+dig example.com A              # Windows: Resolve-DnsName example.com -Type A
+dig www.example.com CNAME      # Windows: Resolve-DnsName www.example.com -Type CNAME
 curl --head https://example.com
 ```
 
@@ -170,7 +170,7 @@ Where the repository's established workflow deploys directly, follow that contra
 
 ## 8. CI/CD is conditional
 
-Do not automatically add a GitHub Actions workflow. First determine whether the project already uses:
+Do not automatically add a CI workflow, such as GitHub Actions. First determine whether the project already uses:
 
 - Vercel Git integration;
 - an existing deployment workflow;

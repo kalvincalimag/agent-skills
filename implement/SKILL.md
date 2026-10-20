@@ -84,7 +84,7 @@ Intermediate breakage is acceptable when it is planned, scoped, and reversible. 
 
 # Part 2 — Types and Boundaries
 
-The type checker is a proof assistant. A case the types let you ignore becomes a runtime failure the compiler could have stopped. Applies to any statically typed language; a language-specific skill grounds it in syntax.
+The type checker is a proof assistant. A case the types let you ignore becomes a runtime failure the compiler could have stopped. Applies to any statically typed language; a language-specific skill, if one is installed, grounds it in syntax.
 
 ## 2.1 Make illegal states unrepresentable
 
@@ -171,7 +171,7 @@ Treat "we need a lock" as a design smell to check, not the default answer. Instr
 
 Applies whenever you create, modify, move, or delete an API endpoint, or change its auth, params, request or response bodies, or status codes. Executable behavior and the repository's canonical contract document move in the same change, including changes that leave the route and method unchanged.
 
-1. Locate the endpoint source, the canonical OpenAPI file, and the existing contract tests. If the repository has API source but no canonical contract location and its instructions name none, use a documented default such as `api_docs/openapi.yaml` and add a parser-based contract test as part of the approved change.
+1. Locate the endpoint source, the canonical contract document (an OpenAPI file, GraphQL schema, protobuf definition, or the project's equivalent), and the existing contract tests. If the repository has API source but no canonical contract and its instructions name none, ask before creating one. If the user agrees, write it in the project's own format and add a parser-based contract test as part of the change.
 2. Before changing behavior, add or update a failing test expressing the intended contract. Cover path, method, security, request, response, status, error, and behavioral limitations — not only route existence.
 3. Implement the change and update the matching operation in the same working change. Synchronize: public path and method; authentication and authorization; path, query, header, and cookie parameters; request schema, required fields, formats, constraints, and examples; success and error schemas with exact status codes; idempotency, concurrency, retry, redaction, and environment behavior; limitations such as configuration-only checks or unimplemented external probes.
 4. When an endpoint moves or is removed, remove the stale operation. Use `deprecated: true` only when the old endpoint still exists and intentionally remains supported.

@@ -1,6 +1,6 @@
 ---
 name: plain
-description: "Answer the request in simple, concise, plain English with as little technical jargon as possible, assuming the reader knows nothing about the subject, so a non-technical person understands it on the first read without asking a follow-up question. Invoked only when the user types /plain, with or without a request after it."
+description: "Answer the request in simple, concise, plain English with as little technical jargon as possible, assuming the reader knows nothing about the subject, so a non-technical person understands it on the first read without asking a follow-up question. Use only when the user explicitly invokes this skill by name, such as /plain, with or without a request after it."
 argument-hint: "[request]"
 disable-model-invocation: true
 ---
@@ -30,7 +30,7 @@ Everyday words can still assume knowledge. This is where plain replies most ofte
 - **Don't invent friendly names.** A label you made up, like "the shared base", matches nothing the reader can see. Describe the thing instead, or use the name the reader will see on screen and explain it once. Then keep calling it that.
 - **Say where things are.** If the reader might want to look at something, say where to find it, such as "in your Downloads folder" or "on the Settings page".
 - **Mention fewer things.** A newcomer can take in about three new ideas in one reply. Choose the ones that answer the question, plus anything the reader must decide. Leave out the rest, however true: how the thing is built inside, how you found out, exact names and codes, and side findings. Every extra thing is one more thing to explain.
-- **Explain what it does, not how it works.** Say what something means for the reader. "The menu only shows games someone has switched on" beats an account of where the menu gets its data.
+- **Explain what it does, not how it works.** Say what something means for the reader. "The menu only shows items someone has switched on" beats an account of where the menu gets its data.
 
 This sentence assumes knowledge:
 

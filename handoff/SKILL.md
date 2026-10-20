@@ -1,6 +1,6 @@
 ---
 name: handoff
-description: "Use when moving an in-progress session to another machine or session — laptop to phone, remote-control to cloud, or ahead of a context limit. Summarizes what this session knows into a handoff the user can open on the other device and hand to a fresh session. Not for publishing finished work; that is `ship`."
+description: "Use when moving an in-progress session to another machine or session — laptop to phone, local to cloud, or ahead of a context limit. Summarizes what this session knows into a handoff the user can open on the other device and hand to a fresh session. Not for publishing finished work; that is `ship`."
 ---
 
 # Handoff
@@ -31,23 +31,25 @@ land somewhere the user can open on the receiving device with the origin machine
 **The code** — only if the next session will edit it. Nothing but a pushed branch moves code.
 A handoff document does not carry it, and saying otherwise strands the next session.
 
-Default carrier for the thinking is a **Claude doc**: it syncs to the user's account, opens in
-the Claude app, needs no repository, and can be handed to the next session as a link or pasted
-in whole. Substitute when the situation is clearly better served:
+Default carrier for the thinking is a **shareable doc** from whichever doc tool is connected,
+such as a Claude doc, Notion page or Google Doc. It syncs to the user's account, opens on any
+device, needs no repository, and can be handed to the next session as a link or pasted in whole.
+If no doc tool is connected, ask where the user wants it. If they name nothing, write a local
+file and also print the handoff in chat. Substitute when the situation is clearly better served:
 
 | Situation | Carrier |
 | --- | --- |
-| Default — phone, tablet, any second device | Claude doc. Report the link. |
-| User wants to paste it into a session with no fuss | Slack message to themselves, or print it in chat. |
-| Work already tracked in a ticket | Linear issue or Notion page on that item. |
-| Next session is a cloud coding session that will edit this branch | Claude doc **and** a pushed branch. Put the file at `plans/handoff-<branch-slug>.md` too so the next session reads it beside the code. |
+| Default — phone, tablet, any second device | Shareable doc. Report the link. |
+| User wants to paste it into a session with no fuss | Print it in chat, or send it to themselves on a connected chat tool such as Slack. |
+| Work already tracked in a ticket | That ticket or page, if its tracker is connected. If not, print the text for the user to paste there. |
+| Next session is a cloud coding session that will edit this branch | Shareable doc **and** a pushed branch. Put the file at `plans/handoff-<branch-slug>.md` too so the next session reads it beside the code. |
 | Next session is another local session or worktree | File on the branch. |
 
 A repository file alone is the wrong default. It reaches the user only through a cloud session
 on that branch, which is more machinery than reading a page.
 
-For the raw conversation rather than a summary, `/export` writes the transcript to a file. Say
-so once; do not produce both unless asked.
+For the raw conversation rather than a summary, mention once that the agent can export the
+transcript to a file, if it can (in Claude Code, `/export`). Say so once; do not produce both unless asked.
 
 ---
 
@@ -81,7 +83,7 @@ handoffs are distinguishable at a glance. When a repository copy is also going o
 branch — `plans/handoff-<branch-slug>.md`, or `HANDOFF-<branch-slug>.md` at the root if the
 repository has no `plans/` — so parallel worktree sessions do not overwrite each other.
 
-Write for a reader with zero context. Do not restate `CLAUDE.md`, repository conventions, or
+Write for a reader with zero context. Do not restate the repository's agent instructions (`AGENTS.md`, `CLAUDE.md`), its conventions, or
 the stack; the next session loads those itself. `writing-discipline` governs the prose.
 
 Sections, all of them, in this order:
@@ -115,7 +117,7 @@ cannot do — run the app, hit a live service, reproduce a bug that needs real d
 
 # Part 4 — Carry it across
 
-Creating the Claude doc, or writing the file locally, is the delivery itself. Do it without
+Creating the shareable doc, or writing the file locally, is the delivery itself. Do it without
 asking and report the link.
 
 Pushing is a separate, outward action. **Stop and ask**, and say what will be pushed: the
@@ -154,7 +156,7 @@ Shape, with every angle-bracket slot filled in for real:
 
 ```
 Read this handoff from another session in full before doing anything else:
-https://claude.ai/…/<the complete address>
+<the complete link or path>
 
 It has the state of the work, the decisions and why, and what does not travel.
 Repository <name>, branch <branch>.

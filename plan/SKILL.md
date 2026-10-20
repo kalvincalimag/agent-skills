@@ -9,7 +9,7 @@ description: "Use before writing code, whenever deciding what to build or how: c
 
 Find the right shape, then write a plan that survives hostile review grounded in repository truth. Both halves are one job: a plan built on an unexplored design space is decision-complete about the wrong design.
 
-This extends — never replaces — repository instructions, user-intent clarification, and active Plan Mode rules. Ground it with `investigate`; shape the resulting code with `implement`.
+This extends — never replaces — repository instructions, user-intent clarification, and the rules of any active planning-only mode, such as Plan Mode. Ground it with `investigate`; shape the resulting code with `implement`.
 
 **The letter of this workflow is the spirit.** Skipping the review because the plan feels solid is the exact failure this exists to catch.
 
@@ -76,7 +76,7 @@ When you catch yourself writing the same instruction a second time, stop writing
 
 ### B1. Ground in truth
 
-- Read project instructions and only task-relevant project memory. Do not import another brain unless the user explicitly authorizes a scoped transfer.
+- Read project instructions and only task-relevant project memory. Do not import another project's memory or brain unless the user explicitly authorizes a scoped transfer.
 - Inspect the actual repository: files, contracts, tests, schemas, runtime boundaries, open PRs, deploy notes, current branch state. Use `investigate` when the subsystem is unfamiliar.
 - Separate discoverable facts from product preferences. Ask the user only for high-impact choices that cannot be derived.
 

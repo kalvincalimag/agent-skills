@@ -13,11 +13,13 @@ A test calls the code the way its users do and asserts the result they observe a
 
 ## 1. The Keep-or-Delete Check
 
-Before keeping any test, ask whether it would still pass if every function it imports returned `undefined`. If yes, it observes no behavior and cannot fail for a defect. Rewrite the assertion or delete the test.
+Before keeping any test, ask whether it would still pass if every function it imports returned nothing (`undefined`, `None`, `nil`, or your language's equivalent). If yes, it observes no behavior and cannot fail for a defect. Rewrite the assertion or delete the test.
 
 A test that cannot fail for a defect costs CI time and review attention and catches nothing. A constant pin is worse than nothing: it also fails when someone edits the constant, so it blocks the edit it was never protecting.
 
 ## 2. Five Shapes That Fail the Check
+
+The matcher names below are Jest-style. The same shapes apply in any test framework.
 
 - **Weak or absent assertion.** No assertion at all, or only `toBeDefined`, `toBeTruthy`, `not.toThrow`, `toBeInstanceOf`, `toBeGreaterThan(0)`.
 - **Mock or absence only.** Only `toHaveBeenCalled`, `not.toHaveBeenCalled`, `toBeUndefined`, `toEqual([])`, `toHaveLength(0)`, `not.toBe(wrongValue)`.

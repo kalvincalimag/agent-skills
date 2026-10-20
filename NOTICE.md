@@ -7,10 +7,7 @@ requires this notice to travel with them.
 ## Derived skills
 
 `investigate`, `plan`, `implement`, `test-design`, `bugfix`, `verify`, `ship`,
-`writing-discipline`, `bro`.
-
-`bro` is the exception to "rewritten". Its instruction paragraph is upstream's text with one
-added line, so it is a near-verbatim copy rather than a consolidation.
+`writing-discipline`.
 
 These were consolidated in September 2026 from an earlier, larger set. The upstream substance
 previously carried by `code-shape`, `type-and-boundary-design`, and `code-cleanup` now lives in
@@ -22,7 +19,6 @@ previously carried by `code-shape`, `type-and-boundary-design`, and `code-cleanu
 | Included work | Upstream | Copyright | License |
 | --- | --- | --- | --- |
 | The principles consolidated into `implement`, `bugfix`, `test-design`, and `plan`; the slop catalog and technical-writing layers in `writing-discipline`; `investigate`; the blast-radius material in `verify` | [cursor/plugins/pstack](https://github.com/cursor/plugins/tree/main/pstack), via the [pstack-claude](https://github.com/michael-denyer/pstack-claude) port | (c) 2026 Lauren Tan | MIT |
-| `bro` | [backnotprop/pstack](https://github.com/backnotprop/pstack/blob/main/skills/bro/SKILL.md) | (c) 2026 Lauren Tan | MIT |
 | The code-slop rules now in `implement` Part 4 and the workflows now in `ship` Part 1 | [cursor/plugins/cursor-team-kit](https://github.com/cursor/plugins/tree/main/cursor-team-kit) | (c) 2026 Cursor | MIT |
 
 ## MIT License

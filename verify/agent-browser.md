@@ -99,10 +99,11 @@ agent-browser fill @e1 "$USERNAME"
 agent-browser fill @e2 "$PASSWORD"
 agent-browser click @e3
 agent-browser wait --url "**/dashboard"
-agent-browser state save /tmp/browser-auth.json
+# SCRATCH: the agent's scratch folder or the OS temp folder, never inside the repository
+agent-browser state save "$SCRATCH/browser-auth.json"
 
 # Reuse in future sessions
-agent-browser state load /tmp/browser-auth.json
+agent-browser state load "$SCRATCH/browser-auth.json"
 agent-browser open http://localhost:3000/dashboard
 ```
 

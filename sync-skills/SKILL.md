@@ -30,13 +30,15 @@ A user of both agents keeps one clone and links the other folder to it. The repo
 
 ## Set up
 
+`<repository>` is the user's own skills repository. Ask for its URL, or offer to fork the one in the README. `<branch>` is that repository's default branch, which `git remote show origin` names once the remote is added; it is usually `main`.
+
 - **Empty or missing folder:** `git clone <repository> <skills folder>`.
-- **Folder that already has skills:** in the folder, run `git init -b main`, `git remote add origin <repository>`, `git fetch origin`, `git reset origin/main`, and `git branch -u origin/main`. This changes no files. `git status` then shows how the folder differs from the repository. Treat those differences as local changes in step 2.
+- **Folder that already has skills:** in the folder, run `git init -b <branch>`, `git remote add origin <repository>`, `git fetch origin`, `git reset origin/<branch>`, and `git branch -u origin/<branch>`. This changes no files. `git status` then shows how the folder differs from the repository. Treat those differences as local changes in step 2.
 
 ## Steps
 
 1. **Check.** In the skills folder, run `git fetch`. Local changes are in `git status --short`. Remote changes are in `git log --oneline HEAD..@{u}` and `git diff --stat HEAD...@{u}`. If neither side changed, say so and stop.
-2. **Review local changes.** Run `bash sync-skills/check.sh`. It must pass. A warning names a frontmatter field that only some agents understand, so keep it only when the skill needs it. Then read each changed skill in full and check that it stays general:
+2. **Review local changes.** Run `bash sync-skills/check.sh` (on Windows, from Git Bash or WSL). It must pass. A warning names a frontmatter field that only some agents understand, so keep it only when the skill needs it. Then read each changed skill in full and check that it stays general:
    - No names of a specific project, client, organization, repository, or person. The exception is a skill whose job is managing one of the user's own repositories.
    - No machine paths except defaults under `~` that the user can override.
    - No credentials, tokens, or account emails.

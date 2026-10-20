@@ -15,7 +15,8 @@ The procedure lives in the template's `TEMPLATE.md`, so it improves with the tem
 ## Locations
 
 - Template copy: a local clone of the user's template repository, kept wherever the user wants it. Look in this order: the `BRAIN_TEMPLATE_DIR` environment variable, a location the user's own agent instructions give, then the default `~/Desktop/Brains/brain-template`. If none exists, offer to clone the template repository to the default or to a folder the user names. The original template is `https://github.com/kalvincalimag/brain-template`. If the user picks a non-default folder, suggest setting `BRAIN_TEMPLATE_DIR` so the next run finds it.
-- Every run updates the template copy from GitHub before using it, so it always starts from the latest version. The copy stays on disk, because template improvements are made and published from it.
+- Before improving the template, check that the user can push to the template copy's `origin`, for example with `git push --dry-run`. If they can't, offer to fork the template to their own account and make the fork `origin`. If they decline, tell them template improvements can't be published, and discard them after the run so the next run isn't blocked by unpublished changes.
+- Every run updates the template copy from its remote before using it, so it always starts from the latest version. The copy stays on disk, because template improvements are made and published from it.
 - Where to create the brain: ask, offering `~/Desktop/Brains/<name>` as the default, and use whatever the user picks.
 
 ## Boundaries

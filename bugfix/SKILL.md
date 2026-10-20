@@ -13,7 +13,7 @@ Compose with `verify` for claim discipline and evidence, `test-design` for wheth
 
 ## Boundaries
 
-- In Plan Mode, produce only the investigation plan, evidence gates, and handoff criteria. Do not mutate code, git, deployments, browsers, or memory.
+- In a planning-only or read-only mode, such as Plan Mode, produce only the investigation plan, evidence gates, and handoff criteria. Do not mutate code, git, deployments, browsers, or memory.
 - A diagnosis-only request is read-only. Investigate and report; do not edit, commit, merge, or deploy unless the user authorizes a fix.
 - Stop before destructive, irreversible, financial, or production actions unless the user explicitly authorizes that exact action.
 - Default to one implementation agent. Use parallel agents only when explicitly requested, or when the work has genuinely independent investigation or review lanes that cannot conflict.

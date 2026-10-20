@@ -15,7 +15,7 @@ Keep non-trivial work evidence-based and provable. Three jobs, one standard:
 
 A writeup that sounds right is worthless, because it reads as convincing whether or not it is true. Run code.
 
-This does not override repository instructions or expand authorization for commits, pushes, pull requests, deployments, or memory writeback. Outward-action boundaries are owned by the user's standing autonomy rule.
+This does not override repository instructions or expand authorization for commits, pushes, pull requests, deployments, or memory writeback. Outward-action boundaries are owned by the user's standing rule for outward actions. Without one, ask before each.
 
 ## When This Triggers
 
@@ -88,7 +88,7 @@ Any safety fact you cannot get to step 4, say so. Do not write it up as settled.
 3. **Look where a search stops.** Read the source of the dependency you call, and check its pinned version and any local patch. Work out when things run: microtasks, teardown, framework scheduling. Follow what a symbol search misses: the JSON an API returns, a database column, a wire format, another language reading the same bytes, a feature flag, code three hops downstream, a cached value, a deployed client still on the old shape.
 4. **Be honest about each risk.** Give it a real chance of happening and a real cost if it does. Keep the risks you confirmed and list the ones you checked and cleared separately. Cite a real `file:line`. A search that finds nothing is still an answer. Never invent a caller or an API.
 5. **Prove the one fact.** Write a script or test that runs the real code, run it, and paste what happened. If you cannot prove it cheaply, mark it unproven rather than overstating.
-6. **For a wide change, get a second opinion.** Ask the same question against a different model and merge the answers. Different models catch different real defects. Agreement is high signal.
+6. **For a wide change, get a second opinion.** Ask the same question against a different model, if one is reachable, and merge the answers. If none is, say the review used one model. Different models catch different real defects. Agreement is high signal.
 
 ## 2.3 What to hand back
 
@@ -172,7 +172,7 @@ Common breaks at each boundary: a missing `await`; a method mismatch (GET handle
 
 # Part 4 — Browser Checks
 
-Run `command -v agent-browser` before the first browser action. If the CLI is unavailable, use an already-available repository-approved browser or Playwright workflow that gives equivalent visual, console, and interaction evidence. If no equivalent runtime exists, report manual browser QA as **blocked** — do not claim it passed, and do not install a dependency without the required approval.
+Run `command -v agent-browser` before the first browser action. If the CLI is unavailable, use any browser tool the agent already has, such as a browser connector, a built-in browser, or the repository's Playwright setup, that gives equivalent visual, console, and interaction evidence. If no equivalent runtime exists, report manual browser QA as **blocked** — do not claim it passed, and do not install a dependency without the required approval.
 
 Command reference: `agent-browser.md` in this skill directory.
 

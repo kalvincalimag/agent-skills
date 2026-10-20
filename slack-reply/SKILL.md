@@ -1,6 +1,6 @@
 ---
 name: slack-reply
-description: Draft a casual, short Slack reply when the user pastes a Slack message/thread, types /slack-reply, or asks how to respond on Slack.
+description: Draft a casual, short Slack reply when the user pastes a Slack message/thread, invokes this skill by name, or asks how to respond on Slack.
 ---
 
 # Slack reply
@@ -9,7 +9,7 @@ description: Draft a casual, short Slack reply when the user pastes a Slack mess
 
 Slack is **read-only** for this skill.
 
-- Slack MCP may only read messages/thread context.
+- A connected Slack tool may only read messages and thread context.
 - Never send, post, reply, react, edit, delete, or call any Slack write/mutation action.
 - If the user says "reply", "send", or similar, draft it in chat only.
 - The only output is suggested reply text for the user to copy/paste.
@@ -23,7 +23,7 @@ Slack is **read-only** for this skill.
 
 ## Process
 
-1. Use Slack MCP to read the latest message, then only enough thread context to understand it.
+1. Get the message. If the user pasted it, use that. If they gave a link and Slack is connected, read the latest message, then only enough thread context to understand it. If Slack isn't connected, ask them to paste the thread or connect Slack.
 2. Answer the actual question, blocker, or ping — not every side comment.
 3. If something is open, state the next step plainly.
 4. If resolved, acknowledge it briefly without reopening it.

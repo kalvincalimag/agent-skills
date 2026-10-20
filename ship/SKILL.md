@@ -9,7 +9,7 @@ description: "Use when publishing finished work outward: getting a branch mergea
 
 Carry finished, locally verified work through the repository's own delivery path: mergeable branch, pull request, merge, post-merge verification, and deployment — with evidence at every gate and a stop before every outward action.
 
-**This skill does not authorize anything.** Push, pull request, merge, deploy, promotion, DNS change, and repository creation are separate actions with separate authorization requirements. Confirm each one against the user's standing autonomy rule before taking it. Repository instructions and explicit user direction determine the base branch, merge method, environment, and stopping boundary.
+**This skill does not authorize anything.** Push, pull request, merge, deploy, promotion, DNS change, and repository creation are separate actions with separate authorization requirements. Confirm each one against the user's standing rule for outward actions, if they have one. Otherwise ask before each one. Repository instructions and explicit user direction determine the base branch, merge method, environment, and stopping boundary.
 
 Prerequisites: `implement` Part 4 has run against the diff, and `verify` has passed local gates with a recorded baseline.
 
@@ -59,7 +59,7 @@ Treat a review comment as a hypothesis, per `verify` 1.4. Automated review bots 
 ## 2.1 Preflight
 
 1. Read the repository instructions and identify the required base branch and promotion path. **Do not assume `develop` or `main`.**
-2. Confirm the GitHub CLI is available and authenticated: `command -v gh` and `gh auth status`.
+2. Find the code host from `git remote get-url origin` and confirm a way to reach it: its CLI (such as `gh` or `glab`, logged in to the right account) or a connected integration. If neither is set up, ask the user to log in or connect one, or prepare the pull-request title, body and compare link for them to open by hand.
 3. Inspect `git status --short --branch`, remotes, current branch, upstream, and the latest base tip.
 4. Refuse to publish from a detached head or a protected base branch. Create an appropriately named feature branch first.
 5. Identify unrelated dirty files and stage only the authorized paths. Never use broad staging when unrelated work exists.
