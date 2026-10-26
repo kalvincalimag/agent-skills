@@ -16,6 +16,8 @@ Reusable skills in the open [Agent Skills](https://agentskills.io) format. They 
 | `writing-discipline` | Writing quality |
 | `slack-reply` | Slack reply helper |
 | `plain` | Plain-English responses |
+| `go-all-out-design` | Explicit-only product design and polish workflow |
+| `mascot-design` | Product mascots held to a reference-character quality bar |
 | `handoff` | In-progress session handoffs |
 | `standup` | Spoken standup updates, written to the user's standup block |
 | `new-brain` | Create a local knowledge brain from brain-template, improving the template first |

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Mascot Design"
+  short_description: "Design memorable product mascots"
+  default_prompt: "Use $mascot-design to create three mascot candidates for this product, reviewed in a blind lineup against the reference characters I name."

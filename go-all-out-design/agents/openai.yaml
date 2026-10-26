@@ -1,0 +1,6 @@
+interface:
+  display_name: "Go All Out Design"
+  short_description: "Create unusually polished product experiences"
+  default_prompt: "Use $go-all-out-design to create one deeply developed, concept-first direction with a neutral canvas, tactile materiality, and one crafted surprise per section; stop for approval unless I explicitly request the full screen set."
+policy:
+  allow_implicit_invocation: false
