@@ -43,7 +43,7 @@ If mascot candidates already exist, review them against the failure list above a
 
 Write at least twelve one-line concepts before drawing. Each line names the subject, the signature trait, the personality edge, the name, and the tie to the product. Use the form of a pitch, for example: "a hedgehog with pencil spines who will not let homework slide; strict, never harsh."
 
-Cut to three. Keep the three that are most specific to this product and most different from each other. Say in one line why each of the others was cut.
+Tie each concept to what the product is about first, such as food for a meal planner or money for a finance app. A tie to the launch place or culture is a bonus on top of that, not a substitute for it. Cut to three. Keep the three that are most specific to this product and most different from each other. Say in one line why each of the others was cut.
 
 ### 4. Character sheets
 
@@ -61,8 +61,9 @@ For each of the three, write:
 
 Use the best image tool available. Check what the session offers before drawing.
 
-- **Image generation available.** Use it for concept art and hero rendering. Generate each candidate as one character sheet image holding the hero pose in three-quarter view, an expression row, and two acting poses with props. Separate generations drift into different characters, so keep the poses together in one image. When the tool accepts a reference image, pass the approved sheet into every later generation for that character. Describe the qualities in the prompt, never "in the style of" a named character or artist. Generate the in-product look as its own flat sheet too: flat fills, no gradients, no texture.
-- **Spend.** Image generation usually costs credits. Plan about three images per candidate per round: the character sheet, the flat sheet, and one scene. Before the first call, tell the user the tool, the model, and the planned count, and get approval, unless the user already approved a budget. Stay inside the approved count.
+- **Image generation available.** Generate each candidate as one character sheet image holding the hero pose in three-quarter view, an expression row, and three acting poses with props. Separate generations drift into different characters, so keep everything for one character in one image. Describe the qualities in the prompt, never "in the style of" a named character or artist.
+- **One sheet, both tiers.** If the image tool cannot take a reference image, draw the sheet in the flat in-product style: flat fills, no gradients, no texture. That one sheet then serves as both the illustration and the source for the in-product vector, so the two cannot drift apart. Make a richer hero rendering only when the tool accepts the approved sheet as a reference image, and pass it into every later generation for that character.
+- **Spend.** Image generation usually costs credits. Spend one sheet per candidate first. Keep the rest of the budget for redraws after each review, spent on the leading candidates, and add scenes only for the candidate you will recommend. If the budget cannot cover the first sheets plus two rounds of redraws, say so when you ask. Before the first call, tell the user the tool, the model, and the planned count, and get approval, unless the user already approved a budget. Stay inside the approved count.
 - **In-product vector.** Rebuild the flat look as clean vector shapes for product use. Use a vectorizing tool if the session has one. Otherwise draw custom paths that follow the character's construction, with the flat sheet beside you as the guide. Do not stack primitive circles and rectangles. The vector version is where quality is most often lost, so it goes through the same lineup as the hero art.
 - **No image generation.** Draw silhouettes first, at least six per candidate, and pick the strongest before adding any face or color. Then draw with custom paths as above, and mark the hero rendering as not produced.
 
@@ -75,7 +76,7 @@ Each of the three candidates gets:
 - a hero pose in three-quarter view with a clear line of action;
 - an expression sheet of at least five moods, carried by brows, lids, and posture as well as the mouth;
 - three acting poses, each one acting out a real product feature with a held or used prop;
-- the in-product vector version at 16, 24, 48, and 120 px, on the light canvas and on a dark tile;
+- the in-product vector version at 24, 48, and 120 px, plus a simplified icon version, such as the head alone, at 16 px, all on the light canvas and on a dark tile;
 - two in-context mockups: one product screen at a real moment, and one hero or marketing moment where the character interacts with the layout, such as peeking from a card edge or breaking out of a frame;
 - a short motion note for one signature interaction, with its reduced-motion version.
 
@@ -87,7 +88,7 @@ Present the three candidates on one board, marked as placeholders. Each round ge
 
 ### 8. Character bible
 
-After the user picks, produce the character bible: a construction guide with base shapes and proportions, a turnaround of front, three-quarter, side, and back views, the expression and action sheets, the color specification, the size rules, do and don't examples, voice rules with sample lines, and the component built as a system as described in [references/appeal.md](references/appeal.md).
+After the user picks, produce the character bible: a construction guide with base shapes and proportions, a turnaround of front, three-quarter, side, and back views, the expression and action sheets, the color specification, the size rules, do and don't examples, voice rules with sample lines, and the component built as a system as described in [references/appeal.md](references/appeal.md). Build the rig here, then check it: every pose on the sheets must be reachable by moving parts, without redrawing the body.
 
 ## Working with other design skills
 

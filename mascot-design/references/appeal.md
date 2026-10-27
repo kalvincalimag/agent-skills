@@ -4,7 +4,7 @@ These rules turn a concept into a character people remember. They describe what 
 
 ## Concept
 
-- **A subject with a reason.** The subject belongs to the product's promise, place, or name. A tortoise suits a savings app that rewards patience. An animal native to the launch market can carry local pride. A cute subject with no reason is generic.
+- **A subject with a reason.** The subject belongs first to what the product is about, then optionally to its place or name. A tortoise suits a savings app that rewards patience. An animal native to the launch market can carry local pride. A cute subject with no reason is generic.
 - **One signature trait.** One feature beyond the face that you could describe in five words and that says what the character does, such as a hedgehog whose spines are pencils for a homework app. The trait often doubles as the silhouette. Test: describe the character in one sentence after a five-second look. "A hedgehog with pencil spines" passes. "A cute orange squirrel" fails.
 - **An edge.** Friendly alone is forgettable. Give the personality one edge with a limit, such as "bossy, never rude" or "nosy, never creepy." The edge comes from the product's job.
 - **The name is the brand.** The character shares the product's name or is an obvious play on the product or its subject. If the product name cannot change, the mascot's name still plays on it, and the mascot can become the app icon.
@@ -23,7 +23,7 @@ These rules turn a concept into a character people remember. They describe what 
 ## Color
 
 - **Contrast lives in the accents.** Keep the body neutral or one quiet hue, and put two or three small saturated accents at the focal points, such as a cream body with a red crest and yellow feet. Black pupils give the strongest contrast at small sizes.
-- **Belong to the canvas.** A body close to the canvas color, outlined by a mid-gray accessory or edge, makes the character feel native to the product. A fully saturated body competes with the interface.
+- **Belong to the canvas.** A body close to the canvas color makes the character feel native to the product, and a fully saturated body competes with the interface. A white or near-white body needs a frame on a light canvas: a mid-gray accessory, skin, or edge drawn as part of the character, such as glasses, a wrap, or a scarf. A faint outline alone disappears.
 - **Brand color as costume.** Tie the character to the brand through clothing or an accessory in the brand color, such as a cap, scarf, or apron.
 - **Stay on the character.** The mascot's accent colors stay on the mascot. They do not become extra accent colors for buttons, labels, or other interface parts. Paper grain, tape, and similar surface textures belong to the surfaces around the in-product mascot, not to the character.
 - **Both backgrounds.** Check it on the light canvas and on a dark tile. Use a defined edge or accessory, not a halo or backing plate, to keep it visible.
