@@ -82,9 +82,18 @@ Each of the three candidates gets:
 
 ### 7. Review, then present
 
-First look at your own lineup beside the references at the same size, and fix any gap you can already see. Then run the full review in [references/review.md](references/review.md), including the blind lineup against the references with a fresh reviewer. Fix what it finds and run it again. If a candidate still loses the lineup after two improvement rounds, present it as below the bar and say why. Do not present it as ready.
+First look at your own lineup beside the references at the same size, and fix any gap you can already see. Then run the full review in [references/review.md](references/review.md), including the blind lineup against the references with a panel of three fresh reviewers. Fix the findings the panel agrees on and run it again. If a candidate still loses the lineup after two improvement rounds, present it as below the bar and say why. Do not present it as ready.
 
 Present the three candidates on one board, marked as placeholders. Each round gets its own new board labeled with its round number. Leave earlier boards unchanged so the user can compare rounds. Each shows its character sheet, art, review results, and one-line downside. Recommend one. If the product already shows a mascot, leave it in place until the user picks.
+
+### Revising after a pick
+
+Every revision, whether the user asks for it or a review prompts it, follows these rules.
+
+- **Locked traits.** When the user approves a trait, such as the signature feature, the face, the palette, or the body, add it to a locked list on the board. A review never changes a locked trait. Only the user can unlock one.
+- **Scope.** Change only the area the request names. A face pass changes the face. A silhouette request changes the outline and the parts that form it, and if that means replacing limbs or other approved parts, ask first. Record other findings as open items and leave them alone.
+- **Options before big changes.** When a change would replace a part, change a locked trait, or alter the character's construction, build two or three options and let the panel pick by majority. Show the panel's pick to the user before applying it everywhere, unless the user has asked the skill to make the call.
+- **One change at a time.** Apply one revision, review it, then move to the next. Do not stack several redesigns into one round.
 
 ### 8. Character bible
 
