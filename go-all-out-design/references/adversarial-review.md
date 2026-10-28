@@ -15,7 +15,8 @@ Use a fresh reviewer who did not create the design. Give them:
 - the approved product requirements;
 - the target user and main task;
 - the editable artifact or working product;
-- the supported platforms and important limits.
+- the supported platforms and important limits;
+- the user's recorded taste and rejected examples, from the project's notes. These are part of the brief, not the designer's rationale.
 
 Export the screens with annotations hidden as image files and give the reviewer their paths, so they review exactly what a user sees. Give a short summary of the requirements instead of the full documents when the documents are long. Ask for their first-look answers word for word, before they see the other screens, and ask for the report format in "Report evidence" below.
 
@@ -62,6 +63,8 @@ Review the direction on its own. Actively look for counterexamples to its claims
 - Check that each screen or section has at most one crafted surprise and enough quiet space around it.
 - Check whether a mascot or character has a useful recurring role.
 - Remove decorative brand elements and identify what product-specific character remains.
+- Check every screen against the user's recorded taste, and look for any failing quality of their rejected examples.
+- Check every screen against the Guardrails in the main skill: added scope, mixed imagery, competing numbers, unreal content or typos, and copied reference material.
 
 ### Interaction and accessibility
 

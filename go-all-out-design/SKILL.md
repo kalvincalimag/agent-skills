@@ -28,7 +28,7 @@ If no brief exists, offer a short working brief for approval. It must name the m
 
 Keep intake short. Ask no more than three grouped questions, recommend defaults, and defer details that do not block the first useful design.
 
-Find the user's design taste before choosing a visual direction: products or designs they admire, palette or canvas preferences, type or style preferences, and reference mascots when a mascot fits. Check the project's notes or knowledge base first. If nothing is recorded, make taste one of the grouped intake questions. Ask for one to three references and what they like about each, plus any palette or style preferences, and offer the house style as the default if they have none. Record the answers in the project's notes, if it keeps them, so later sessions do not ask again.
+Find the user's design taste before choosing a visual direction: products or designs they admire, palette or canvas preferences, type or style preferences, and reference mascots when a mascot fits. Take taste only from the project's notes or knowledge base, including any reference images stored there and the verdicts recorded with them. Do not search for or read reference folders outside the notes; if the user points to one, ask them to add it to the notes first. If nothing is recorded, make taste one of the grouped intake questions. Ask for one to three references and what they like about each, plus any palette or style preferences, and offer the house style as the default if they have none. Record the answers in the project's notes, if it keeps them, so later sessions do not ask again.
 
 Define the beginner's goal in their own words, the first useful result, the minimum information they must provide, and any unfamiliar ideas that need explanation. Do not make users learn the product team's vocabulary before they can act.
 
@@ -57,11 +57,22 @@ Before choosing the visual system, read and apply [references/art-direction.md](
 
 Choose one concrete metaphor and make it structural: it must affect layout, components, illustration or objects, and motion. A concept that appears only in the name, headline, or annotations does not count.
 
+## Guardrails
+
+These hold for every direction, alongside the art direction.
+
+- **Scope.** Add no feature, screen, or control the approved requirements do not include, such as an AI chat bar, streaks, badges, or scores. Propose it separately and flag it as added scope.
+- **One imagery style.** Use one imagery style for content across the product. Do not mix photographs with drawn characters or illustrations on the same screen.
+- **Quiet numbers.** Show the one number that drives the user's next decision and move the rest into a detail view. Prefer a plain sentence to a chart. Every chart says what it measures and in what units; avoid stacked or multi-ring gauges.
+- **Real content.** Use real day names and dates and everyday content for the audience and place, not aspirational stock imagery or slogans. Spell-check every visible string before taking review screenshots.
+- **References inform, never copied.** Take principles from references. Never copy a reference's layout, assets, images, or text into the design.
+- **Ask before spending.** Ask before using paid credits, a paid model, or a paid plan.
+
 ## Create one design direction per invocation
 
 For a new product, redesign, or unresolved direction, create exactly one deeply developed design direction. Do not create a trio, comparison matrix, or several partially developed alternatives in the same invocation. Concentrate the available time, reasoning, and craft on making one direction coherent and approval-ready.
 
-Choose the direction from the product truth, user needs, constraints, and lessons from existing work. Keep the proven basic journey unless a change clearly reduces effort and passes the beginner check. If the user wants another direction, they can invoke the skill again; treat that later invocation as a fresh exploration, not a color variation of the previous result.
+Choose the direction from the product truth, user needs, constraints, and lessons from existing work. Keep the proven basic journey unless a change clearly reduces effort and passes the beginner check. Before building, state what the new direction keeps from earlier directions, such as the journey, recorded decisions, and the user's feedback on them, and what it changes. If the user wants another direction, they can invoke the skill again; treat that later invocation as a fresh exploration, not a color variation of the previous result.
 
 The direction must show:
 
@@ -80,8 +91,9 @@ Explain why the direction is the strongest fit, including its main strengths, ri
 
 ## Lay out the design file
 
-Put the direction on its own new page or file. Do not edit existing work unless the user asked for that.
+Put the direction on its own new page or file. Do not edit, move, or delete existing pages, frames, components, or variables unless the user asked for that.
 
+- **Own parts.** Build the direction's own components and variables, named for the direction. Reuse components or variables from earlier work only when the user asks, or for a placeholder the project's notes say to keep.
 - **Shared parts first.** Before drawing screens, build the shared parts as components in a separate Components section: controls, navigation, cards, rows, messages, content illustrations, and mascot poses. Build every screen from instances of them, so a later change to a part reaches every screen.
 - **Colors as variables.** Save the canvas, text, and accent colors from [references/art-direction.md](references/art-direction.md) as named variables with light and dark modes. Give each variable a short description of its use and limit it to the properties it belongs on. Bind every fill, stroke, and text color to a variable, and save shadows as effect styles.
 - **Notes outside the screens.** Add an About panel with the idea, why it fits, risks, what is covered and what is not yet, and a draft status label. Add an Identity board with the wordmark, app icon, color swatches with values, type, mascot poses, and sample wording. Add a short caption above each screen linking it to the requirements. Keep every note outside the screen frames and mark it as an annotation, so all notes can be hidden for review.
@@ -92,7 +104,7 @@ Put the direction on its own new page or file. Do not edit existing work unless 
 
 For a new consumer or lifestyle product, give the direction a suitable placeholder identity when approved assets do not exist. Keep the name and logo understated so the work remains the loud part. Include a wordmark or logo idea, an app icon or product mark when relevant, the prescribed color and type approach, a concept-specific object or illustration style, a concise writing voice, and examples inside real screens.
 
-Consider a mascot or recurring character unless that would be inappropriate. Reuse it as a system and give it one prop per idea. Give it useful jobs, such as guiding first use, explaining an unfamiliar idea, improving an empty state, helping with an error, or marking meaningful progress. Do not use a mascot as a random sticker or a substitute for clear design. Design the character itself with the `mascot-design` skill. If that skill cannot be invoked, read `../mascot-design/SKILL.md` from this skill's folder and follow it. This skill still decides where the mascot appears in the product and what job it does there. If the screens have no mascot yet, place the recommended candidate on them until the user picks. If they already show one, keep it until the user picks. Mark placeholder identity work as a hypothesis until approved.
+Consider a mascot or recurring character unless that would be inappropriate. Reuse it as a system and give it one prop per idea. Give it useful jobs, such as guiding first use, explaining an unfamiliar idea, improving an empty state, helping with an error, or marking meaningful progress. Do not use a mascot as a random sticker or a substitute for clear design. Design the character itself with the `mascot-design` skill. If that skill cannot be invoked, read `../mascot-design/SKILL.md` from this skill's folder and follow it. This skill still decides where the mascot appears in the product and what job it does there. If the screens have no mascot yet, place the recommended candidate on them until the user picks. If they already show one, keep it until the user picks. If the project's notes put any identity work on hold, such as the mascot, use the current placeholder as it is: do not redesign it or start the `mascot-design` skill. Mark placeholder identity work as a hypothesis until approved.
 
 After a direction passes the beginner check, read and apply [references/aliveness.md](references/aliveness.md). Add immediate feedback, continuity, warmth, and one purposeful surprise without hiding controls or delaying the task. Keep familiar alternatives for gestures and support reduced motion.
 
