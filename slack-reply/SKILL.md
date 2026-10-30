@@ -24,9 +24,11 @@ Slack is **read-only** for this skill.
 ## Process
 
 1. Get the message. If the user pasted it, use that. If they gave a link and Slack is connected, read the latest message, then only enough thread context to understand it. If Slack isn't connected, ask them to paste the thread or connect Slack.
-2. Answer the actual question, blocker, or ping — not every side comment.
-3. If something is open, state the next step plainly.
-4. If resolved, acknowledge it briefly without reopening it.
+2. Read where the conversation stands now. Include what the user already said in the thread. Before each draft, and again on every redraft, re-read the thread so the reply follows the latest message rather than an earlier version of the conversation.
+3. Write only what moves it forward from there. Never repeat what the user already said, such as a list they gave, an offer they made, or context they set out. Point back to it ("the stuff above") instead of restating it.
+4. Answer the actual question, blocker, or ping — not every side comment.
+5. If something is open, state the next step plainly.
+6. If resolved, acknowledge it briefly without reopening it.
 
 ## Output
 
