@@ -16,7 +16,7 @@ If the destination's platform isn't connected, ask the user to connect it or to 
 Read the block's current text before you draft, for two reasons:
 
 - Its layout is the template. Match its section labels, bullet style and length.
-- Anything already in it has already been reported. Don't say it again unless it moved forward since.
+- Its bullets may be old updates already reported, or new work the user added themselves and hasn't read out yet. You can't tell which from the text. Before drafting, list them and ask the user which to keep, which to drop, and which have moved forward. Keep the ones they choose word for word, and don't repeat anything they mark as already reported.
 
 ## 2. Gather what happened
 
@@ -39,6 +39,7 @@ Pick three to five updates the team cares about: outcomes, decisions, estimates,
 - **Everyday words.** If a technical word is unavoidable, say what the thing does instead: "the part that keeps track of the money", not "the ledger service".
 - **Nothing that can't be said aloud.** No file names, branch or pull-request numbers, code identifiers, or acronyms listeners wouldn't say. No symbols such as slashes, arrows, ampersands, tildes or parentheses. Write numbers the way you'd say them.
 - **Names people already use.** People by first name, and products by the name the team already uses.
+- **Don't report listeners' own actions back to them.** Ask who hears the standup. If someone in the room made a decision or owns a task, state the outcome without crediting them: "moved the new partner ahead of the other one", not "Sam made them the priority".
 - **Plain confidence.** No filler or hedging. An estimate is "a rough estimate", once.
 - **Blockers say who.** One line each: what's stuck and who can unblock it. If there are none, keep the block's empty bullet.
 
@@ -50,7 +51,7 @@ Pick three to five updates the team cares about: outcomes, decisions, estimates,
 
 ## 5. Show, then write
 
-Show the draft in chat exactly as it will appear, and ask whether to write it. Writing replaces the block's current bullets, so say that when you ask.
+Show the draft in chat exactly as it will appear, with the bullets the user kept from step 1 in place, and ask whether to write it. Writing replaces the block's current bullets, so say which current bullets the draft drops when you ask. Never drop one the user didn't agree to drop.
 
 If the destination isn't connected, give the user the final text to paste and stop.
 
