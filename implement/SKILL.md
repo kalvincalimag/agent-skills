@@ -80,6 +80,19 @@ During a planned migration with explicit phases, optimize for the intended end s
 
 Intermediate breakage is acceptable when it is planned, scoped, and reversible. Declare where it is acceptable, keep high-signal checks on actively touched areas, and require full verification at plan completion.
 
+## 1.8 Run independent units in parallel
+
+The user wants implementation streamlined: work that does not depend on other unfinished work runs at the same time, in subagents or separate sessions, not one unit after another in the main thread.
+
+- **Land the shared seam first.** Types, schema, contracts and any signature the parallel units all call go in before the fan-out, by the main thread. Parallel workers build on a seam; they never negotiate one.
+- **Split by file ownership.** Give each worker an explicit list of files it may touch and name the files others are editing. Two workers in one file is a merge conflict scheduled in advance. When the split cannot be clean, use a separate worktree per worker and merge their branches.
+- **Hand each worker the whole contract.** The goal, the plan section it implements, the seam it builds on, the repository conventions, the checks to run, and what it must not do (commit, push, migrate, or touch shared state) unless the user has authorized that. A worker starts with none of this conversation's context unless it is a fork.
+- **Use background work for anything slow.** Full test suites, mutation runs, CI watches, deploy waits, reviews and writebacks run in the background while the main thread keeps building.
+- **Keep integration in the main thread.** The main thread re-reads every worker's diff, runs the combined checks, and owns the result. A worker's "done" is a claim to verify, per `verify` 1.4.
+- **Do not parallelize what is sequential.** A unit that needs another unit's output, or one small enough that briefing costs more than doing, stays in the main thread.
+
+If the session only allows subagents when the user asks, this standing preference is that request for implementation work.
+
 ---
 
 # Part 2 — Types and Boundaries
@@ -243,3 +256,4 @@ Deletion count, casts removed and any that remain with the reason, constraints y
 | "The route did not change, so the spec is fine" | Auth, params, and status codes are the contract too. |
 | "The comment explains the tricky part" | Then the code is tricky. Fix the code or record the constraint. |
 | "I will clean up the whole file while I am here" | Out of scope. Name it and leave it. |
+| "I will do these units one at a time, it is simpler" | If they share no unfinished work, run them in parallel per 1.8. |
