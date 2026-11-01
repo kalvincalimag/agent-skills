@@ -1,6 +1,6 @@
 ---
 name: test-design
-description: "Use whenever writing, changing, reviewing, or deciding whether to keep a test, and when sequencing a multi-step change into units that each end in a check. Governs whether a test can actually fail for a defect — not whether the suite currently passes."
+description: "Use whenever writing, changing, reviewing, or deciding whether to keep a test, when configuring how tests run in CI, and when sequencing a multi-step change into units that each end in a check. Governs whether a test can actually fail for a defect, and how the suite runs fast without losing coverage — not whether the suite currently passes."
 ---
 
 # Test Design
@@ -52,6 +52,35 @@ Order work as small units, each ending in a state you can verify, and do not adv
 
 **While delivering.** Stack commits in the order that proves the work. The canonical shape is the failing test first, then the fix on top. Other honest orders are a subtraction before a reshape, a baseline capture before a treatment, a scaffold before a feature. Each commit stands on its own and the sequence reads as an argument a reviewer can replay.
 
+## 6. Run the Suite in Parallel on CI
+
+A slow suite gets run less, retried, and trimmed. Make it fast by structure, never by testing less. When you add or change tests that run on CI, configure them to run in parallel unless they cannot.
+
+**Parallel by default.**
+
+- Turn on the runner's own parallelism: worker processes or threads per file, and per test where the runner supports it. Set the worker count from the CI machine's cores and memory, not a guess.
+- Independent CI stages (lint, typecheck, unit, build, browser) run as separate jobs side by side, not as sequential steps in one job.
+- Shard a suite across jobs when one job's run time is well above its setup time. Balance shards by recorded timings, not file count. Do not shard below that point; every job pays its own setup.
+
+**Make tests safe to run together.** A test that breaks under parallelism shares state it should not.
+
+- Give each test or worker its own data: unique IDs, a per-worker database or schema, ports and temp directories derived from the worker index.
+- Remove the shared write target before reaching for serial execution, per `implement` 2.11.
+
+**When a group must run serially,** name the reason in the config (one external sandbox, one shared account, a real rate limit) and move only that group into its own job or project, so the rest stays parallel.
+
+**Optimize what cannot be parallelized.**
+
+- Cache dependencies and build outputs between runs. Build once and hand the artifact to every test job.
+- Do expensive setup once per worker or per run (seed, login state, server boot), not once per test.
+- Test each behavior at the cheapest tier that can still fail for its defect. Keep browser tests for what only a browser shows.
+- Wait on conditions, never fixed sleeps.
+- Selecting only affected tests is fine for early feedback when the full suite still gates the merge.
+
+**Never buy speed with coverage.** Do not add retries to hide flakes, skip or delete failing tests, lower coverage thresholds, or loosen assertions to make the suite faster. A flaky test is a determinism defect; fix it per section 4.
+
+Measure before and after from the CI run timings, and report the change in wall time with the evidence `verify` requires.
+
 ## Red Flags — STOP, you are rationalizing
 
 | Excuse | Reality |
@@ -62,3 +91,6 @@ Order work as small units, each ending in a state you can verify, and do not adv
 | "I will verify the whole sweep at the end" | Then the break is buried. Check each unit before the next. |
 | "The expected value comes from the helper" | The helper is the code under test. Write the literal. |
 | "The assertion was too strict so I loosened it" | Say the contract changed and get authorization, or fix the code. |
+| "The tests are flaky in parallel, so run them serially" | They share state. Isolate the data; serialize only the group with a named reason. |
+| "Add a retry, it passes the second time" | The retry hides a determinism defect. Fix it. |
+| "Skip those tests to speed up CI" | Speed comes from structure, not from testing less. |
