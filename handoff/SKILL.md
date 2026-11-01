@@ -31,15 +31,34 @@ land somewhere the user can open on the receiving device with the origin machine
 **The code** — only if the next session will edit it. Nothing but a pushed branch moves code.
 A handoff document does not carry it, and saying otherwise strands the next session.
 
-Default carrier for the thinking is a **shareable doc** from whichever doc tool is connected,
-such as a Claude doc, Notion page or Google Doc. It syncs to the user's account, opens on any
-device, needs no repository, and can be handed to the next session as a link or pasted in whole.
-If no doc tool is connected, ask where the user wants it. If they name nothing, write a local
-file and also print the handoff in chat. Substitute when the situation is clearly better served:
+**If the project has a brain, the brain is the carrier.** A brain is a curated knowledge base
+that the project's sessions read at startup, under rules of their own: an `AGENTS.md` with
+startup and writeback rules, and usually a memory index. Write the handoff into the brain
+itself, so that the next session needs only the brain and a prompt. Do not make a separate doc.
+
+- First, write all durable knowledge back to the brain the way its own rules say: decisions,
+  findings, sessions, plans. The handoff is then a thin **pickup note** that points into that
+  knowledge rather than repeating it.
+- Put the pickup note where the brain keeps active plans, or where its rules say. Name it with
+  the work and the date. Mark any older pickup for the same work as superseded so that only one
+  is live.
+- Follow the brain's own rules on what may go in it. Local-only state, such as recordings,
+  folders on the user's machine, or signed-in sessions, is described generically ("only on the
+  user's laptop, in the demo workspace") and never by private path when the brain forbids that.
+- Commit and push it the way the brain's writeback rules say, since those rules authorize that
+  write.
+
+Without a brain, the default carrier is a **shareable doc** from whichever doc tool is
+connected, such as a Claude doc, Notion page or Google Doc. It syncs to the user's account,
+opens on any device, needs no repository, and can be handed to the next session as a link or
+pasted in whole. If no doc tool is connected, ask where the user wants it. If they name nothing,
+write a local file and also print the handoff in chat. Substitute when the situation is clearly
+better served:
 
 | Situation | Carrier |
 | --- | --- |
-| Default — phone, tablet, any second device | Shareable doc. Report the link. |
+| The project has a brain | The brain's pickup note, pushed per its rules. No doc. Report its path in the brain. |
+| No brain; phone, tablet, any second device | Shareable doc. Report the link. |
 | User wants to paste it into a session with no fuss | Print it in chat, or send it to themselves on a connected chat tool such as Slack. |
 | Work already tracked in a ticket | That ticket or page, if its tracker is connected. If not, print the text for the user to paste there. |
 | Next session is a cloud coding session that will edit this branch | Shareable doc **and** a pushed branch. Put the file at `plans/handoff-<branch-slug>.md` too so the next session reads it beside the code. |
@@ -117,8 +136,9 @@ cannot do — run the app, hit a live service, reproduce a bug that needs real d
 
 # Part 4 — Carry it across
 
-Creating the shareable doc, or writing the file locally, is the delivery itself. Do it without
-asking and report the link.
+Writing the brain's pickup note and pushing it under the brain's writeback rules, creating the
+shareable doc, or writing the file locally is the delivery itself. Do it without asking, and
+report where it lives.
 
 Pushing is a separate, outward action. **Stop and ask**, and say what will be pushed: the
 unfinished work in the tree, and the handoff file if one is going to the repository. Unfinished
@@ -152,7 +172,19 @@ survive that.
 - Never emit it with the link unresolved. If the carrier failed and there is no address yet,
   say so instead of shipping a prompt with a hole in it.
 
-Shape, with every angle-bracket slot filled in for real:
+With a brain, the prompt names the brain repository and the pickup note's path inside it, and
+tells the next session to follow the brain's startup rules first. No link to anything outside
+the brain:
+
+```
+Pick up work from another session. Follow the startup rules of the <brain name> brain
+(<brain repository>, branch <default branch>), then read <pickup note path> in full
+before doing anything else. The brain is the reference for state, decisions and next steps.
+
+Then: <your new request here>
+```
+
+Without a brain, use this shape, with every angle-bracket slot filled in for real:
 
 ```
 Read this handoff from another session in full before doing anything else:
@@ -164,6 +196,15 @@ Repository <name>, branch <branch>.
 Then: <your new request here>
 ```
 
-Leave `<your new request here>` as the only unfilled slot — that one is the user's to complete.
+Fill the request in yourself. You know what is done and what is left, so write the concrete next
+task:
+
+- what to start with;
+- what can run in parallel;
+- what to bring to the user for decisions;
+- what "done" means.
+
+Leave a `<your new request here>` slot only when the next request genuinely cannot be inferred.
+When the user asks for the prompt as a file, write it there with the request already filled in.
 After the block, add one line naming what to do if the link does not open on the other device:
 paste the handoff text itself, which is written to stand alone.

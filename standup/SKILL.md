@@ -16,7 +16,7 @@ If the destination's platform isn't connected, ask the user to connect it or to 
 Read the block's current text before you draft, for two reasons:
 
 - Its layout is the template. Match its section labels, bullet style and length.
-- Its bullets may be old updates already reported, or new work the user added themselves and hasn't read out yet. You can't tell which from the text. Before drafting, list them and ask the user which to keep, which to drop, and which have moved forward. Keep the ones they choose word for word, and don't repeat anything they mark as already reported.
+- Its bullets may be old updates already reported, or new work the user added themselves and hasn't read out yet. You can't tell which from the text. Before drafting, list them and ask the user which to keep, which to drop, and which have moved forward. Keep the ones they choose word for word, and don't repeat anything they mark as already reported. If a kept bullet and a new update describe the same work, merge them into one bullet rather than listing both, and point out the merge when you show the draft.
 
 ## 2. Gather what happened
 
@@ -30,7 +30,7 @@ If the sources are thin, say so and ask what else to include. Don't pad.
 
 ## 3. Choose
 
-Pick three to five updates the team cares about: outcomes, decisions, estimates, and anything someone else must act on. Merge small related items into one. Put the most important first. Leave out how the work was done, dead ends, and side findings, unless one changes what the team should do.
+Pick three to five updates the team cares about: outcomes, decisions, estimates, and anything someone else must act on. Write one update per domain, such as one partner, one product area or one piece of infrastructure, and fold everything about that domain into it, kept bullets included. Two bullets about the same partner or the same system is one bullet split in two. Put the most important first. Leave out how the work was done, dead ends, and side findings, unless one changes what the team should do.
 
 ## 4. Write for the ear
 

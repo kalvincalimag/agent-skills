@@ -1,6 +1,6 @@
 # Adversarial design review
 
-Run this after the beginner test and normal product review, before presenting the direction for approval or calling the product polished.
+Run this after the beginner test and normal product review, before presenting the direction for approval or calling the product polished. It also runs on its own to review a product that is already built; see "Review an existing product" below.
 
 The goal is to find evidence that the design is confusing, fragile, generic, incomplete, or inconsistent with the product requirements. Do not try to confirm the designer's conclusion.
 
@@ -62,6 +62,12 @@ Review the direction on its own. Actively look for counterexamples to its claims
 - Check that the canvas remains neutral, color is borrowed from meaningful content or one warm accent, and multiple accents do not compete.
 - Check that each screen or section has at most one crafted surprise and enough quiet space around it.
 - Check whether a mascot or character has a useful recurring role.
+- Run a replica check against every named reference. Put them side by side and look for:
+  - the same palette combination, where canvas, contrast tile, and accent all match;
+  - the same composition on an equivalent screen;
+  - the same signature components or copy patterns.
+  Someone who knows the reference must not mistake the product for it, or for its sibling.
+- Look for screens that read as white and redundant: the same white or tinted card repeated, and accent only on links. Run the identity check in [art-direction.md](art-direction.md) on each screen.
 - Remove decorative brand elements and identify what product-specific character remains.
 - Check every screen against the user's recorded taste, and look for any failing quality of their rejected examples.
 - Check every screen against the Guardrails in the main skill: added scope, mixed imagery, competing numbers, unreal content or typos, and copied reference material.
@@ -92,3 +98,23 @@ Record each finding with:
 Do not report vague preferences as defects. Separate observed failures from hypotheses that need a real user test.
 
 Any blocker in product understanding, main-task completion, recovery, accessibility, or requirement fidelity prevents approval. Fix supported blockers and major findings, then repeat the affected tests with fresh context. Report unresolved risks instead of lowering the standard or explaining them away.
+
+## Review an existing product
+
+When the user asks for a review of a product that is already built, rather than a new direction, the steps below replace "Report evidence" above.
+
+- Walk the main user journeys in the real implementation, from entry to result, using the checks above. Look hardest for anything that could confuse users, slow them down, or cause mistakes.
+- Look in particular for inconsistencies between screens, such as the same action labelled, placed, or confirmed differently; friction that adds steps or waiting; unclear or missing feedback after an action; and missing states.
+- Ground every finding in the current implementation: name the screen or flow, and give what the user sees or the steps that reproduce it. Leave out speculative problems.
+- Rank usability gains above cosmetic polish. Skip the Identity checks unless the user asks for them.
+- Recommend the simplest effective improvement for each finding. Do not propose broad redesigns.
+- Narrow the findings to a short list of the highest-impact improvements, ranked by impact, no more than seven. Keep the rest available on request.
+
+Report each shortlisted finding as:
+
+- **Issue:** what happens and where.
+- **Impact:** who it affects and why it matters.
+- **Recommendation:** the simplest effective improvement.
+- **Effort:** low, medium, or high.
+
+Present the shortlist and stop for the user's approval before changing anything. After approval, apply only the approved items, then rerun the review on what changed.

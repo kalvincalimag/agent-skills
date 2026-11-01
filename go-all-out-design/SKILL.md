@@ -65,7 +65,7 @@ These hold for every direction, alongside the art direction.
 - **One imagery style.** Use one imagery style for content across the product. Do not mix photographs with drawn characters or illustrations on the same screen.
 - **Quiet numbers.** Show the one number that drives the user's next decision and move the rest into a detail view. Prefer a plain sentence to a chart. Every chart says what it measures and in what units; avoid stacked or multi-ring gauges.
 - **Real content.** Use real day names and dates and everyday content for the audience and place, not aspirational stock imagery or slogans. Spell-check every visible string before taking review screenshots.
-- **References inform, never copied.** Take principles from references. Never copy a reference's layout, assets, images, or text into the design.
+- **References inform, never copied.** Take principles from references. Never copy a reference's layout, assets, images, or text into the design. Never copy its palette or signature components either. Before building from a reference's qualities, write down how each quality translates into the product's own world. Examples: the reference's black tiles become a material from the product's metaphor; its accent pill tags become the product's own kind of label. Build the translation, not the original. Before presenting, run the replica check in [references/adversarial-review.md](references/adversarial-review.md) with a fresh reviewer who has the reference images.
 - **Ask before spending.** Ask before using paid credits, a paid model, or a paid plan.
 
 ## Create one design direction per invocation
@@ -100,6 +100,19 @@ Put the direction on its own new page or file. Do not edit, move, or delete exis
 - **One story.** Make all screens follow one continuous scenario with realistic content for the product's audience and place. A detail that appears on one screen must be explained by an earlier screen.
 - **Small batches.** Build at most three screens at a time. After each batch, screenshot the screens at their target size and fix clipping, overlap, contrast, and missing elements before continuing. If a build step fails partway, remove what it left behind before retrying.
 
+## Run implementation in parallel
+
+Once the shared parts exist, building or restyling many screens is parallel work. When subagents or separate sessions are available, use them for it:
+
+1. Build the shared parts, variables, and one or two pilot screens yourself, and screenshot them. The pilot is the pattern every worker copies.
+2. Split the remaining screens into groups that share no screens, such as by flow. Give each worker its screens, the pilot's node IDs as the reference, the rules from this skill and the project's taste notes, and the verification it must run: screenshots in every mode and a spacing measurement.
+3. Each shared component and variable has one owner. Workers edit only their own screens and any components assigned to them. They report a needed change to a shared part instead of making it.
+4. Do independent work, such as notes, briefs, or the knowledge base, while the workers run.
+5. Integrate the results yourself: check cross-screen consistency, then update the About and Identity boards and the captions.
+6. Run the adversarial review as a separate fresh agent that saw none of the work, as the verification section requires. Independent checks, such as one reviewer per flow, can also run in parallel.
+
+Do not split a small correction or a single screen across workers. If no parallel tool is available, work in the same order sequentially.
+
 ## Build identity after clarity
 
 For a new consumer or lifestyle product, give the direction a suitable placeholder identity when approved assets do not exist. Keep the name and logo understated so the work remains the loud part. Include a wordmark or logo idea, an app icon or product mark when relevant, the prescribed color and type approach, a concept-specific object or illustration style, a concise writing voice, and examples inside real screens.
@@ -118,6 +131,8 @@ Use common platform patterns when they improve familiarity. Break a convention o
 
 Before calling a direction approval-ready or a product polished, read and apply [references/polish-rubric.md](references/polish-rubric.md), then run [references/adversarial-review.md](references/adversarial-review.md).
 
+When the user asks for a review of a product that is already built, do not create a direction. Run [references/adversarial-review.md](references/adversarial-review.md) on the real implementation, following its "Review an existing product" section, and stop for approval before changing anything.
+
 Inspect the real artifact at the target size with annotations hidden. Use a fresh reviewer when possible. Test first-glance understanding, the main task, correction, recovery, and realistic content. If no fresh reviewer is available, mark beginner usability as unverified. Do not claim that a design is intuitive based only on the designer's own review.
 
 The adversarial reviewer must try to disprove the design's claims rather than confirm them. Give them the product requirements and artifact, but withhold the designer's rationale, recommendation, and prior scores. Fix supported approval-blocking findings and repeat the review with fresh context.
@@ -131,5 +146,7 @@ Report what was produced, tested, changed, and left unverified. Open the report 
 ## Refine a direction
 
 When the user reviews a direction and raises concerns, answer each one with a recommendation, a short reason, and the design change it needs. Flag any recommendation that adds scope beyond the approved requirements. Wait for approval before changing the design. Reuse existing patterns and components before adding screens or controls.
+
+When the user asks to revamp the identity of an existing direction, such as when it looks plain, white, or repetitive, keep its journey, labels, and approved decisions. Change the identity layer described in [references/art-direction.md](references/art-direction.md), in place on the direction's page, and record what changed.
 
 After approval, apply the changes and update any requirement or brief documents the user asked to keep in sync. If the applied change differs from what was proposed, say what changed and why. Then rerun the review as the verification section requires.

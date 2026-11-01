@@ -37,9 +37,26 @@ These rules define the skill's house style. They win over conflicting aesthetic 
 - **Refined type:** use a neutral grotesk such as Inter at smaller sizes.
 - **Shapes:** prefer pill controls, cards with roughly 24–32 px radii, and soft or no shadows.
 - **Buttons:** use one solid black primary pill. Use an outlined secondary pill with an accent-colored label.
-- **Contrast blocks:** use occasional `#1A1A1A` tiles with flat geometric illustrations.
+- **Contrast blocks:** use occasional dark tiles. See "Identity layer" below for how to use them.
 - **Lists:** align the label left, muted metadata right, and separate rows with hairline dividers.
 - **Layout:** use a narrow centered column of roughly 640–720 px for text and up to roughly 1100 px for grids. Use three-up card grids where the viewport and content support them. Adapt these proportions for mobile rather than shrinking desktop layouts.
+
+## Identity layer
+
+A calm, neutral screen can be polished and still look white and redundant: every card the same white or the same pale tint, with the accent only on links. These qualities carry identity without adding noise. Use them together, within the restraint rules above.
+
+- **Canvas contrast.** Keep the base visibly darker than the raised cards, such as `#EDEDED` under `#FFFFFF`. A near-white base makes every surface read as one white sheet.
+- **Own palette, borrowed qualities.** Take a reference's qualities, never its palette. If the canvas, contrast tile, and accent together match a reference's, it reads as a replica. Change at least the contrast tile to a colour from the product's own world, such as a leaf, a material, or a place, and borrow a second illustration colour from the subject.
+- **Contrast tiles.** Dark tiles in the product's own deep colour, near-black only as a last resort. Each has a short title, a one-line state, and one large object from the product's world. Give the tile a faint material cue from the metaphor, such as leaf veins, wood grain, or paper fibre, so it reads as a surface rather than a slab. Use one as the screen's single hero, or as one surface holding a list of choices, such as an add menu. Avoid grids of identical dark tiles; they are a common reference signature. Text carries the meaning; the object carries identity. Do not copy a reference's tile signature, such as its tilt-and-crop of flat art. Do not turn a settings or profile page into a grid of dark tiles; it looks like a common reference skeleton. Keep settings as rows, and give at most one block a product-specific picture.
+- **One imagery style.** Prefer the content imagery style, such as food stickers, product renders, or place photos, inside tiles too. A second, flat interface style doubles the system and tends to look like whichever reference it came from.
+- **Accent as mass.** The warm accent fills the large shapes that matter: the primary button, the current-day or current-item marker, selected chips and segments, an active toggle, a progress ring. Keep destructive actions out of the accent's main job: a red text row with an icon and Undo, not a second full-width button.
+- **Hero numeral.** Give a card one large, heavy number when a number drives the next action, such as a time, a count left, or a stepper value, with a small sentence-case label. Never more than one per card.
+- **Labels from the product's world.** A small label above a card's heading names the card, such as "Tonight" or "This week". Style it from the metaphor, such as masking tape, a stamp, a receipt, or a ticket stub, not as a generic solid-accent pill. It is a label, never a score or status badge.
+- **Character in the content.** Where a mascot exists, stage it in the product's own objects and scenes, inside the card, rather than peeking over a card edge, a common reference pose. Use a plain-language verdict as the headline above any numbers. Do not add a mascot where the notes put identity work on hold.
+- **Bento rhythm.** Vary the shapes down a screen, mixing full-width cards, 2-up tiles, and small pills, so no screen is a stack of identical white cards.
+- **Objects bleed.** Let a large content object, such as a dish, a product, or a scene, bleed off a card's corner instead of sitting in a small centered thumbnail. Never let it cover text or controls.
+
+Identity check: with annotations hidden, every screen shows at least one of a contrast tile, an accent mass beyond a link, or an illustrated object large enough to read at arm's length. Every screen also stays within the one-surprise and one-focus rules. If a screen fails either test, fix it before review.
 
 ## Interaction preferences
 
