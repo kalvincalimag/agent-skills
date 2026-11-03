@@ -1,120 +1,114 @@
 # Adversarial design review
 
-Run this after the beginner test and normal product review, before presenting the direction for approval or calling the product polished. It also runs on its own to review a product that is already built; see "Review an existing product" below.
+Run this after the beginner check and the polish rubric, before presenting a direction for approval or calling a product polished. It also runs on its own to review a product that is already built. See "Review an existing product" below.
 
 The goal is to find evidence that the design is confusing, fragile, generic, incomplete, or inconsistent with the product requirements. Do not try to confirm the designer's conclusion.
 
-## When to run it again
+## When to review again
 
-Run a new review after every change that reaches the artifact, not only after the first direction. A refinement round, a new or edited screen, a new state, and a new mode such as dark mode each need their own review of what changed. Give the new reviewer the changed screens together with the screens around them, so they can test the journey and not just the parts in isolation.
+A review covers only the screens and modes it saw. Any change that reaches the artifact makes it stale for what changed: a refinement round, a new or edited screen, a new state, or a new mode such as dark mode.
+
+- Before reporting a change as done, run a fresh review of every new or changed screen. Give the reviewer those screens together with the screens around them, so they test the journey and not isolated parts.
+- Screenshot every defined mode on the real screens.
+- Never reuse an earlier reviewer, because they have already seen the design.
+- If a required review did not run, do not call the work done or approval-ready. Name each unreviewed screen and mode, and run the review before asking for approval.
 
 ## Keep the reviewer independent
 
 Use a fresh reviewer who did not create the design. Give them:
 
-- the approved product requirements;
-- the target user and main task;
-- the editable artifact or working product;
-- the supported platforms and important limits;
-- the user's recorded taste and rejected examples, from the project's notes. These are part of the brief, not the designer's rationale.
+- the approved product requirements, as a short summary when the documents are long
+- the target user and main task
+- the supported platforms and important limits
+- the user's recorded taste and rejected examples from the project's notes, which are part of the brief
+- the screens exported as image files with annotations hidden, so they review exactly what a user sees, plus the editable artifact or working product
 
-Export the screens with annotations hidden as image files and give the reviewer their paths, so they review exactly what a user sees. Give a short summary of the requirements instead of the full documents when the documents are long. Ask for their first-look answers word for word, before they see the other screens, and ask for the report format in "Report evidence" below.
+Ask for their first-look answers word for word, before they see the other screens, and ask for the report format in "Report evidence" below.
 
-Do not give them the designer's rationale, preferred direction, annotations, previous scores, expected findings, or proposed fixes. If no independent reviewer is available, mark the adversarial review as unverified.
+Withhold the designer's rationale, preferred direction, annotations, previous scores, expected findings, and proposed fixes. If no independent reviewer is available, mark the adversarial review as unverified. Independent checks, such as one reviewer per flow, can run in parallel.
 
 ## Try to break the direction
 
-Review the direction on its own. Actively look for counterexamples to its claims.
+Look for counterexamples to every claim the design makes.
 
 ### Understanding
 
 - Find every term, icon, control, or visual metaphor that assumes prior knowledge.
-- Look for another reasonable but wrong interpretation of the first screen and main action.
+- Look for another reasonable but wrong reading of the first screen and the main action.
 - Check whether decoration, identity, or motion competes with the task.
-- Remove the product name mentally and ask whether the category and purpose remain clear.
+- Remove the product name mentally and ask whether the category and purpose stay clear.
 
 ### Main task
 
 - Try the most likely wrong action first.
-- Try to complete the task without gestures, hints, or designer notes.
+- Complete the task without gestures, hints, or designer notes.
 - Interrupt the journey, go back, change a choice, and repeat the task.
-- Check whether progress, saved state, and consequences remain clear.
+- Check whether progress, saved state, and consequences stay clear.
 
 ### Data and edge conditions
 
-- Use missing, unknown, zero, conflicting, stale, long, and unusually large values.
-- Test empty, partial, loading, offline, denied, failed, and retry states where relevant.
-- Test larger text, narrow screens, localization pressure, and the weakest supported device.
-- Check that realistic data does not cause clipping, overflow, hidden controls, or misleading summaries.
+- Run the worst-case content check from the main skill on every screen.
+- Add missing, unknown, zero, conflicting, and stale values, and the weakest supported device.
+- Check that no summary misleads, and that the interface never presents unknown information as zero or certain.
 
 ### Recovery and trust
 
 - Trigger a realistic mistake and look for unclear or irreversible outcomes.
 - Check undo, cancel, retry, confirmation, and return paths.
 - Look for hidden costs, destructive effects, permissions, or data changes.
-- Confirm that the interface never presents unknown information as zero or certain.
 
 ### Identity
 
-- Check whether the design could be mistaken for an unrelated product or generic component kit.
-- Remove the headline and annotations; check whether the chosen metaphor still appears in layout, components, objects or illustration, and motion.
-- Test whether the logo, color, type, imagery, icons, and voice form one recognizable system.
-- Check that the canvas remains neutral, color is borrowed from meaningful content or one warm accent, and multiple accents do not compete.
-- Check that each screen or section has at most one crafted surprise and enough quiet space around it.
-- Check whether a mascot or character has a useful recurring role.
-- Run a replica check against every named reference. Put them side by side and look for:
-  - the same palette combination, where canvas, contrast tile, and accent all match;
-  - the same composition on an equivalent screen;
-  - the same signature components or copy patterns.
-  Someone who knows the reference must not mistake the product for it, or for its sibling.
-- Look for screens that read as white and redundant: the same white or tinted card repeated, and accent only on links. Run the identity check in [art-direction.md](art-direction.md) on each screen.
-- Remove decorative brand elements and identify what product-specific character remains.
+- Run the identity check and approval check in [art-direction.md](art-direction.md) on each screen.
+- Check whether the design could be mistaken for an unrelated product or a generic component kit. Remove decorative brand elements and name the product-specific character that remains.
+- Run a replica check against every named reference, side by side. Look for the same palette combination (canvas, contrast tile, and accent all matching), the same composition on an equivalent screen, and the same signature components or copy patterns. Someone who knows the reference must not mistake the product for it, or for its sibling.
 - Check every screen against the user's recorded taste, and look for any failing quality of their rejected examples.
 - Check every screen against the Guardrails in the main skill: added scope, mixed imagery, competing numbers, unreal content or typos, and copied reference material.
 
-### Interaction and accessibility
+### Interaction, motion, and accessibility
 
-- Check touch, mouse, keyboard, focus, screen-reader meaning, reduced motion, zoom, and non-color cues where relevant.
+- Check touch, pointer, keyboard, focus, screen-reader meaning, reduced motion, zoom, and non-color cues where relevant.
 - Look for controls that appear interactive but are not, or work only through a hidden gesture.
+- Put every animation through the gate in [aliveness.md](aliveness.md). Flag motion on high-frequency actions, motion without a named purpose, missing press feedback, entrances from nothing, ease-in curves, and interface animation over 300 ms.
 - Check whether motion delays the task, loses context, or hides the final state.
 - Run the important interaction repeatedly and look for fatigue or annoyance.
 
 ### Artifact integrity
 
-- Check prototype links, component use, editability, text styles, variables, and state coverage.
+- Check prototype links, transition curves, component use, editability, text styles, variables, and state coverage.
 - Inspect the real artifact for clipping, overlap, broken navigation, placeholder content, and staged behavior that does not work.
-- Compare the artifact with the approved requirements. Record missing or contradicted decisions.
+- Compare the artifact with the approved requirements, and record missing or contradicted decisions.
 
 ## Report evidence
 
 Record each finding with:
 
-- severity: blocker, major, or minor;
-- the screen, state, or action affected;
-- the exact evidence or reproduction steps;
-- the likely user impact;
-- the smallest useful fix.
+- severity: blocker, major, or minor
+- the screen, state, or action affected
+- the exact evidence or reproduction steps
+- the likely user impact
+- the smallest useful fix
 
 Do not report vague preferences as defects. Separate observed failures from hypotheses that need a real user test.
 
-Any blocker in product understanding, main-task completion, recovery, accessibility, or requirement fidelity prevents approval. Fix supported blockers and major findings, then repeat the affected tests with fresh context. Report unresolved risks instead of lowering the standard or explaining them away.
+Any blocker in product understanding, main-task completion, recovery, accessibility, or requirement fidelity prevents approval. Fix supported blockers and major findings, then repeat the affected tests with a fresh reviewer. Report unresolved risks instead of lowering the standard or explaining them away.
 
 ## Review an existing product
 
-When the user asks for a review of a product that is already built, rather than a new direction, the steps below replace "Report evidence" above.
+When the user asks for a review of a product that is already built, these steps replace "Report evidence" above.
 
-- Walk the main user journeys in the real implementation, from entry to result, using the checks above. Look hardest for anything that could confuse users, slow them down, or cause mistakes.
-- Look in particular for inconsistencies between screens, such as the same action labelled, placed, or confirmed differently; friction that adds steps or waiting; unclear or missing feedback after an action; and missing states.
-- Ground every finding in the current implementation: name the screen or flow, and give what the user sees or the steps that reproduce it. Leave out speculative problems.
+- Walk the main journeys in the real implementation, from entry to result, using the checks above. Look hardest for anything that could confuse users, slow them down, or cause mistakes.
+- Look in particular for inconsistencies between screens, such as the same action labelled, placed, or confirmed differently. Also look for friction that adds steps or waiting, unclear or missing feedback after an action, and missing states.
+- Ground every finding in the current implementation. Name the screen or flow, and give what the user sees or the steps that reproduce it. Leave out speculative problems.
 - Rank usability gains above cosmetic polish. Skip the Identity checks unless the user asks for them.
-- Recommend the simplest effective improvement for each finding. Do not propose broad redesigns.
-- Narrow the findings to a short list of the highest-impact improvements, ranked by impact, no more than seven. Keep the rest available on request.
+- Recommend the simplest effective improvement for each finding, not a broad redesign.
+- Shortlist no more than seven findings, ranked by impact. Keep the rest available on request.
 
 Report each shortlisted finding as:
 
-- **Issue:** what happens and where.
-- **Impact:** who it affects and why it matters.
-- **Recommendation:** the simplest effective improvement.
-- **Effort:** low, medium, or high.
+- **Issue.** What happens and where.
+- **Impact.** Who it affects and why it matters.
+- **Recommendation.** The simplest effective improvement.
+- **Effort.** Low, medium, or high.
 
-Present the shortlist and stop for the user's approval before changing anything. After approval, apply only the approved items, then rerun the review on what changed.
+Present the shortlist and stop for the user's approval before changing anything. After approval, apply only the approved items, then review again what changed.

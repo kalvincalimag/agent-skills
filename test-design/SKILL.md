@@ -1,6 +1,6 @@
 ---
 name: test-design
-description: "Use whenever writing, changing, reviewing, or deciding whether to keep a test, when configuring how tests run in CI, and when sequencing a multi-step change into units that each end in a check. Governs whether a test can actually fail for a defect, and how the suite runs fast without losing coverage — not whether the suite currently passes."
+description: "Use whenever writing, changing, reviewing, or deciding whether to keep a test, when configuring how tests run in CI, when sequencing a multi-step change into units that each end in a check, and before restructuring existing code. Governs whether a test can actually fail for a defect, and how the suite runs fast without losing coverage — not whether the suite currently passes."
 ---
 
 # Test Design
@@ -81,6 +81,18 @@ A slow suite gets run less, retried, and trimmed. Make it fast by structure, nev
 
 Measure before and after from the CI run timings, and report the change in wall time with the evidence `verify` requires.
 
+## 7. Lock Behavior Before You Restructure
+
+A refactor is safe only when some test fails if behavior changes. Before you move, split, or rewrite existing code:
+
+- Check the tests that cover it against section 1. A suite that passes when the subject returns nothing protects nothing.
+- Where coverage is missing, write characterization tests first, at the code's public surface. Assert what the code returns today as literals, including outputs that look wrong.
+- Record suspected bugs as findings and leave them in place. A behavior change inside a refactor hides in the diff.
+- Commit the characterization tests before the refactor, so a reviewer sees them pass on the old code, per section 5.
+- If the project runs mutation testing, run it on the code you are about to move, to confirm the tests catch changes.
+
+Code with no such test gets only the changes a tool can prove safe, such as deleting an export that no file imports.
+
 ## Red Flags — STOP, you are rationalizing
 
 | Excuse | Reality |
@@ -94,3 +106,5 @@ Measure before and after from the CI run timings, and report the change in wall 
 | "The tests are flaky in parallel, so run them serially" | They share state. Isolate the data; serialize only the group with a named reason. |
 | "Add a retry, it passes the second time" | The retry hides a determinism defect. Fix it. |
 | "Skip those tests to speed up CI" | Speed comes from structure, not from testing less. |
+| "The tests pass, so the refactor is safe" | Only if they fail when behavior changes. Check them first, per section 7. |
+| "I will fix this bug while I refactor" | Record it and leave it. Fix it in its own change. |

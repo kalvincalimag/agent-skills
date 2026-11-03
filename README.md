@@ -9,6 +9,7 @@ Reusable skills in the open [Agent Skills](https://agentskills.io) format. They 
 | `investigate` | Structured investigation |
 | `plan` | Planning and design exploration |
 | `implement` | Implementation discipline |
+| `overhaul` | Repo-wide quality, architecture, and modularity overhauls |
 | `test-design` | Test design |
 | `bugfix` | Debugging and bug fixes |
 | `verify` | Verification and blast radius |

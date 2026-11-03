@@ -1,6 +1,6 @@
 ---
 name: implement
-description: "Use whenever writing or refactoring implementation code: sizing a diff, deciding whether an abstraction earns its place, designing a type or function signature, placing validation and error handling, keeping an API contract in sync, and the cleanup pass before the diff is handed over. Governs what the code should look like, not whether it works."
+description: "Use whenever writing or refactoring implementation code: sizing a diff, deciding whether an abstraction earns its place, designing a type or function signature, placing validation and error handling, keeping an API contract in sync, and the cleanup pass before the diff is handed over. Governs what the code should look like, not whether it works. A repo-wide quality or architecture overhaul is `overhaul`, which applies these rules wave by wave."
 ---
 
 # Implement
@@ -32,6 +32,7 @@ Adding to a complex system compounds complexity. Removing first leaves less code
 
 ## 1.2 Make the smallest change that solves the problem
 
+- Search before you write. Before adding a helper, type, constant, hook, or component, search the repository for one that already does the job, by name and by behavior. Reuse it. If it lives in the wrong module, move it and update its callers. A second copy is the most common way a codebase rots, and in AI-assisted code copied lines now outnumber moved ones. The same holds for data and APIs. Before adding a column, table, or endpoint, check whether one already stores that fact or serves that resource.
 - Prefer deletion. When asked to refactor or improve, look for removals before additions.
 - Fewer lines beat elegant boilerplate.
 - Consolidate decisions. Do not repeat the same choice in several places. Put it behind one source of truth and pass the result as a simple flag.
@@ -69,6 +70,7 @@ When integrating a new requirement, do not attach it to the existing design. Rea
 
 When a new internal API is the right design, migrate callers and remove the old one in the same wave. Keeping both creates dual-path complexity and makes the codebase feel append-only.
 
+- When a change removes a feature, delete it through every layer it reached: the UI, the endpoint and its contract entry, helpers, tables or columns, flags, config, tests, and docs. Leave nothing that only the removed feature used. A table or column drop goes in its own migration, after the code stops using it.
 - Do not keep a legacy path only because internal callers still exist.
 - Treat temporary adapters as exceptional and time-boxed.
 - Update tests to assert the new contract. Delete tests that only protect pre-refactor implementation details.
@@ -92,6 +94,32 @@ The user wants implementation streamlined: work that does not depend on other un
 - **Do not parallelize what is sequential.** A unit that needs another unit's output, or one small enough that briefing costs more than doing, stays in the main thread.
 
 If the session only allows subagents when the user asks, this standing preference is that request for implementation work.
+
+## 1.9 Put new code in the module that owns it
+
+Agents add code to whichever file is open. A file that keeps taking unrelated work becomes the file every later change has to read. Size is the symptom. Mixed responsibility is the cause.
+
+- Before adding code to a file, name the file's job in one sentence. If that sentence needs an "and" to cover the new code, the new code belongs elsewhere. Find the module that owns that knowledge, or create one, per 2.1.
+- Code that serves only this file's job stays with it. Do not create a module for a private helper with one caller, per 1.3.
+- A file near the project's size limit is a signal to split by responsibility. Never compress code, inline helpers, or disable the size rule to make it fit.
+- If the file already mixes several jobs, place the new code correctly and report the existing mix. Splitting the rest is a separate task, per Boundaries.
+
+**The test:** could a new reader guess what this file contains from its name and path? If the new code would surprise them, it is in the wrong file.
+
+## 1.10 Name things so a reader knows what they do
+
+A name is the first documentation a reader sees, and often the only one. A developer should know what a function, file, or folder does from its name alone.
+
+- **Functions say what they do.** Use a verb plus the thing it acts on, such as `parseInvoice` or `sendReminderEmail`. A boolean reads as a yes-or-no question, such as `isExpired` or `hasAccess`. Avoid vague verbs such as `handle`, `process`, `manage`, and `doWork` unless the domain gives them one exact meaning.
+- **Name by meaning, not mechanics.** Write `activeCustomers`, not `filteredList`, and `retryDelayMs`, not `num`.
+- **Files and folders are named for what they own,** such as `billing/` or `invoice-pdf.ts`. Catch-all names such as `utils`, `helpers`, `common`, and `misc` say nothing about what the code is for. Put the code in the module that owns it, per 1.9, even when the project already has a catch-all folder.
+- **Spell words out.** No `mgr`, `cfg`, `tmp2`, `data2`, or `info`. Universal abbreviations such as `id`, `url`, and `api` are fine.
+- **Use one name per concept, everywhere.** Pick one of `user`, `account`, or `member` for one concept, and use it in code, file names, API fields, and UI text. Use the domain's own word where one exists.
+- **Match length to reach.** A loop index used across three lines can be `i`. A public export gets the full name.
+- **Take the form from the project.** Casing, file suffixes, and folder layout follow the project's conventions. These rules choose the words.
+- **Rename instead of explaining.** If a name needs a comment to say what it means, rename it with the language's rename tool so every caller updates. Rename only names this change touches, per Boundaries.
+
+**The test:** hide the body and read only the name and path. Can a new developer say what it does? If not, rename it.
 
 ---
 
@@ -200,7 +228,15 @@ Never place live tokens, API keys, signing secrets, credentials, private URLs, o
 
 Run this against the diff before commit and before handing the branch to `ship`. Scope is the diff against the base branch including uncommitted work, or the files the caller named — not the surrounding code. Behavior stays unchanged unless you are fixing a clear defect; say so if you are. Prefer minimal focused edits; a cleanup pass that reshapes unrelated code is no longer a cleanup pass.
 
-## 4.1 Delete comments that earn nothing
+## 4.1 Run the project's analyzers first
+
+Cleanup by judgment alone misses most of what matters, so start with the tools. Run the project's own dead-code, duplication, lint, and type checks. Keep only the findings this branch added. Compare against the base branch, or use the tool's baseline or new-code mode.
+
+- Fix every new finding, or report why it stays.
+- If the project has no check for a symptom, name the missing check in the report. Adding it is its own change, per `plan` A4.
+- Then run the judgment passes below.
+
+## 4.2 Delete comments that earn nothing
 
 Keep a comment only for a non-obvious *why* that the code itself cannot show. Delete everything else.
 
@@ -214,7 +250,7 @@ Keep a comment that records a constraint you cannot express in code: a known ups
 
 **Constraint comments** that say do not remove, do not change wording, or talk to someone before changing, get one extra step. Offer the cheapest type, runtime, test, or lint check that would encode the rule, per `plan` A4. If the encoding lands, delete the comment. If it does not, keep the comment and report the constraint as unenforced.
 
-## 4.2 Remove residue the rules above already forbid
+## 4.3 Remove residue the rules above already forbid
 
 Apply 2.9 and 2.5 to the lines this branch introduced:
 
@@ -223,17 +259,17 @@ Apply 2.9 and 2.5 to the lines this branch introduced:
 - Fallback values that silently paper over a case that should be impossible. If it is possible, model it. If it is not, let it fail loud.
 - Every `any`, every `as`, every assertion helper that tells the compiler to stop asking. Trace each to its boundary and validate there. If one must remain, say so in the report and why.
 
-## 4.3 Flatten what early returns would flatten
+## 4.4 Flatten what early returns would flatten
 
 Deep nesting that guard clauses would collapse. Count the layers between the question and the answer, per 1.3.
 
-## 4.4 Match the surrounding file
+## 4.5 Match the surrounding file
 
 The strongest signal is the code already there. Comment density, naming, error idiom, import style. A diff that reads as written by a different author is residue even when every line is defensible on its own.
 
-## 4.5 Report
+## 4.6 Report
 
-Deletion count, casts removed and any that remain with the reason, constraints you offered to encode and what happened to each, and anything left alone because it sat outside the diff. One to three sentences unless something needs authorization.
+New analyzer findings fixed and any that remain with the reason, deletion count, casts removed and any that remain with the reason, constraints you offered to encode and what happened to each, and anything left alone because it sat outside the diff, including files that already mix several jobs. One to three sentences unless something needs authorization.
 
 ---
 
@@ -257,3 +293,8 @@ Deletion count, casts removed and any that remain with the reason, constraints y
 | "The comment explains the tricky part" | Then the code is tricky. Fix the code or record the constraint. |
 | "I will clean up the whole file while I am here" | Out of scope. Name it and leave it. |
 | "I will do these units one at a time, it is simpler" | If they share no unfinished work, run them in parallel per 1.8. |
+| "A quick helper is faster than searching" | Search first. The second copy is how the codebase rots. |
+| "It fits in this file well enough" | Name the file's job in one sentence. If the new code needs an "and", move it. |
+| "The diff looks clean to me" | Run the analyzers first. Judgment misses what they catch. |
+| "Everyone knows what this short name means" | The next reader does not. Spell it out. |
+| "It goes in utils for now" | A catch-all folder hides what the code is for. Put it in the module that owns it. |

@@ -1,13 +1,13 @@
 ---
 name: plain
-description: "Answer the request in simple, concise, plain English with as little technical jargon as possible, assuming the reader knows nothing about the subject, so a non-technical person understands it on the first read without asking a follow-up question. Use only when the user explicitly invokes this skill by name, such as /plain, with or without a request after it."
+description: "Answer the request as a short TL;DR in layman's terms, as if onboarding someone new to the project (a newcomer with no technical background by default, or the reader the request names, such as a new developer), so they understand it on the first read without asking a follow-up question. Works for any project. Use only when the user explicitly invokes this skill by name, such as /plain, with or without a request after it."
 argument-hint: "[request]"
 disable-model-invocation: true
 ---
 
 # Plain English
 
-The reply must be simple, concise, and in plain human English, with as little technical jargon as possible. It assumes the reader knows nothing about the subject. Every choice below serves one test: a non-technical person understands it on the first read and has no need to ask "what do you mean by that?"
+Write the reply in layman's terms: the words a person outside the field would use in everyday conversation. If a word would sound out of place said aloud to a friend who doesn't work in tech, replace it with what it means. Write as if you are onboarding someone new to the project on their first day, whatever the project is. Every choice below serves one test: the newcomer understands it on the first read and has no need to ask "what do you mean by that?"
 
 The request is whatever the user typed after the command. It may be empty.
 
@@ -20,7 +20,9 @@ This applies to your next reply only. After that, write normally again.
 
 ## The reader
 
-A smart person with no technical background who is new to the subject. Assume they know only what they said themselves in this conversation. They did not see your tool output, the files you read, the steps you took, or the names you picked up along the way. They may have skimmed your earlier replies. They read this one once. They want to know what happened, what it means for them, and what to do next.
+Someone new you are onboarding: a smart person who just joined and has never seen this project. By default they have no technical background. Assume they know only what they said themselves in this conversation. They did not see your tool output, the files you read, the steps you took, or the names you picked up along the way. They may have skimmed your earlier replies. They read this one once. They want to know what happened, what it means for them, and what to do next.
+
+If the request names a different reader, such as "a new developer" or "my manager", onboard them instead. A new developer knows the trade but not this project, so every rule below still applies. You may use terms any developer uses daily, such as "database" or "pull request". The project's own names, tools, people, and internal labels still need a few words saying what they are, as you would on someone's first day.
 
 ## Assume nothing
 
@@ -56,7 +58,14 @@ This one assumes nothing:
 
 ## Length
 
-Concise means no wasted words, not the fewest words. Cut what the reader doesn't need, then add what they need to follow the rest. Explaining terms adds words, so make room by cutting details. If the plain version is longer than the technical one, cut again. A reply that leaves the reader asking "what is that?" was too short in the wrong place. When this skill and another instruction to keep replies short disagree, the reader's understanding wins.
+Short wins. A plain reply should be a TL;DR, not a tutorial.
+
+- **Fit one screen.** Aim for under about 120 words: the answer in one or two sentences, then at most three to five short bullets or steps. No headings, no tables, and no closing summary.
+- **Make room by cutting, not by explaining more.** Explaining a term costs words, so mention fewer terms. If an idea needs a paragraph to explain, it probably isn't one of the three that matter. Leave it out.
+- **Offer, don't include.** Put background, how it works inside, alternatives, and edge cases in a single closing line the reader can ask about, such as "Want the details on how the update reaches the server?"
+- **Never cut what the reader must act on.** Keep every warning, decision, and next step, however short the reply gets.
+
+If the plain version is longer than the normal reply would have been, cut again.
 
 ## Check before sending
 
@@ -65,6 +74,7 @@ Reread the reply as the reader above.
 1. Find every thing it names, including labels carried over from earlier replies, such as the name of a step, a site, or a part of the work. For each one, ask whether the reader would know what it is and where it is. If not, explain it in a few words or cut it.
 2. Ask what the reader would ask first after reading it. Answer that in the reply, or remove what prompts the question.
 3. Check that the reply makes sense without the earlier messages.
+4. Check that it fits one screen. If it doesn't, cut the least important point, not the explanations of the ones that remain.
 
 ## Tone
 
