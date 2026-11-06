@@ -1,6 +1,6 @@
 ---
 name: implement
-description: "Use whenever writing or refactoring implementation code: sizing a diff, deciding whether an abstraction earns its place, designing a type or function signature, placing validation and error handling, keeping an API contract in sync, and the cleanup pass before the diff is handed over. Governs what the code should look like, not whether it works. A repo-wide quality or architecture overhaul is `overhaul`, which applies these rules wave by wave."
+description: "Use whenever writing or refactoring implementation code: sizing a diff, deciding whether an abstraction earns its place, designing a type or function signature, placing validation and error handling, keeping an API contract in sync, keeping the demo path working end to end, building for the long term without speculative code, and the cleanup pass before the diff is handed over. Governs what the code should look like, not whether it works. A repo-wide quality or architecture overhaul is `overhaul`, which applies these rules wave by wave."
 ---
 
 # Implement
@@ -8,6 +8,12 @@ description: "Use whenever writing or refactoring implementation code: sizing a 
 ## Purpose
 
 What the work should look like when it lands: its structure, its types and boundaries, its contracts, and the residue removed before anyone else reads it. Apply it while writing, not as a review pass afterward, because every rule here is cheap at write time and reads as a refactor later.
+
+The user wants three things from the result:
+
+- **Technically precise.** Types admit only legal states, contracts are exact, quantities carry their units, and names say what things do (Part 2, Part 3, 1.10).
+- **Demoable, when the work has a user-facing result.** The planned demo path runs end to end on real code at the end of every milestone (1.11).
+- **Built to last and to extend.** Low reader load, one owner for each concept, durable choices for stored data and dependencies, and seams instead of speculative features (Part 1, 1.12).
 
 `plan` decides what to build. This decides what it looks like. `verify` decides whether you may call it done.
 
@@ -121,6 +127,30 @@ A name is the first documentation a reader sees, and often the only one. A devel
 
 **The test:** hide the body and read only the name and path. Can a new developer say what it does? If not, rename it.
 
+## 1.11 Keep the demo path working
+
+When the work has a user-facing result, a person must be able to start it and watch the main flow work. `plan` B2 writes the demo path. Build toward it from the first unit, not at the end.
+
+- Build the thinnest path through every real layer first, then widen it. In an app, that is one screen, through its handler, to storage and back. A finished layer with nothing above or below it shows nothing.
+- Leave the demo path working at the end of every milestone. Planned breakage under 1.7 stays inside a milestone.
+- Load demo data through the path real data takes, such as a seed script, a fixture loader, or the app's own import. Never hard-code it into a screen or a handler.
+- Give the demo one start command. Write that command and the steps to follow where the project keeps its run instructions.
+- Every control on the demo path does what its label says. Hide a control that is not built yet rather than leave one that does nothing.
+- Fake only what you cannot reach yet, such as an outside service with no test environment. Put the fake behind the real interface, name it as a fake, and list it in the report (4.6).
+
+**The test:** could someone who has never seen the code start the demo from the written steps and finish the main flow without your help?
+
+## 1.12 Build it to last and to extend
+
+Code lasts when the next engineer can change it safely. Part 1 and Part 2 do most of that work. These rules decide whether it survives its first extension.
+
+- **Extend through structure, not speculation.** Keep each concept in one owning module (1.9), keep variants in a sum type the compiler checks (2.1, 2.6), and let stored data and contracts grow by adding fields. Leave the seams `plan` names for likely extensions. Do not add hooks, plugin systems, config options, or generic layers for extensions nobody asked for. That is 1.1 seen from the other side.
+- **Treat stored data and public contracts as permanent.** A column, a file format, an event, or a public endpoint outlives the code that wrote it. Name and type it exactly. Change it through migrations that add before they remove (1.6), and through Part 3 for an API.
+- **Pick dependencies that will stay maintained.** Prefer the platform and the libraries the project already uses. A new one is the current stable release, actively maintained and not deprecated, pinned the way the project pins the rest. Write against the documentation for the pinned version, not from memory.
+- **Leave no hidden shortcut.** Name a shortcut taken for a demo or a deadline in the code, such as a fake or a stub named for what it stands in for. List it in the report (4.6) with what replaces it.
+
+**The test:** for each extension the plan names, can you point to the one place it would go? Would adding it change only that place, plus the sites the compiler or the tests point to?
+
 ---
 
 # Part 2 — Types and Boundaries
@@ -147,7 +177,9 @@ Build the type up from the values you want rather than carving them out of a loo
 
 `UserId` and `OrderId` are strings underneath and must not be interchangeable. Use newtypes, opaque types, value classes, or branded intersections. Validate once at creation and trust the type downstream.
 
-**The test:** do two function arguments share a primitive type but mean different things? Brand them.
+A unit is part of a value's meaning. A quantity carries its unit in its type or its name, such as `durationMs` or `weightGrams`, and conversions live in one place. Money is an integer count of the currency's smallest unit, or a decimal type, stored with its currency and never as a binary float. Times cross boundaries in UTC or with an explicit offset. Round once, at a named point, by a named rule.
+
+**The test:** do two function arguments share a primitive type but mean different things? Brand them. Could two callers read the same number in different units? Name the unit.
 
 ## 2.4 External data is untyped until parsed
 
@@ -269,7 +301,7 @@ The strongest signal is the code already there. Comment density, naming, error i
 
 ## 4.6 Report
 
-New analyzer findings fixed and any that remain with the reason, deletion count, casts removed and any that remain with the reason, constraints you offered to encode and what happened to each, and anything left alone because it sat outside the diff, including files that already mix several jobs. One to three sentences unless something needs authorization.
+New analyzer findings fixed and any that remain with the reason, deletion count, casts removed and any that remain with the reason, constraints you offered to encode and what happened to each, every fake or shortcut still in the code with what replaces it, and anything left alone because it sat outside the diff, including files that already mix several jobs. When the work has a demo, add its start command and what happened when you ran its path, per `verify` Part 3. One to three sentences, plus that demo line, unless something needs authorization.
 
 ---
 
@@ -298,3 +330,8 @@ New analyzer findings fixed and any that remain with the reason, deletion count,
 | "The diff looks clean to me" | Run the analyzers first. Judgment misses what they catch. |
 | "Everyone knows what this short name means" | The next reader does not. Spell it out. |
 | "It goes in utils for now" | A catch-all folder hides what the code is for. Put it in the module that owns it. |
+| "I will wire it end to end once every layer is done" | Then nothing runs until the end. Build the thin path first (1.11). |
+| "I will hard-code it for the demo" | Seed it through the real path. A hard-coded demo proves nothing and becomes the code. |
+| "Extensible means generic" | Extensible means one owner per concept and a compiler that finds every site. A generic layer nobody asked for is reader load (1.12). |
+| "I know this library's API" | You know some version of it. Read the documentation for the pinned version. |
+| "A float is fine for this amount" | Not for money, and not without a unit. See 2.3. |
