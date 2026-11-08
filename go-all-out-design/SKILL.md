@@ -132,6 +132,7 @@ Consider a mascot or recurring character unless that would be inappropriate. Giv
 - If the screens have no mascot yet, place the recommended candidate on them until the user picks.
 - If they already show one, keep it until the user picks.
 - If the project's notes put identity work on hold, such as the mascot, use the current placeholder as it is. Do not redesign it or start the `mascot-design` skill.
+- If the project's notes record an approved character, place only its approved poses. When a screen needs a pose that does not exist yet, get it through the `mascot-design` skill's extension step. Never generate the character from text alone.
 
 ## Add motion and feedback
 

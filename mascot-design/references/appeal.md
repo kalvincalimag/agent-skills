@@ -26,12 +26,13 @@ These rules turn a concept into a character people remember. They describe what 
 - **Belong to the canvas.** A body close to the canvas color makes the character feel native to the product, and a fully saturated body competes with the interface. A white or near-white body needs a frame on a light canvas: a mid-gray accessory, skin, or edge drawn as part of the character, such as glasses, a wrap, or a scarf. A faint outline alone disappears.
 - **Brand color as costume.** Tie the character to the brand through clothing or an accessory in the brand color, such as a cap, scarf, or apron.
 - **Stay on the character.** The mascot's accent colors stay on the mascot. They do not become extra accent colors for buttons, labels, or other interface parts. Paper grain, tape, and similar surface textures belong to the surfaces around the in-product mascot, not to the character.
-- **Both backgrounds.** Check it on the light canvas and on a dark tile. Use a defined edge or accessory, not a halo or backing plate, to keep it visible.
+- **Every surface.** Check it on each surface the product uses, including brand-colored tiles and dark mode. Use a defined edge or accessory, not a halo or backing plate, to keep it visible. When a signature part shares a color with a surface, give it an edge or keep the character off that surface.
 
 ## Rendering tiers
 
-- **In-product vector.** Flat fills, no gradients, an optional consistent mid-gray edge, and a flat ellipse as the ground shadow. Draw it with custom curves that follow the construction. Avoid stacked primitive shapes. It must read at 16 px as a silhouette.
-- **Hero rendering.** For a landing page, onboarding, or a celebration, a richer illustration with light shading, texture, and a full scene is allowed. It must use the same construction and reduce cleanly to the vector version.
+- **Style.** The user picks it by eye from a few rendered samples. Image tools render 3D toy and painted styles well and rarely make flat vector art look finished.
+- **In-product art.** The chosen style, kept simple: few small details and a soft ground shadow. A flat style uses flat fills and an optional consistent mid-gray edge, and its vector version comes from a vectorizing tool or a designer, never from paths drawn in code. A rendered style ships as transparent cut-outs. Either way the full body must read at 24 px, and a simplified version, such as the head alone, at 16 px.
+- **Hero rendering.** For a landing page, onboarding, or a celebration, a richer image with a full scene is allowed. Make it from the approved character as the reference, so it stays the same character.
 
 ## Acting
 
@@ -55,6 +56,7 @@ Write interface lines, feature headlines, and empty states in the character's vo
 ## Build it as a system
 
 - Make the in-product mascot a component with a `Pose` variant property covering the expression and acting sheets.
-- Draw each movable part as its own layer with its pivot at the joint: eyes, lids or brows, mouth, head, body, limbs, and tail or ears.
-- Keep props as separate layers, positioned in the hand or on the body for each pose. Record which prop means which product job in the component description.
+- For vector art, draw each movable part as its own layer with its pivot at the joint: eyes, lids or brows, mouth, head, body, limbs, and tail or ears.
+- For vector art, keep props as separate layers, positioned in the hand or on the body for each pose. Record which prop means which product job in the component description.
+- For rendered art, each pose is its own approved image in the component, and motion comes from short animations made from those images. Record which pose and prop mean which product job in the component description.
 - Keep micro-animations short, roughly 150–300 ms, and tie them to an action or real progress.

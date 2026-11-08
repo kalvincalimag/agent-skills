@@ -1,6 +1,6 @@
 ---
 name: mascot-design
-description: Use when creating, redesigning, or reviewing a mascot or recurring character for a product, app, site, or brand, including when another design skill reaches its identity step and a mascot fits. Produces a character that can stand beside the best product mascots without looking weaker: a concept with a story, appealing shape design, acting poses tied to product moments, staging inside the product, and a blind side-by-side review against reference characters. Not for icon sets, general illustration, or logos without a character.
+description: Use when creating, redesigning, or reviewing a mascot or recurring character for a product, app, site, or brand, including when another design skill reaches its identity step and a mascot fits. Produces a character that can stand beside the best product mascots without looking weaker: a concept with a story, appealing shape design, acting poses tied to product moments, staging inside the product, and a side-by-side lineup against reference characters that the user judges. Also extends an approved character with new poses made from its master image. Not for icon sets, general illustration, or logos without a character.
 argument-hint: "[product, and any reference characters to match]"
 ---
 
@@ -8,11 +8,13 @@ argument-hint: "[product, and any reference characters to match]"
 
 A mascot earns its place when people remember it after one look and connect it to the product. The strongest product mascots share four things: the character is the brand, it has one unmistakable trait, it acts out what the product does, and it lives inside the product's pages instead of sitting beside them.
 
-Legibility is the floor, not the goal. A mascot that passes every size and contrast check but is forgettable has failed. Judge the result by one question: placed beside the reference characters at the same size, does it look as finished, as specific, and as alive?
+Legibility is the floor, not the goal. A mascot that passes every size and contrast check but is forgettable has failed. Judge the result by one question: placed beside the reference characters at the same size, does it look as finished, as specific, and as alive? The user answers that question by looking. Checks only find problems.
 
 Read [references/appeal.md](references/appeal.md) before writing concepts, and [references/review.md](references/review.md) before presenting anything.
 
 **Scope.** When the mascot is the task, develop all three candidates fully. When another design skill calls this one during a broader design pass, develop the strongest candidate fully and show the other two at concept-sheet level, so the mascot keeps its quality bar without crowding out the rest of the design.
+
+**Approved character.** If the project's notes record an approved character, do not design a new one. Go to [Extending an approved character](#extending-an-approved-character).
 
 ## How mascots fail
 
@@ -25,6 +27,7 @@ These failures are what this skill exists to prevent. Check every candidate agai
 - **Saturated body.** The whole body in one loud color, which fights the neutral canvas and hides the focal accents.
 - **No world.** The character is shown only on a blank board, never inside the product, a scene, or a moment.
 - **Primitive construction.** A body built from stacked circles, ellipses, and rounded rectangles in code, which reads as clip art however carefully it is colored.
+- **Drift.** The face, signature trait, proportions, or colors change from pose to pose, so the poses read as different characters.
 - **Checklist pass.** A board that records passed checks but would lose a side-by-side comparison with the references.
 
 ## Process
@@ -61,11 +64,11 @@ For each of the three, write:
 
 Use the best image tool available. Check what the session offers before drawing.
 
-- **Image generation available.** Generate each candidate as one character sheet image holding the hero pose in three-quarter view, an expression row, and three acting poses with props. Separate generations drift into different characters, so keep everything for one character in one image. Describe the qualities in the prompt, never "in the style of" a named character or artist.
-- **One sheet, both tiers.** If the image tool cannot take a reference image, draw the sheet in the flat in-product style: flat fills, no gradients, no texture. That one sheet then serves as both the illustration and the source for the in-product vector, so the two cannot drift apart. Make a richer hero rendering only when the tool accepts the approved sheet as a reference image, and pass it into every later generation for that character.
-- **Spend.** Image generation usually costs credits. Spend one sheet per candidate first. Keep the rest of the budget for redraws after each review, spent on the leading candidates, and add scenes only for the candidate you will recommend. If the budget cannot cover the first sheets plus two rounds of redraws, say so when you ask. Before the first call, tell the user the tool, the model, and the planned count, and get approval, unless the user already approved a budget. Stay inside the approved count.
-- **In-product vector.** Rebuild the flat look as clean vector shapes for product use. Use a vectorizing tool if the session has one. Otherwise draw custom paths that follow the character's construction, with the flat sheet beside you as the guide. Do not stack primitive circles and rectangles. The vector version is where quality is most often lost, so it goes through the same lineup as the hero art.
-- **No image generation.** Draw silhouettes first, at least six per candidate, and pick the strongest before adding any face or color. Then draw with custom paths as above, and mark the hero rendering as not produced.
+- **Reference image required.** A mascot is one character in many poses. A tool that works from words alone redraws the character in every image, so it drifts and falls back on a stock face. Before drawing, check that the image tool accepts a reference image, for example by editing an existing image. If no tool in the session does, stop the mascot work and tell the user: name a tool that does and what it costs, and draw nothing until they choose. A design pass that called this skill keeps any current placeholder meanwhile.
+- **Style by eye.** Before developing candidates, draw the leading concept in three or four styles the tool renders well, such as a 3D toy render, flat stickers, and a painted look, at the same size. The user picks the style by looking. Image tools rarely make flat vector art look finished, so do not choose it by default.
+- **One pose per image.** Draw each candidate's hero pose alone and large, in three-quarter view. Then make every expression and acting pose as its own image, with the hero attached as the reference. Packing a whole sheet into one image leaves each figure too few pixels, and the faces turn generic. Assemble the character sheet from the separate images. Describe the qualities in the prompt, never "in the style of" a named character or artist.
+- **Spend.** Image generation usually costs credits. Spend one hero image per candidate first. Keep the rest of the budget for the poses and redraws of the leading candidates, and add scenes only for the candidate you will recommend. If the budget cannot cover the heroes plus a full pose set for one candidate, say so when you ask. Before the first call, tell the user the tool, the model, and the planned count, and get approval, unless the user already approved a budget. Stay inside the approved count.
+- **In-product art.** Use the chosen style in the product. For a rendered style, such as 3D, ship transparent cut-outs at twice the largest display size. For a flat style, the vector version comes from a vectorizing tool or a designer. Do not hand-draw character paths in code, because they read as clip art. Either way, add a simplified version, such as the head alone, for the smallest sizes.
 
 Follow the craft rules in [references/appeal.md](references/appeal.md) at every step.
 
@@ -76,15 +79,15 @@ Each of the three candidates gets:
 - a hero pose in three-quarter view with a clear line of action;
 - an expression sheet of at least five moods, carried by brows, lids, and posture as well as the mouth;
 - three acting poses, each one acting out a real product feature with a held or used prop;
-- the in-product vector version at 24, 48, and 120 px, plus a simplified icon version, such as the head alone, at 16 px, all on the light canvas and on a dark tile;
+- the in-product art at 24, 48, and 120 px, plus the simplified version at 16 px, on every surface the product uses, including brand-colored tiles and dark mode;
 - two in-context mockups: one product screen at a real moment, and one hero or marketing moment where the character interacts with the layout, such as peeking from a card edge or breaking out of a frame;
 - a short motion note for one signature interaction, with its reduced-motion version.
 
-### 7. Review, then present
+### 7. Check, then present
 
-First look at your own lineup beside the references at the same size, and fix any gap you can already see. Then run the full review in [references/review.md](references/review.md), including the blind lineup against the references with a panel of three fresh reviewers. Fix the findings the panel agrees on and run it again. If a candidate still loses the lineup after two improvement rounds, present it as below the bar and say why. Do not present it as ready.
+First look at your own lineup beside the references at the same size, and fix any gap you can already see. Then run the checks in [references/review.md](references/review.md). Reviewers find measurable problems, such as a face that blurs at 48 px or a prop that floats, and you fix them. They do not rank candidates or decide whether one is ready. The user judges appeal by looking at the lineup.
 
-Present the three candidates on one board, marked as placeholders. Each round gets its own new board labeled with its round number. Leave earlier boards unchanged so the user can compare rounds. Each shows its character sheet, art, review results, and one-line downside. Recommend one. If the product already shows a mascot, leave it in place until the user picks.
+Present the three candidates on one board, marked as placeholders, beside the references at the same size. Each round gets its own new board labeled with its round number. Leave earlier boards unchanged so the user can compare rounds. Each shows its character sheet, art, check results, and one-line downside. Recommend one and say why, but the user picks. If the product already shows a mascot, leave it in place until the user picks.
 
 ### Revising after a pick
 
@@ -92,12 +95,16 @@ Every revision, whether the user asks for it or a review prompts it, follows the
 
 - **Locked traits.** When the user approves a trait, such as the signature feature, the face, the palette, or the body, add it to a locked list on the board. A review never changes a locked trait. Only the user can unlock one.
 - **Scope.** Change only the area the request names. A face pass changes the face. A silhouette request changes the outline and the parts that form it, and if that means replacing limbs or other approved parts, ask first. Record other findings as open items and leave them alone.
-- **Options before big changes.** When a change would replace a part, change a locked trait, or alter the character's construction, build two or three options and let the panel pick by majority. Show the panel's pick to the user before applying it everywhere, unless the user has asked the skill to make the call.
+- **Options before big changes.** When a change would replace a part, change a locked trait, or alter the character's construction, build two or three options and let the user pick.
 - **One change at a time.** Apply one revision, review it, then move to the next. Do not stack several redesigns into one round.
 
 ### 8. Character bible
 
-After the user picks, produce the character bible: a construction guide with base shapes and proportions, a turnaround of front, three-quarter, side, and back views, the expression and action sheets, the color specification, the size rules, do and don't examples, voice rules with sample lines, and the component built as a system as described in [references/appeal.md](references/appeal.md). Build the rig here, then check it: every pose on the sheets must be reachable by moving parts, without redrawing the body.
+After the user picks, produce the character bible: a construction guide with base shapes and proportions, a turnaround of front, three-quarter, side, and back views, the expression and action sheets, the color specification, the size rules, do and don't examples, voice rules with sample lines, and the component built as a system as described in [references/appeal.md](references/appeal.md). For vector art, build the rig here, then check it: every pose on the sheets must be reachable by moving parts, without redrawing the body. For rendered art, the component holds the approved pose images, and new poses come from [Extending an approved character](#extending-an-approved-character).
+
+## Extending an approved character
+
+When the project's notes record an approved character, do not design a new one. Make each new pose or expression by editing the approved master image with a tool that accepts it as a reference, one pose per image. Attach the master to every edit, never an earlier edit, so changes do not pile up. Run the drift check in [references/review.md](references/review.md) on each result, and redo any pose that drifted. The user approves each new pose before it goes into the product. Record approved poses in the project's notes.
 
 ## Working with other design skills
 
@@ -109,4 +116,4 @@ If the project keeps notes or a knowledge base, record there what the next round
 
 ## Report
 
-Open with a short summary of a few bullets. Then report the brief, the reference breakdowns, the concept list with cuts, the three candidates with review results, the recommendation, what was not produced, and any spend. End with any rule in this skill that was unclear, conflicted, or could not be followed.
+Open with a short summary of a few bullets. Then report the brief, the reference breakdowns, the concept list with cuts, the three candidates with check results, the recommendation, what was not produced, and any spend. End with any rule in this skill that was unclear, conflicted, or could not be followed.
