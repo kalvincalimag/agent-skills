@@ -1,210 +1,222 @@
 ---
 name: handoff
-description: "Use when moving an in-progress session to another machine or session — laptop to phone, local to cloud, or ahead of a context limit. Summarizes what this session knows into a handoff the user can open on the other device and hand to a fresh session. Not for publishing finished work; that is `ship`."
+description: "Use when work moves to a session that starts with no memory of this one: switching AI provider or account before a usage limit hits, starting a clean session to free up context, or continuing on another machine. Syncs everything durable from this session into the project's brain, writes a pickup note that a cold-start agent can resume from without drift (end goal, what is done and proven, what is left, fixed decisions, next steps, subagent lanes), tests it with a cold-read review, and returns the opening prompt. Also use when starting work from a pickup note. Not for publishing finished work, which is `ship`."
 ---
 
 # Handoff
 
 ## Purpose
 
-Carry a live session's working state onto another device, where a session will start with
-nothing. That session gets the handoff and no conversation. Everything it needs to continue, or
-to take a new request against this work, has to be in the handoff.
+Move in-progress work to a session that starts with nothing. That session may run on another provider, another account, another model, or the same agent with a clean context. It receives two things, the brain and an opening prompt. From those alone it must continue as if the first session never ended. It knows the end goal, what is done and how that was proven, what is left, which decisions are fixed, and the first command to run.
 
-The origin machine may be asleep or offline when the handoff is read. Anything that depends on
-it is not delivered.
+A handoff is a brain sync plus an opening prompt. The brain carries everything, and the prompt points into it. Never hand off through a doc tool, a hosted artifact, a chat message, a ticket, or a transcript export. Those split the record from the brain, and the next session cannot keep them current as it works.
 
-**Boundary.** This skill packages state. It does not open a pull request, merge, or deploy —
-that is `ship`. It does not design the work — that is `plan`. Its only outward action is a
-work-in-progress commit and push of the current branch, and that requires authorization like
-any other.
+Common triggers:
 
----
+- A usage limit is close on one provider, and the work continues on another.
+- The session is long, and a clean one will attend to the work better.
+- The work continues on another machine or in a cloud session.
 
-# Part 1 — Choose the carrier
+**Boundary.** This skill syncs knowledge and packages state. `plan` designs the work, and `ship` publishes it. The only outward actions here are delivering the brain writeback and, when the code must reach another machine, pushing the work branch.
 
-Two things may need to travel, and they travel differently. Decide both before writing.
+## Order the work so a cutoff still leaves a handoff
 
-**The thinking** — what was decided and what comes next. This is the handoff proper. It must
-land somewhere the user can open on the receiving device with the origin machine switched off.
+A handoff often runs just before a session ends. Work in this order, so that stopping after any step leaves something the next session can use:
 
-**The code** — only if the next session will edit it. Nothing but a pushed branch moves code.
-A handoff document does not carry it, and saying otherwise strands the next session.
+1. Find the brain (Part 1). Choose the pickup note's path and copy the template there, with its status `partial` (Part 4). If the budget is nearly gone, print the opening prompt now (Part 6).
+2. Take the inventory (Part 2).
+3. Fill the core of the pickup note: "End goal", "As of", "State", and "Next steps" (Part 4).
+4. Sync durable knowledge into the brain (Part 3).
+5. Finish the pickup note (Part 4).
+6. Check it mechanically, then by cold read (Part 5).
+7. Deliver, set the status to `ready`, and report (Part 6).
 
-**If the project has a brain, the brain is the carrier.** A brain is a curated knowledge base
-that the project's sessions read at startup, under rules of their own: an `AGENTS.md` with
-startup and writeback rules, and usually a memory index. Write the handoff into the brain
-itself, so that the next session needs only the brain and a prompt. Do not make a separate doc.
-
-- First, write all durable knowledge back to the brain the way its own rules say: decisions,
-  findings, sessions, plans. The handoff is then a thin **pickup note** that points into that
-  knowledge rather than repeating it.
-- Put the pickup note where the brain keeps active plans, or where its rules say. Name it with
-  the work and the date. Mark any older pickup for the same work as superseded so that only one
-  is live.
-- Follow the brain's own rules on what may go in it. Local-only state, such as recordings,
-  folders on the user's machine, or signed-in sessions, is described generically ("only on the
-  user's laptop, in the demo workspace") and never by private path when the brain forbids that.
-- Commit and push it the way the brain's writeback rules say, since those rules authorize that
-  write.
-
-Without a brain, the default carrier is a **shareable doc** from whichever doc tool is
-connected, such as a Claude doc, Notion page or Google Doc. It syncs to the user's account,
-opens on any device, needs no repository, and can be handed to the next session as a link or
-pasted in whole. If no doc tool is connected, ask where the user wants it. If they name nothing,
-write a local file and also print the handoff in chat. Substitute when the situation is clearly
-better served:
-
-| Situation | Carrier |
-| --- | --- |
-| The project has a brain | The brain's pickup note, pushed per its rules. No doc. Report its path in the brain. |
-| No brain; phone, tablet, any second device | Shareable doc. Report the link. |
-| User wants to paste it into a session with no fuss | Print it in chat, or send it to themselves on a connected chat tool such as Slack. |
-| Work already tracked in a ticket | That ticket or page, if its tracker is connected. If not, print the text for the user to paste there. |
-| Next session is a cloud coding session that will edit this branch | Shareable doc **and** a pushed branch. Put the file at `plans/handoff-<branch-slug>.md` too so the next session reads it beside the code. |
-| Next session is another local session or worktree | File on the branch. |
-
-A repository file alone is the wrong default. It reaches the user only through a cloud session
-on that branch, which is more machinery than reading a page.
-
-For the raw conversation rather than a summary, mention once that the agent can export the
-transcript to a file, if it can (in Claude Code, `/export`). Say so once; do not produce both unless asked.
+Write each piece to disk as soon as it exists. Knowledge that lives only in the conversation is lost when the session ends.
 
 ---
 
-# Part 2 — Take the inventory before writing
+# Part 1. Find the brain
 
-Read the working state from the repository, not from memory. A long session may have been
-compacted, and recollection of file state is the first thing to go.
+A brain is a curated knowledge base with an `AGENTS.md` that sets startup and writeback rules, and a memory index. Find the project's brain in this order: a project-to-brain map in the user's agent instructions, a pointer in the work repository's agent instructions, then the current directory.
+
+Read the brain's `AGENTS.md` and memory index before writing anything. Its rules decide where knowledge goes and what may go in, for example whether machine paths or personal details are allowed. This skill adds only the pickup note, the cold-read review, and the opening prompt.
+
+**No brain.** Ask once whether to create one with `new-brain`, and recommend it when the work will run across more sessions. If the user declines, or the budget cannot fit the interview, write the pickup note as one file in the work repository at `plans/handoff-<work-slug>.md`. Leave it uncommitted unless the user says otherwise. That file is then the whole record, and the rest of this skill still applies to it.
+
+---
+
+# Part 2. Take the inventory from the source
+
+Read state from the repositories and the conversation, not from recollection. A long session may have been compacted, and file state is the first thing recollection gets wrong.
+
+For each repository the work touched, record:
 
 ```bash
+git rev-parse --show-toplevel
 git branch --show-current
+git rev-parse --short HEAD
 git status --porcelain
-git log --oneline -8
-git diff --stat
 git stash list
+git log --oneline -8
+git rev-list --left-right --count @{u}...HEAD   # behind and ahead of the upstream, when one is set
 ```
 
-Also establish, by looking rather than assuming: which files this session actually changed,
-whether anything is running (dev server, ports, background jobs), and what local-only state
-exists (`.env`, seeded database, authenticated CLI tools).
+Then establish, by looking rather than assuming:
 
-If the session was compacted, say so in the handoff and mark which sections are reconstructed
-from a summary rather than recalled directly. A confident wrong handoff costs more than an
-honest gap.
+- Which files this session changed.
+- What is running, such as dev servers, ports, background jobs, and watchers.
+- What exists only on this machine, such as `.env` files, seeded databases, signed-in tools, and downloaded files.
+- The commands that set up, build, test, and run each repository, and what each gives today.
 
----
+Then walk the conversation from its start and list:
 
-# Part 3 — Write the file
+- Every decision, with what was rejected and why.
+- Every correction the user made and every preference they stated, quoted. A fresh agent gets these wrong first.
+- Findings, each with its evidence.
+- Dead ends, each with why it failed.
+- Terms coined during the session. A fresh agent cannot know what a nickname for a design direction or a component refers to.
+- Approvals the user gave in this session, such as permission to push a branch.
+- What was verified, how, and what was not verified.
+- Open questions.
 
-The content is the same whatever the carrier. Title it with the branch and the date so several
-handoffs are distinguishable at a glance. When a repository copy is also going out, name it per
-branch — `plans/handoff-<branch-slug>.md`, or `HANDOFF-<branch-slug>.md` at the root if the
-repository has no `plans/` — so parallel worktree sessions do not overwrite each other.
-
-Write for a reader with zero context. Do not restate the repository's agent instructions (`AGENTS.md`, `CLAUDE.md`), its conventions, or
-the stack; the next session loads those itself. `writing-discipline` governs the prose.
-
-Sections, all of them, in this order:
-
-**1. Start here.** Repository, branch, current commit. Then the literal prompt the user pastes
-into the next session, quoted on its own line and ready to copy.
-
-**2. The task.** What this session was asked for, in the user's own framing. State plainly
-whether it is finished, partway, or blocked.
-
-**3. State of the work.** Done, in progress, not started — each tied to the files it lives in.
-"In progress" means: what is half-written and what condition it is in.
-
-**4. Decisions and why.** The expensive part to reconstruct. For each: what was chosen, what
-was rejected, and the reason. A decision without its reason will be relitigated or reversed.
-
-**5. Files that matter.** Path, one line on why it matters, and whether this session changed it.
-
-**6. Dead ends.** What was tried and did not work, so the next session does not pay for it
-twice. Omit the section only if there genuinely were none.
-
-**7. What does not travel.** Uncommitted work, `.env` and secrets, running servers, local
-database state, authenticated tools. Then the consequence: name what the next session therefore
-cannot do — run the app, hit a live service, reproduce a bug that needs real data.
-
-**8. Next steps.** Ordered and concrete. The first one runnable as written.
-
-**9. Open questions.** Only what needs the user's decision, and what each answer would change.
+If the session was compacted, say so in the note, and mark which items come from the summary rather than from direct recall. A confident wrong handoff costs more than an honest gap.
 
 ---
 
-# Part 4 — Carry it across
+# Part 3. Sync durable knowledge
 
-Writing the brain's pickup note and pushing it under the brain's writeback rules, creating the
-shareable doc, or writing the file locally is the delivery itself. Do it without asking, and
-report where it lives.
+Write back everything durable under the brain's own writeback rules: topical memory files, decision records, the session file, and the memory index. Writeback runs without asking.
 
-Pushing is a separate, outward action. **Stop and ask**, and say what will be pushed: the
-unfinished work in the tree, and the handoff file if one is going to the repository. Unfinished
-work is the point — a push that leaves the working tree behind gives the next session a branch
-that does not match the handoff.
+Put each piece of knowledge in one place:
 
-Never push to a protected branch. The work-in-progress commit belongs on the current feature
-branch.
+| Knowledge | Where it goes |
+| --- | --- |
+| A fact about the subject that will stay true | The topical memory file the brain's rules name |
+| A decision with its reasons | A decision record, per the brain's rules |
+| What happened in this session | The session file, which is history |
+| A user preference or working rule | The memory file the brain uses for working norms |
+| The live state of the work: goal, progress, next steps, lanes | The pickup note, which looks forward |
+
+The pickup note links to the other places instead of repeating them. It restates each fixed decision in one line, so the next agent can act without opening every record. If the line and the record ever disagree, the record wins.
+
+Make the knowledge easy to find, and exact once found:
+
+- In the memory index, add or update one active-context bullet that links the pickup note. A session that starts in the brain then finds the work even without the prompt.
+- Use the names the code and the brain already use. Define every term coined in the session under the pickup note's "Traps".
+- Fill the pickup note's "Map" with where each topic of this work lives, so the next agent opens a file instead of searching.
+- Write exact identifiers in code font: repository-relative paths, commit hashes, branch names, full commands, URLs, and IDs. "The config file" sends the next agent searching. `apps/web/next.config.ts` does not.
+- When this session made something stale, update or supersede it in place, and list it under the pickup note's "Traps".
+
+Then tick off the inventory from Part 2. Each item now lives in a named file, or you dropped it on purpose because it is not durable.
+
+Never store a secret in the brain. Say where it lives instead, if the brain's rules allow that.
+
+---
+
+# Part 4. Write the pickup note
+
+Copy `pickup-note.md` from this skill's folder. Fill every section, and delete each guidance comment once its section is filled.
+
+The pickup note is the work's active plan. It carries the objective, status, and next action that the brain's planning rules ask of a plan, so it is not agent runtime state. Put it with the brain's active plans, which is `planning/active/YYYY-MM-DD-<work-slug>.md` in a brain built from the usual template. If the brain's rules name another place for active plans, use that place.
+
+Keep one live pickup note per piece of work:
+
+- If an active plan or pickup note for this work already exists, update it in place.
+- If a new pickup note replaces an older one, mark the older one superseded with a link to the new one, and archive it under the brain's rules.
+
+Write for a reader with no context, who may be a different model from a different provider:
+
+- Write nothing that needs the conversation to decode, such as "as discussed" or "the approach we chose".
+- Give every done item its evidence: a commit, a test command and its result, or a screenshot path. An item without evidence goes under "In progress", marked unverified.
+- End every next step in a check that can fail. Make the first step runnable as written.
+- Split the remaining work into lanes a subagent can take alone, using the parallel test in `plan` (Phase B2, "Decide what runs in parallel"). Write each lane's brief so it stands alone, because a subagent receives the brief and not the pickup note.
+- Name what stays in the main thread: integration, any file more than one lane writes, and questions for the user.
+- If the work follows one of the user's skills, or needs a connected tool, list it under "What does not travel" with where it lives. The next agent may run on a provider that does not load it.
+
+Keep the pickup note short enough to read in one pass, about 150 lines once filled. Move detail into linked memory, decision, or session files.
+
+---
+
+# Part 5. Check the pickup note
+
+## Mechanical check
+
+Run the note checker from this skill's folder. Pass the brain root and every repository the pickup note refers to:
+
+```bash
+bash <this skill's folder>/check-note.sh <pickup note> <brain root> <repository root> ...
+```
+
+It fails on a path or link that does not exist, a commit hash that no given repository has, a template comment or placeholder left in, and a core section that is missing or empty. Fix each failure, or confirm it is a false alarm, such as a generic type written outside code font. Then run the brain's own validator.
+
+## Cold-read review
+
+The test of a handoff is whether an agent with no context does the right next thing. This session cannot run that test on itself, because it cannot forget the conversation. The cold read tests whether a fresh reader understands the pickup note. Whether the plan inside it is right is `plan`'s review, so do not repeat that review here.
+
+1. Start a reviewer with no context: a fresh subagent, or a fresh non-interactive session of any installed agent. If you know which agent will receive the handoff and it is installed, use it, since that tests the real reader. Otherwise prefer a different model from this one. Give the reviewer only the opening prompt and read access to the brain and the repositories, and tell it to change nothing.
+2. Have it follow the opening prompt and the pickup note's pick-up steps, without acting on them, then answer:
+   - What is the end goal, and what does done mean?
+   - What is done, and what proves it?
+   - What is in progress, and in what condition?
+   - What would you run first, and why?
+   - What must you not change or reopen?
+   - What would you ask the user before starting?
+   - Where did you have to guess, infer, or search? Which claims could you not verify against the repositories?
+   - Which instruction could you read two ways? What in the brain contradicts the pickup note?
+3. Compare its answers with what you know. Each mismatch is a defect in the pickup note, not in the reviewer.
+4. Grade each defect:
+   - **P0.** The reviewer would do the wrong thing, or would undo a fixed decision.
+   - **P1.** The reviewer would have to ask, guess, or rediscover something costly.
+   - **P2.** Polish.
+5. Fix every P0 and P1, then run a new reviewer on the revised pickup note. Stop after two rounds. Record open findings and deferred P2 items under "Review", so nothing is dropped silently.
+
+If no reviewer can be started, or the session cannot fit one more round, skip to delivery and set the cold-read line to `not run`. The receiving session then lists its own guesses as open questions before it acts.
+
+---
+
+# Part 6. Deliver and report
+
+**The brain.**
+
+- On the same machine, the next session reads the brain from disk. No commit or push is needed for the handoff. Commit only as the brain's rules and the user's standing instructions say.
+- For another machine or a cloud session, the brain must be pushed. If its rules and the user's standing instructions authorize the push, push it. If they do not, or the brain has no remote, ask the user. A brain that exists only on this machine cannot cross to another one, so say that plainly if the user declines.
+
+Then set the pickup note's status to `ready`.
+
+**The code.**
+
+- On the same machine, leave the working tree as it is. The pickup note's "As of" records it, and the next session checks it.
+- On another machine or in a cloud session, only a pushed branch moves code. Commit work in progress on the current feature branch, never on a protected branch, and ask before pushing unless a standing rule covers it. If the code is not pushed, tell the user that the next session can read the handoff but cannot continue the work, and name what is missing from the remote.
 
 **Report, in this order:**
 
-1. The link or path the user opens on the receiving device.
-2. **The opening prompt, in a fenced code block, ready to copy in one gesture.** See below.
-3. Whether the branch is pushed.
-
-If the code was not pushed, say plainly that the next session can read the handoff but cannot
-continue the work, and name what is missing from the remote.
+1. The opening prompt, in a fenced code block on its own.
+2. The folder to start the next session in. Pick the folder the work writes to, usually the code repository. Some agents can write only inside the folder they start in, so say when the brain must be added as a second folder.
+3. Where the pickup note lives.
+4. Whether the brain and the code are committed and pushed.
+5. The cold-read result: the rounds run and the open findings, or that it did not run.
+6. What does not travel, in one line.
 
 ## The opening prompt
 
-The user is about to copy this on a phone, one-handed, possibly on a moving bus. It has to
-survive that.
+The user may paste the prompt into any agent, from any provider, in a hurry. It has to work there.
 
-- Put it in a fenced code block on its own. Nothing else inside the block.
-- **Spell the URL out in full, literally.** Never a markdown link, never a shortened or
-  reference-style link, never "the doc above" or a placeholder standing in for the real
-  address. The raw address has to be visible in the copied text.
-- Make it self-contained: it names the repository and branch where those apply, tells the next
-  session to read the handoff before doing anything, and ends with a marked slot for the new
-  request.
-- Never emit it with the link unresolved. If the carrier failed and there is no address yet,
-  say so instead of shipping a prompt with a hole in it.
-
-With a brain, the prompt names the brain repository and the pickup note's path inside it, and
-tells the next session to follow the brain's startup rules first. No link to anything outside
-the brain:
+- Use plain instructions only. Leave out slash commands, tool names, and skill names the receiving agent may lack.
+- Spell out every path and address in full. Never use a placeholder, a markdown link, or "the note above". On the same machine, give the brain's absolute path. For another machine, give the brain's repository and branch.
+- Fill in the next task yourself. You know what is done and what is left.
+- Name the lanes to hand to subagents. A user who pastes the prompt has then asked for those subagents, which matters to agents that start subagents only on request.
+- Never print the prompt with an unresolved path. If the pickup note could not be written, say so instead.
 
 ```
-Pick up work from another session. Follow the startup rules of the <brain name> brain
-(<brain repository>, branch <default branch>), then read <pickup note path> in full
-before doing anything else. The brain is the reference for state, decisions and next steps.
+Continue work handed off from another session. You have no memory of that session. The brain is the record.
 
-Then: <your new request here>
+1. Open the <brain name> brain at <absolute path, or repository and branch> and follow the startup rules in its AGENTS.md.
+2. Read <pickup note path inside the brain> in full, then follow its "How to pick this up" steps before anything else. It holds the end goal, what is done, what is left, and the decisions and fences not to cross.
+3. Then: <the next task, written out: where to start, which lanes to hand to subagents, what to bring to the user, and what done means>
 ```
 
-Without a brain, use this shape, with every angle-bracket slot filled in for real:
+---
 
-```
-Read this handoff from another session in full before doing anything else:
-<the complete link or path>
+# Part 7. Pick up from a pickup note
 
-It has the state of the work, the decisions and why, and what does not travel.
-Repository <name>, branch <branch>.
-
-Then: <your new request here>
-```
-
-Fill the request in yourself. You know what is done and what is left, so write the concrete next
-task:
-
-- what to start with;
-- what can run in parallel;
-- what to bring to the user for decisions;
-- what "done" means.
-
-Leave a `<your new request here>` slot only when the next request genuinely cannot be inferred.
-When the user asks for the prompt as a file, write it there with the request already filled in.
-After the block, add one line naming what to do if the link does not open on the other device:
-paste the handoff text itself, which is written to stand alone.
+When you are the receiving session, follow the pickup note's "How to pick this up". Those steps live in the pickup note, so an agent without this skill follows the same ones. To change them, change `pickup-note.md`, not this part.
