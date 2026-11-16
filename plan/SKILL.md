@@ -1,6 +1,6 @@
 ---
 name: plan
-description: "Use before writing code, whenever deciding what to build or how: choosing between approaches with no precedent, weighing a product or scope tradeoff, or producing an implementation plan, roadmap, sequencing, or pre-execution handoff. Also triggers on requests for adversarial plan review. Covers exploring the design space and hardening the resulting plan, so the result is technically precise, demoable when it has a user-facing result, and built to last and to extend, with planning effort matched to risk."
+description: "Use before writing code, whenever deciding what to build or how: choosing between approaches with no precedent, weighing a product or scope tradeoff, or producing an implementation plan, roadmap, sequencing, or pre-execution handoff. Also triggers on requests for adversarial plan review, and on planning how multi-phase or multi-agent work is orchestrated. Covers exploring the design space, deciding what runs in parallel, and hardening the resulting plan, so the result is technically precise, demoable when it has a user-facing result, and built to last and to extend, with planning effort matched to risk."
 ---
 
 # Plan
@@ -98,6 +98,7 @@ When you catch yourself writing the same instruction a second time, stop writing
 - Check every outside fact the plan relies on against a current primary source. For a library, framework, API, or platform, find the version the project pins in its manifest or lockfile, then read that version's documentation or changelog. An API you remember is often a version out of date.
 - Run independent research at the same time. Batch unrelated reads and searches, and give separate subsystems to subagents or background tasks where the session allows them.
 - Treat decisions the user already made as fixed inputs. Reopen one only when new evidence contradicts it, and say what changed.
+- The repository shows what exists, not what should exist. When the user says today's behavior is not the specification, for example because the code is a prototype headed for launch or the work exists to correct it, take the requirements from the product documents and external contracts and treat the code as evidence. Record each disagreement as a discrepancy, per `test-design` section 8.
 - Separate discoverable facts from product preferences. Ask the user only for high-impact choices that cannot be derived. Ask them all at once and early, each with your recommended default and what it changes. Keep working on whatever the answers do not block.
 
 ### B2. Draft the plan
@@ -130,12 +131,23 @@ When the work produces something a person uses, such as a screen, an app, an end
 - **Dependencies.** Prefer what the project already uses. A new dependency is the current stable release, actively maintained, and not deprecated.
 - **Shortcuts.** List each shortcut taken for the demo or a deadline, with what replaces it and when. An unlisted shortcut becomes the design.
 
+When the work spans several phases, lanes, or agents, the plan also states its orchestration:
+
+- [ ] Each phase's goal, inputs, outputs, and an exit gate that can fail.
+- [ ] The dependencies between phases and lanes, as a table or diagram. A phase or lane starts only after everything it depends on has passed its exit gate.
+- [ ] An owner for each lane: the main thread or a named subagent.
+- [ ] Gates that run without waiting on people. The plan decides what evidence can settle, takes the best recommendation, records it where people can read and overturn it, and continues. A reviewer subagent replaces a human review gate. A person is needed only for an outward action under the user's standing rule, access the work lacks, or a fact only an outside party holds after its documents and a test have failed to settle it. Batch those into one request per phase, and keep the work moving around them.
+- [ ] Every shared file or resource, such as a contract file, a migration journal, a lockfile, or a deploy target, with one owner who applies changes to it in order.
+- [ ] The integration points: where lane outputs merge, who merges them, and the checks that run after each merge.
+
+**Decide what runs in parallel, and say why.** Parallelize a unit only when all of these hold. Everything it depends on has passed its gate. It writes files no other running unit writes, or it runs in its own worktree. Briefing it costs less than doing it. Merging its output costs less than the time it saves. Everything else runs in sequence in the main thread. Investigation, test writing, review, long checks, and writeback qualify as often as implementation does. Where the session allows subagents only when the user asks, this standing preference is that request for any unit that passes this test, unless the active skill sets its own rule, as `bugfix` does for its fix. `implement` 1.8 covers how to brief workers and integrate their output.
+
 ### B3. Adversarial review
 
 - Spawn a dedicated adversarial reviewer on a different model when a subagent path is available and allowed. A research subagent does not count unless it explicitly attacks the plan.
 - **Hand it:** the full plan, the goal, the four outcomes in Purpose, verified repository facts with file paths, and the constraints. **Require back:** findings with severity, each backed by a file path, contract, or runtime fact, not vibes.
 - Fall back to local self-critique only when no subagent path exists or session rules prohibit one, and state that fallback in the final plan notes.
-- The reviewer is hostile to: unverified runtime assumptions, vague seams (any component named without its exact contract), missing tests on risky paths, hidden state transitions, deploy and rollback gaps, stale branch context, and scope creep.
+- The reviewer is hostile to: unverified runtime assumptions, vague seams (any component named without its exact contract), missing tests on risky paths, hidden state transitions, deploy and rollback gaps, stale branch context, lanes or shared files without an owner, parallel work that costs more to merge than it saves, and scope creep.
 - It also attacks every miss on a Purpose outcome:
   - An unchecked version, or a success criterion nobody can measure.
   - A user-facing result with no demo path, or a demo that runs on fakes the plan does not list.
@@ -168,6 +180,8 @@ Title / Summary / Key Changes / Demo Path / Test Plan / Long-term Notes / Assump
 | "I will ask which one they want" | If running it would answer the question, run it. |
 | "The plan is simple enough" | Simple plans hide unverified runtime assumptions. Review takes minutes. |
 | "I already know this codebase" | Branch state, contracts, and deploys drift. Ground in current truth. |
+| "Run every lane in parallel" | Check inputs, shared files, briefing cost, and merge cost first. |
+| "We will decide who merges later" | Name the owner of every shared file before the fan-out. |
 | "The reviewer would just agree" | Then the review is cheap. If it would not, you need it. |
 | "It is faster to just edit the files" | Faster to write, impossible to re-verify. Build the lever. |
 | "I will note it in the instructions" | Second time writing it means it should be a check, not a sentence. |

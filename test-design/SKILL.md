@@ -1,6 +1,6 @@
 ---
 name: test-design
-description: "Use whenever writing, changing, reviewing, or deciding whether to keep a test, when configuring how tests run in CI, when sequencing a multi-step change into units that each end in a check, and before restructuring existing code. Governs whether a test can actually fail for a defect, and how the suite runs fast without losing coverage — not whether the suite currently passes."
+description: "Use whenever writing, changing, reviewing, or deciding whether to keep a test, when configuring how tests run in CI, when sequencing a multi-step change into units that each end in a check, and before restructuring existing code. Governs whether a test can actually fail for a defect, whether it tests the requirement rather than the implementation, and how the suite runs fast without losing coverage — not whether the suite currently passes."
 ---
 
 # Test Design
@@ -83,7 +83,9 @@ Measure before and after from the CI run timings, and report the change in wall 
 
 ## 7. Lock Behavior Before You Restructure
 
-A refactor is safe only when some test fails if behavior changes. Before you move, split, or rewrite existing code:
+A refactor is safe only when some test fails if behavior changes. First decide which behavior the tests protect. When today's behavior is the specification, characterize it as below. When the user says it is not, for example because the code is a prototype headed for launch or the work exists to correct it, test the required behavior instead, per section 8. Do not characterize an output that looks wrong in that case.
+
+Before you move, split, or rewrite trusted code:
 
 - Check the tests that cover it against section 1. A suite that passes when the subject returns nothing protects nothing.
 - Where coverage is missing, write characterization tests first, at the code's public surface. Assert what the code returns today as literals, including outputs that look wrong.
@@ -92,6 +94,19 @@ A refactor is safe only when some test fails if behavior changes. Before you mov
 - If the project runs mutation testing, run it on the code you are about to move, to confirm the tests catch changes.
 
 Code with no such test gets only the changes a tool can prove safe, such as deleting an export that no file imports.
+
+## 8. Test the Requirement, Not the Implementation
+
+Use this section when today's behavior is not the specification, and for any suite that must outlive a planned restructure. Such a test asserts what the requirement promises, not how today's code delivers it.
+
+- Derive each test from a written requirement, business rule, or external contract, and name it in the test. If none is written down, write it down first or ask its owner.
+- Assert the outcomes the requirement names: responses at the contract boundary, resulting state read back through the public surface, refusals, and replayed results. Do not assert internal calls, table names, module layout, or call order.
+- When a restructure is planned, keep what it may change behind one test driver: paths, payload shapes, function names, and storage. Specs speak the domain's words and the driver translates them. The evidence that behavior held is then two things. The spec files are unchanged, and the driver's diff changes only how requests are made, never what is checked. Review the driver diff for that.
+- Test external contracts verbatim, at their real paths and payloads, because they must not change.
+- Test a storage rule that is itself a requirement, such as an append-only record or a unique retry key, by its outcome. The forbidden update is refused.
+- When the code disagrees with the requirement, log a discrepancy. The record names the requirement, what the code does today with evidence, the impact, a recommended resolution, who decides, and its status.
+- Then write the test to the requirement. Run it unmarked and confirm it fails on the requirement's assertion. Mark it with an expected-failure marker that also fails on an unexpected pass, such as `test.fails` in Vitest or `xfail(strict=True)` in pytest, and cite the discrepancy. Where the runner allows it, wrap only the failing assertion, so a broken setup still fails. The marker comes off when the fix lands. Never assert the wrong behavior to turn the suite green.
+- When the requirement is unclear, log the question for its owner and leave the behavior untested until it is answered. A test that guesses becomes the specification by accident.
 
 ## Red Flags — STOP, you are rationalizing
 
@@ -108,3 +123,6 @@ Code with no such test gets only the changes a tool can prove safe, such as dele
 | "Skip those tests to speed up CI" | Speed comes from structure, not from testing less. |
 | "The tests pass, so the refactor is safe" | Only if they fail when behavior changes. Check them first, per section 7. |
 | "I will fix this bug while I refactor" | Record it and leave it. Fix it in its own change. |
+| "Assert today's output, that is what it does" | Only when today's behavior is the specification. Otherwise test the requirement, per section 8. |
+| "The test has to name the table to check the write" | Read the outcome back through the public surface, or keep the read in the driver. |
+| "Skip it until someone fixes the bug" | Mark it as an expected failure that cites the discrepancy, so the fix has to update it. |

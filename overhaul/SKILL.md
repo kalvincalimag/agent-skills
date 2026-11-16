@@ -14,6 +14,7 @@ It adds only what the other skills lack. `implement` governs the shape of every 
 ## Boundaries
 
 - Behavior stays the same. A behavior change found along the way is a separate change the user approves, never part of a refactor commit.
+- When the user says today's behavior is not the specification, the behavior to keep is the required behavior, per `test-design` section 8. Each place the code disagrees is a discrepancy, fixed as its own approved change.
 - Scope is what the user named: the repository, a directory, or a list of modules. Feature work stays out.
 - This covers local edits. Commits, pushes, pull requests, and changes to shared CI follow the user's standing rule for outward actions.
 - Use the project's own tools and conventions first. Add a tool only when nothing in the project measures the symptom.
@@ -53,11 +54,13 @@ Before you move any code, encode the map as a dependency rule that lint or the b
 
 ## 4. Lock behavior before you move it
 
-Apply `test-design` section 7 to every hotspot before its wave starts. Write the characterization tests for a whole wave up front, so the wave's refactor commits all land on a locked base.
+Apply `test-design` section 7 to every hotspot before its wave starts. Write the tests for a whole wave up front, so the wave's refactor commits all land on a locked base. When the user says today's behavior is not the specification, write them from the requirements instead, per `test-design` section 8.
 
 ## 5. Refactor in waves, in this order
 
 Each wave makes the next one cheaper. Finish one wave before starting the next.
+
+**When the overhaul covers an API and its database, settle the API first.** Run every wave on the API and freeze its contract. Then derive the minimal schema from what the frozen API, pages, jobs, and scripts read and write and what the business rules require, and run the database's waves once. A schema reshaped while its API still moves gets reshaped twice, and database changes are the costliest to redo. This is the one exception to running each wave in every layer.
 
 1. **Subtract.** Delete dead code and dead surface in every layer, with the proof each layer needs (see the table below). This wave carries the least risk and shrinks every wave after it.
 2. **Deduplicate.** Merge copies of the same decision into one source of truth, in every layer (see the redundancy table below). Leave similar code that encodes different decisions alone. Three similar lines beat a wrong abstraction (`implement` 1.4).
@@ -117,4 +120,5 @@ Give before and after counts per symptom from the baseline file, the waves finis
 | "Keep the old module for compatibility" | Name the external consumer or delete it. |
 | "Push the slop score to 100" | A score is a trend, not a target. Work the hotspot list. |
 | "Raise the baseline, the new code needs it" | The baseline only goes down unless the user approves. |
+| "Reshape the tables while the API is still moving" | Freeze the contract first, then derive the schema once. |
 | "Add a rule to the agent instructions" | If a tool can check it, make it a check. |

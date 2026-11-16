@@ -32,7 +32,7 @@ The user wants three things from the result:
 Adding to a complex system compounds complexity. Removing first leaves less code, reveals the real structure, and usually makes the next design obvious.
 
 - Sequence removal before construction. Cut to the minimum before investing in quality.
-- Design for observed usage. No speculative validators, parsers, guards, or edge cases beyond what the spec demands.
+- Build only what a current requirement needs. Add no speculative features, options, configuration, extension points, validators, parsers, guards, or edge cases. Optimize only for a measured need.
 - When a reference has no novel content, delete it rather than leaving a stub.
 - Leave the design slightly simpler behind the same or smaller surface than you found it.
 
@@ -93,11 +93,10 @@ Intermediate breakage is acceptable when it is planned, scoped, and reversible. 
 The user wants implementation streamlined: work that does not depend on other unfinished work runs at the same time, in subagents or separate sessions, not one unit after another in the main thread.
 
 - **Land the shared seam first.** Types, schema, contracts and any signature the parallel units all call go in before the fan-out, by the main thread. Parallel workers build on a seam; they never negotiate one.
-- **Split by file ownership.** Give each worker an explicit list of files it may touch and name the files others are editing. Two workers in one file is a merge conflict scheduled in advance. When the split cannot be clean, use a separate worktree per worker and merge their branches.
-- **Hand each worker the whole contract.** The goal, the plan section it implements, the seam it builds on, the repository conventions, the checks to run, and what it must not do (commit, push, migrate, or touch shared state) unless the user has authorized that. A worker starts with none of this conversation's context unless it is a fork.
+- **Split by file ownership.** Give each worker an explicit list of files it may touch and name the files others are editing. Two workers in one file is a merge conflict scheduled in advance. When the split cannot be clean, use a separate worktree per worker and merge their branches.- **Hand each worker the whole contract.** The goal, the plan section it implements, the seam it builds on, the repository conventions, the checks to run, and what it must not do (commit, push, migrate, or touch shared state) unless the user has authorized that. A worker starts with none of this conversation's context unless it is a fork.
 - **Use background work for anything slow.** Full test suites, mutation runs, CI watches, deploy waits, reviews and writebacks run in the background while the main thread keeps building.
 - **Keep integration in the main thread.** The main thread re-reads every worker's diff, runs the combined checks, and owns the result. A worker's "done" is a claim to verify, per `verify` 1.4.
-- **Do not parallelize what is sequential.** A unit that needs another unit's output, or one small enough that briefing costs more than doing, stays in the main thread.
+- **Do not parallelize what is sequential.** A unit that needs another unit's output, or one small enough that briefing costs more than doing, stays in the main thread. `plan` B2 has the full test, including shared files and merge cost.
 
 If the session only allows subagents when the user asks, this standing preference is that request for implementation work.
 

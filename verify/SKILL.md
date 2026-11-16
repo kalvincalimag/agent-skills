@@ -44,6 +44,7 @@ This does not override repository instructions or expand authorization for commi
 ## 1.3 Use gates that can fail
 
 - Prefer real tests, builds, lint and typecheck, HTTP smoke, browser or device checks, generated artifact inspection, or source readback. `test-design` decides whether the test itself can fail for a defect.
+- Check the outcome the requirement names, not the mechanism that produces it today. Where a suite follows `test-design` section 8, a restructure leaves its spec files unchanged and still green. A changed spec assertion is a behavior change to declare, not a regression fix.
 - A compile or build alone does not prove runtime behavior. For visual, stateful, or user-facing work, inspect the actual screen or artifact when feasible.
 - If a stage cannot be verified, label it unverified instead of implying confidence.
 
