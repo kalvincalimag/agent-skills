@@ -29,7 +29,7 @@ A handoff often runs just before a session ends. Work in this order, so that sto
 4. Sync durable knowledge into the brain (Part 3).
 5. Finish the pickup note (Part 4).
 6. Check it mechanically, then by cold read (Part 5).
-7. Deliver, set the status to `ready`, and report (Part 6).
+7. Deliver: commit what must travel, refresh "As of", set the status to `ready`, and push when the work crosses machines. Then report (Part 6).
 
 Write each piece to disk as soon as it exists. Knowledge that lives only in the conversation is lost when the session ends.
 
@@ -41,7 +41,7 @@ A brain is a curated knowledge base with an `AGENTS.md` that sets startup and wr
 
 Read the brain's `AGENTS.md` and memory index before writing anything. Its rules decide where knowledge goes and what may go in, for example whether machine paths or personal details are allowed. This skill adds only the pickup note, the cold-read review, and the opening prompt.
 
-**No brain.** Ask once whether to create one with `new-brain`, and recommend it when the work will run across more sessions. If the user declines, or the budget cannot fit the interview, write the pickup note as one file in the work repository at `plans/handoff-<work-slug>.md`. Leave it uncommitted unless the user says otherwise. That file is then the whole record, and the rest of this skill still applies to it.
+**No brain.** Ask once whether to create one with `new-brain`, and recommend it when the work will run across more sessions. If the user declines, or the budget cannot fit the interview, write the pickup note as one file in the work repository at `plans/handoff-<work-slug>.md`. That file is then the whole record, and the rest of this skill still applies to it. On the same machine, leave it uncommitted unless the user says otherwise. For another machine, it travels committed on the work branch (Part 6). Part 6 also gives the opening prompt for a handoff without a brain.
 
 ---
 
@@ -59,6 +59,7 @@ git status --porcelain
 git stash list
 git log --oneline -8
 git rev-list --left-right --count @{u}...HEAD   # behind and ahead of the upstream, when one is set
+git remote -v                                   # the clone URL for "As of"
 ```
 
 Then establish, by looking rather than assuming:
@@ -147,7 +148,7 @@ Run the note checker from this skill's folder. Pass the brain root and every rep
 bash <this skill's folder>/check-note.sh <pickup note> <brain root> <repository root> ...
 ```
 
-It fails on a path or link that does not exist, a commit hash that no given repository has, a template comment or placeholder left in, and a core section that is missing or empty. Fix each failure, or confirm it is a false alarm, such as a generic type written outside code font. Then run the brain's own validator.
+It fails on a path or link that does not exist, a commit hash that no given repository has, an "As of" row that no longer matches its repository, a template comment or placeholder left in, and a core section that is missing or empty. Fix each failure, or confirm it is a false alarm, such as a generic type written outside code font. Then run the brain's own validator.
 
 ## Cold-read review
 
@@ -169,31 +170,38 @@ The test of a handoff is whether an agent with no context does the right next th
    - **P1.** The reviewer would have to ask, guess, or rediscover something costly.
    - **P2.** Polish.
 5. Fix every P0 and P1, then run a new reviewer on the revised pickup note. Stop after two rounds. Record open findings and deferred P2 items under "Review", so nothing is dropped silently.
+6. Set the cold-read line to `passed after N rounds`. If a P0 or P1 is still open, set it to `open findings after N rounds`.
 
-If no reviewer can be started, or the session cannot fit one more round, skip to delivery and set the cold-read line to `not run`. The receiving session then lists its own guesses as open questions before it acts.
+If no reviewer can be started, or the session cannot fit one more round, skip to delivery and set the cold-read line to `not run` with the reason. The receiving session then lists its own guesses as open questions before it acts.
 
 ---
 
 # Part 6. Deliver and report
 
-**The brain.**
+"As of" must describe the repositories as the next session will find them. Deliver in this order, so that "As of" is refreshed after the last commit that changes the code.
 
-- On the same machine, the next session reads the brain from disk. No commit or push is needed for the handoff. Commit only as the brain's rules and the user's standing instructions say.
-- For another machine or a cloud session, the brain must be pushed. If its rules and the user's standing instructions authorize the push, push it. If they do not, or the brain has no remote, ask the user. A brain that exists only on this machine cannot cross to another one, so say that plainly if the user declines.
+1. **Commit what must travel.**
+   - On the same machine, leave the code's working tree as it is. The next session finds it there.
+   - For another machine or a cloud session, only pushed commits move. Commit work in progress on the current feature branch, never on a protected branch. Commit the brain's writeback as its rules say, but leave the pickup note for step 3.
+2. **Refresh the pickup note.** Read each repository's commit and working tree again, update "As of" to match, and set the status to `ready`. Run the note checker again (Part 5). It fails on any "As of" row that no longer matches its repository.
+3. **Deliver the brain.**
+   - On the same machine, the next session reads the brain from disk, so the handoff needs no commit or push. Commit only as the brain's rules and the user's standing instructions say.
+   - For another machine or a cloud session, commit the pickup note. Push the code branch first, then the brain, so the pushed note never names code the remote lacks. Ask before each push unless the brain's rules or a standing rule of the user's cover it. Then run the checker once more with `--remote`:
 
-Then set the pickup note's status to `ready`.
+     ```bash
+     bash <this skill's folder>/check-note.sh --remote <pickup note> <brain root> <repository root> ...
+     ```
 
-**The code.**
+     It also fails on a path, link, or commit that no pushed commit has, on an "As of" repository with unpushed commits or uncommitted changes, and on a pickup note that differs from its pushed copy. Paths under "As of" and "What does not travel" are exempt, because they name local things on purpose. Fix each failure, commit, and push again.
 
-- On the same machine, leave the working tree as it is. The pickup note's "As of" records it, and the next session checks it.
-- On another machine or in a cloud session, only a pushed branch moves code. Commit work in progress on the current feature branch, never on a protected branch, and ask before pushing unless a standing rule covers it. If the code is not pushed, tell the user that the next session can read the handoff but cannot continue the work, and name what is missing from the remote.
+If the user declines a push, or a repository has no remote, say plainly what cannot cross. A brain that exists only on this machine cannot reach another one. Code that is not pushed can be read about but not continued. Name what is missing from the remote.
 
 **Report, in this order:**
 
 1. The opening prompt, in a fenced code block on its own.
 2. The folder to start the next session in. Pick the folder the work writes to, usually the code repository. Some agents can write only inside the folder they start in, so say when the brain must be added as a second folder.
 3. Where the pickup note lives.
-4. Whether the brain and the code are committed and pushed.
+4. Whether the brain and the code are committed and pushed, and, for another machine, whether the `--remote` check passed.
 5. The cold-read result: the rounds run and the open findings, or that it did not run.
 6. What does not travel, in one line.
 
@@ -212,6 +220,16 @@ Continue work handed off from another session. You have no memory of that sessio
 
 1. Open the <brain name> brain at <absolute path, or repository and branch> and follow the startup rules in its AGENTS.md.
 2. Read <pickup note path inside the brain> in full, then follow its "How to pick this up" steps before anything else. It holds the end goal, what is done, what is left, and the decisions and fences not to cross.
+3. Then: <the next task, written out: where to start, which lanes to hand to subagents, what to bring to the user, and what done means>
+```
+
+Without a brain, the pickup note is the whole record. Use this prompt instead:
+
+```
+Continue work handed off from another session. You have no memory of that session. The pickup note is the record.
+
+1. Open the repository at <absolute path, or repository URL and branch>.
+2. Read <pickup note path inside the repository> in full, then follow its "How to pick this up" steps before anything else. It holds the end goal, what is done, what is left, and the decisions and fences not to cross.
 3. Then: <the next task, written out: where to start, which lanes to hand to subagents, what to bring to the user, and what done means>
 ```
 

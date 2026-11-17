@@ -6,18 +6,19 @@
 - Started: <YYYY-MM-DD>. Replaces: <link to the previous pickup note, or "none">
 - Sessions: <links to this work's session files>
 
-<!-- Status is "partial" until the handoff is checked and delivered, then "ready". Cold read is "not run", "passed after N rounds", or "skipped" with the reason. -->
+<!-- Status is "partial" until the handoff is checked and delivered, then "ready". Cold read is "not run" with the reason, "passed after N rounds", or "open findings after N rounds". -->
 
 ## How to pick this up
 
 1. Read this note in full, then the "Read first" files under "Map".
-2. Run the checks under "As of". If anything differs, do not reset, pull, or rewrite anything. Read what changed since the recorded commit with `git log` and `git diff`. Update "State" if the change explains itself. Otherwise ask the user, and hold only the steps the difference affects.
-3. If "Cold read" above is not "passed", write each point where you have to guess under "Open questions". Ask the user about them once, and continue with the steps that do not depend on a guess.
-4. Work through "Next steps". Before each step, check it against "End goal" and "Fences". Do not reopen anything under "Fixed decisions" without asking the user.
-5. Hand each lane under "Parallel lanes" to a subagent with its brief. If you cannot start subagents, run the lanes in order yourself.
-6. At every exit check, update "State" with the result and its evidence, and write durable knowledge back as the brain's `AGENTS.md` says. This note then stays at most one step behind if your session ends suddenly.
-7. Approvals listed under "Fences" were given to an earlier session. Ask again before any action they covered, unless a standing rule of the user's covers it.
-8. When the end goal is met, archive this note as the brain's rules say and remove its line from the memory index's active context. To hand off before then, update this note in place.
+2. If "Status" above is `partial`, the handoff stopped before it finished. The brain sync, the checks, or the delivery may not have run. Check each "Done" item against its evidence before you rely on it, and treat anything this note does not cover as unknown.
+3. Run the checks under "As of". If your machine has no repository at a row's "Location", clone its "Remote", check out its "Branch", and run the checks in the clone. If anything differs, do not reset, pull, or rewrite anything. Read what changed since the recorded commit with `git log` and `git diff`. Update "State" if the change explains itself. Otherwise ask the user, and hold only the steps the difference affects.
+4. If the "Cold read" line above does not start with "passed", write each point where you have to guess under "Open questions". Ask the user about them once, and continue with the steps that do not depend on a guess.
+5. Work through "Next steps". Before each step, check it against "End goal" and "Fences". Do not reopen anything under "Fixed decisions" without asking the user.
+6. Hand each lane under "Parallel lanes" to a subagent with its brief. If you cannot start subagents, run the lanes in order yourself.
+7. At every exit check, update "State" with the result and its evidence. Write durable knowledge back as the brain's `AGENTS.md` says, or into this note when there is no brain. This note then stays at most one step behind if your session ends suddenly.
+8. Approvals listed under "Fences" were given to an earlier session. Ask again before any action they covered, unless a standing rule of the user's covers it.
+9. When the end goal is met, archive this note as the brain's rules say and remove its line from the memory index's active context. Without a brain, ask the user whether to delete this note. To hand off before then, update this note in place.
 
 ## End goal
 
@@ -35,13 +36,13 @@ Out of scope:
 
 ## As of
 
-<!-- One row per repository the work touches, and one for the brain. Write locations, branches, and commits in code font so the checker can verify them. A dirty tree lists its changed files. -->
+<!-- One row per repository the work touches, and one for the brain if there is one. "Location" is the path on the machine that wrote this note. "Remote" is the URL to clone it from, or "none". Write locations, remotes, branches, and commits in code font so the checker can verify them. A dirty tree lists its changed files. For the brain, write `-` under "Commit" and "Working tree", because the brain changes as this handoff is saved. -->
 
-| Repository | Location | Branch | Commit | Working tree |
-| --- | --- | --- | --- | --- |
-| <name> | `<path or URL>` | `<branch>` | `<short hash>` | <clean, or the changed files> |
+| Repository | Location | Remote | Branch | Commit | Working tree |
+| --- | --- | --- | --- | --- | --- |
+| <name> | `<path>` | `<clone URL, or none>` | `<branch>` | `<short hash>` | <clean, or the changed files> |
 
-Check each row with `git -C <location> rev-parse --short HEAD` and `git -C <location> status --porcelain`.
+Check each row with `git -C <location> rev-parse --short HEAD` and `git -C <location> status --porcelain`. In the repository that holds this note, leave the note itself out of both checks. Its last commit may be one that changed only this note.
 
 ### Commands
 

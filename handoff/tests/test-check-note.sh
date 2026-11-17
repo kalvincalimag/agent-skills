@@ -20,6 +20,10 @@ run() { out="$(bash "$check" "$@" 2>&1)"; status=$?; }
 expect_status() { [[ $status -eq $1 ]] && ok "$2" || bad "$2: exit $status, want $1. Output: $out"; }
 expect_out() { [[ "$out" == *"$1"* ]] && ok "$2" || bad "$2: output lacks '$1'. Output: $out"; }
 expect_no_out() { [[ "$out" != *"$1"* ]] && ok "$2" || bad "$2: output has '$1'. Output: $out"; }
+commit_all() {
+  git -C "$1" -c core.autocrlf=false add -A
+  git -C "$1" -c user.name=test -c user.email=test@example.com commit -qm "$2"
+}
 
 # A code repository with one commit, and a brain beside it.
 repo="$tmp/repo"
@@ -28,8 +32,7 @@ mkdir -p "$repo/src/[id]" "$brain/planning/active" "$brain/memory" "$brain/sessi
 printf 'x\n' >"$repo/src/app.ts"
 printf 'x\n' >"$repo/src/[id]/page.tsx"
 git -C "$repo" init -q
-git -C "$repo" -c core.autocrlf=false add -A
-git -C "$repo" -c user.name=test -c user.email=test@example.com commit -qm init
+commit_all "$repo" init
 hash="$(git -C "$repo" rev-parse HEAD)"
 printf '# Memory\n' >"$brain/memory/MEMORY.md"
 printf '# Session\n' >"$brain/sessions/2026/01/2026-01-01-a.md"
@@ -150,6 +153,120 @@ run
 expect_status 2 "no arguments is a usage error"
 run "$tmp/no-such-note.md"
 expect_status 2 "a missing note is a usage error"
+
+# A repository with two commits. The note lives inside it, as it does when
+# there is no brain.
+live="$tmp/live"
+mkdir -p "$live"
+printf 'one\n' >"$live/a.txt"
+git -C "$live" init -q
+git -C "$live" config core.autocrlf false
+commit_all "$live" one
+old="$(git -C "$live" rev-parse --short HEAD)"
+printf 'two\n' >>"$live/a.txt"
+commit_all "$live" two
+new="$(git -C "$live" rev-parse --short HEAD)"
+mkdir -p "$live/plans"
+live_note="$live/plans/handoff.md"
+
+# Writes the live note. Arguments: the "As of" commit and working tree cells,
+# then extra text for "State" and for "What does not travel".
+write_live_note() {
+  cat >"$live_note" <<EOF
+# Pickup: live
+
+## How to pick this up
+
+1. Read this note.
+
+## End goal
+
+Ship it.
+
+## As of
+
+| Repository | Location | Remote | Branch | Commit | Working tree |
+| --- | --- | --- | --- | --- | --- |
+| live | \`$live\` | none | \`main\` | \`$1\` | $2 |
+
+## State
+
+Edit \`./a.txt\`. ${3:-}
+
+## Next steps
+
+1. Run it.
+
+## Fixed decisions
+
+- None.
+
+## Fences
+
+- None.
+
+## What does not travel
+
+- ${4:-None.}
+EOF
+}
+
+write_live_note "$new" clean
+run "$live_note" "$live"
+expect_status 0 "a matching As of row passes, apart from the uncommitted note"
+expect_out '1 row(s) under "As of"' "the As of row is counted"
+
+write_live_note "$old" clean
+run "$live_note" "$live"
+expect_status 1 "an older As of commit fails"
+expect_out "As of: $live is at $new, not $old" "the stale commit is reported"
+
+write_live_note "$new" '`a.txt`'
+run "$live_note" "$live"
+expect_status 1 "listed changes in a clean tree fail"
+expect_out "As of: $live is clean, but the note lists changes" "the clean tree is reported"
+
+printf 'three\n' >>"$live/a.txt"
+write_live_note "$new" clean
+run "$live_note" "$live"
+expect_status 1 "a dirty tree marked clean fails"
+expect_out "As of: $live has uncommitted changes, but the note says clean" "the dirty tree is reported"
+write_live_note - -
+run "$live_note" "$live"
+expect_status 0 "a row marked - is not compared"
+git -C "$live" checkout -q -- a.txt
+
+write_live_note "$new" clean
+commit_all "$live" "save the note"
+run "$live_note" "$live"
+expect_status 0 "a later commit that changes only the note still matches"
+
+# --remote: the next machine must be able to get everything the note names.
+git init -q --bare "$tmp/live.git"
+git -C "$live" remote add origin "$tmp/live.git"
+git -C "$live" push -q -u origin HEAD 2>/dev/null
+upstream="origin/$(git -C "$live" branch --show-current)"
+
+run --remote "$live_note" "$live"
+expect_status 0 "a pushed note passes --remote"
+
+printf 'local.txt\nsecret.txt\n' >>"$live/.git/info/exclude"
+printf 'x\n' >"$live/local.txt"
+printf 'x\n' >"$live/secret.txt"
+orphan="$(git -C "$live" -c user.name=test -c user.email=test@example.com commit-tree "HEAD^{tree}" -m orphan)"
+write_live_note "$new" clean "Also \`./local.txt\`, \`$plain/plain.md\`, and \`$orphan\`." "\`./secret.txt\` stays here."
+run --remote "$live_note" "$live"
+expect_status 1 "unpushed references fail --remote"
+expect_out "not pushed: ./local.txt is not in $upstream" "an ignored file is reported"
+expect_out "not pushed: $plain/plain.md is in no repository" "a file outside every repository is reported"
+expect_out "commit not on any remote branch: $orphan" "an unpushed commit is reported"
+expect_out "the note has changes that are not pushed" "an unpushed note is reported"
+expect_no_out "secret.txt" "What does not travel is exempt"
+expect_out "failed with 4 issue(s)" "each unpushed reference is reported once"
+
+commit_all "$live" "keep the note local"
+run --remote "$live_note" "$live"
+expect_out "As of: $live has 1 commit(s) that are not pushed" "an unpushed commit in an As of repository is reported"
 
 if [[ $failures -gt 0 ]]; then
   printf '%s test(s) failed\n' "$failures" >&2
