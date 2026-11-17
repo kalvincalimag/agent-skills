@@ -36,7 +36,7 @@ Out of scope:
 
 ## As of
 
-<!-- One row per repository the work touches, and one for the brain if there is one. "Location" is the path on the machine that wrote this note. "Remote" is the URL to clone it from, or "none". Write locations, remotes, branches, and commits in code font so the checker can verify them. A dirty tree lists its changed files. For the brain, write `-` under "Commit" and "Working tree", because the brain changes as this handoff is saved. -->
+<!-- One row per repository the work touches, and one for the brain if there is one. "Location" is the path on the machine that wrote this note. "Remote" is the URL to clone it from, or "none". "Branch" is the branch the next session checks out, which for a brain that merges through pull requests is its default branch. Write locations, remotes, branches, and commits in code font so the checker can verify them. A dirty tree lists its changed files. For the brain, write `-` under "Commit" and "Working tree", because the brain changes as this handoff is saved. -->
 
 | Repository | Location | Remote | Branch | Commit | Working tree |
 | --- | --- | --- | --- | --- | --- |

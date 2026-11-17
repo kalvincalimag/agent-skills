@@ -16,11 +16,16 @@
 # commit or working tree is "-" is not compared on that column.
 #
 # With --remote, for a handoff to another machine, it also fails on what the
-# next machine cannot get: a path or link missing from its repository's upstream
-# branch, a commit on no remote branch, an "As of" repository with no upstream,
-# unpushed commits, or uncommitted changes, and a note that differs from its
-# pushed copy. Paths under "As of" and "What does not travel" are exempt,
-# because they name local things on purpose.
+# next machine cannot get. For each "As of" row it fetches the row's "Branch"
+# from the remote whose URL is in "Remote", because that branch is what the
+# next machine checks out. It then fails on a row with no remote, a remote
+# branch that does not hold the row's commit, committed changes in a row whose
+# commit is "-" that the remote branch lacks, uncommitted changes, a path or
+# link missing from the remote branch of its repository, a commit on no remote
+# branch, and a note that differs from its copy on the remote branch. Content is
+# compared rather than commits, so a squash-merged pull request passes. Paths
+# under "As of" and "What does not travel" are exempt, because they name local
+# things on purpose.
 #
 # A path is an inline code span with a slash in it that names a file with an
 # extension (`src/app.ts`), ends in a slash (`docs/`), or starts with `./`,
@@ -67,8 +72,8 @@ fail() { printf '%s:%s: %s\n' "$note" "$1" "$2" >&2; failures=$((failures + 1));
 # by tabs. Kinds: heading, content (the first line of content under a heading),
 # code (an inline code span), link (a markdown link target), comment (an HTML
 # comment), placeholder (an <angle-bracket> slot in prose), asof (an "As of"
-# row as location, commit, and working tree, separated by \037). The working
-# tree is "clean", "dirty", or "-".
+# row as location, remote, branch, commit, and working tree, separated by
+# \037). The working tree is "clean", "dirty", or "-".
 read -r -d '' parse <<'AWK'
 function emit(kind, value) { print NR "\t" kind "\t" (cur == "" ? "-" : cur) "\t" value }
 function mark() {
@@ -85,9 +90,11 @@ function as_of_row(line,    n, i, cell, tree) {
   }
   if (!table) {
     table = 1
-    col_location = col_commit = col_tree = 0
+    col_location = col_remote = col_branch = col_commit = col_tree = 0
     for (i = 1; i <= n; i++) {
       if (cells[i] == "Location") col_location = i
+      else if (cells[i] == "Remote") col_remote = i
+      else if (cells[i] == "Branch") col_branch = i
       else if (cells[i] == "Commit") col_commit = i
       else if (cells[i] == "Working tree") col_tree = i
     }
@@ -97,7 +104,7 @@ function as_of_row(line,    n, i, cell, tree) {
   tree = tolower(cells[col_tree])
   if (tree == "") tree = "-"
   else if (tree != "clean" && tree != "-") tree = "dirty"
-  emit("asof", cells[col_location] "\037" cells[col_commit] "\037" tree)
+  emit("asof", cells[col_location] "\037" cells[col_remote] "\037" cells[col_branch] "\037" cells[col_commit] "\037" tree)
 }
 BEGIN { fence = 0; incomment = 0; table = 0; cur = "" }
 {
@@ -187,24 +194,55 @@ find_path() {
   done
 }
 
+# With --remote, the remote branch the next machine checks out for each "As of"
+# repository, as two parallel lists: the repository's top level and the branch
+# as <remote>/<branch>. The branch is "-" when the row failed its own check.
+target_tops=()
+target_branches=()
+
+# Prints the remote branch recorded for the repository at a top level.
+target_for() {
+  local i
+  for ((i = 0; i < ${#target_tops[@]}; i++)); do
+    if [[ "${target_tops[i]}" == "$1" ]]; then
+      printf '%s' "${target_branches[i]}"
+      return 0
+    fi
+  done
+  return 1
+}
+
+# Prints the name of the remote whose URL is the given one.
+remote_named() {
+  local name
+  for name in $(git -C "$1" remote); do
+    if [[ "$(git -C "$1" remote get-url "$name")" == "$2" ]]; then
+      printf '%s' "$name"
+      return 0
+    fi
+  done
+  return 1
+}
+
 # Prints why another machine cannot get the file or folder at an existing path,
-# or nothing when the upstream branch of its repository has it.
+# or nothing when the remote branch of its repository has it.
 unpushed_reason() {
-  local path="$1" dir top upstream rel
+  local path="$1" dir top target rel
   if [[ -d "$path" ]]; then dir="$path"; else dir="$(dirname "$path")"; fi
   if ! top="$(git -C "$dir" rev-parse --show-toplevel 2>/dev/null)"; then
     printf 'is in no repository'
     return 0
   fi
-  if ! upstream="$(git -C "$top" rev-parse --abbrev-ref '@{upstream}' 2>/dev/null)"; then
-    printf 'is in %s, whose branch has no upstream' "$top"
+  if ! target="$(target_for "$top")"; then
+    printf 'is in %s, which has no row under "As of"' "$top"
     return 0
   fi
+  [[ "$target" == - ]] && return 0
   rel="$(git -C "$dir" rev-parse --show-prefix)"
   [[ -d "$path" ]] || rel="$rel$(basename "$path")"
   rel="${rel%/}"
   [[ -z "$rel" ]] && return 0
-  git -C "$top" cat-file -e "$upstream:$rel" 2>/dev/null || printf 'is not in %s' "$upstream"
+  git -C "$top" cat-file -e "refs/remotes/$target:$rel" 2>/dev/null || printf 'is not in %s' "$target"
 }
 
 # With --remote, fails when another machine cannot get a path the note names.
@@ -240,7 +278,7 @@ commit_pushed() {
 # Compares one "As of" row with the repository at its location. A location that
 # is not a local repository is skipped. The path check reports a missing one.
 check_as_of() {
-  local lineno="$1" location="$2" commit="$3" tree="$4" top recorded dirty ahead
+  local lineno="$1" location="$2" remote_url="$3" branch="$4" commit="$5" tree="$6" top recorded="" dirty
   # The second pathspec leaves out the note when this repository holds it, and
   # repeats "." when it does not.
   local others="."
@@ -255,6 +293,7 @@ check_as_of() {
   fi
   if [[ "$commit" =~ $hash_re ]]; then
     if ! recorded="$(git -C "$top" rev-parse -q --verify "$commit^{commit}")"; then
+      recorded=""
       fail "$lineno" "As of: $commit is not a commit in $location"
     elif [[ -n "$(git -C "$top" diff --name-only "$recorded" HEAD -- . "$others")" ]]; then
       fail "$lineno" "As of: $location is at $(git -C "$top" rev-parse --short HEAD), not $commit"
@@ -271,15 +310,68 @@ check_as_of() {
     fail "$lineno" "As of: $location is clean, but the note lists changes"
   fi
   [[ $remote -eq 1 ]] || return 0
-  if ! git -C "$top" rev-parse -q --verify '@{upstream}' >/dev/null; then
-    fail "$lineno" "As of: $location has no upstream branch, so it cannot reach another machine"
+  fetch_target "$lineno" "$location" "$top" "$remote_url" "$branch"
+  target_tops+=("$top")
+  target_branches+=("$fetched")
+  [[ "$fetched" == - ]] || check_remote_branch "$lineno" "$location" "$top" "$fetched" "$commit" "$recorded" "$others"
+}
+
+# With --remote, fetches the branch an "As of" row names from the remote with
+# the row's URL, and sets fetched to it as <remote>/<branch>. Sets fetched to
+# "-" after reporting why it cannot.
+fetched=-
+fetch_target() {
+  local lineno="$1" location="$2" top="$3" remote_url="$4" branch="$5" name
+  fetched=-
+  if [[ -z "$remote_url" || "$remote_url" == none || "$remote_url" == - ]]; then
+    fail "$lineno" "As of: $location has no remote, so it cannot reach another machine"
+  elif [[ -z "$branch" || "$branch" == - ]]; then
+    fail "$lineno" "As of: $location names no branch for the next machine to check out"
+  elif ! name="$(remote_named "$top" "$remote_url")"; then
+    fail "$lineno" "As of: $location has no remote with the URL $remote_url"
+  elif ! git -C "$top" fetch -q "$name" "$branch" </dev/null 2>/dev/null ||
+    ! git -C "$top" rev-parse -q --verify "refs/remotes/$name/$branch" >/dev/null; then
+    fail "$lineno" "As of: $remote_url has no branch $branch"
+  else
+    fetched="$name/$branch"
+  fi
+}
+
+# With --remote, fails when the remote branch would give the next machine
+# something other than what the "As of" row describes.
+check_remote_branch() {
+  local lineno="$1" location="$2" top="$3" target="$4" commit="$5" recorded="$6" others="$7"
+  local base file files=() missing
+  if [[ -n "$recorded" ]]; then
+    if [[ -n "$(git -C "$top" diff --name-only "$recorded" "refs/remotes/$target" -- . "$others")" ]]; then
+      fail "$lineno" "As of: $target is at $(git -C "$top" rev-parse --short "refs/remotes/$target"), not $commit"
+    fi
     return 0
   fi
-  ahead="$(git -C "$top" rev-list --count '@{upstream}..HEAD')"
-  [[ "$ahead" -eq 0 ]] || fail "$lineno" "As of: $location has $ahead commit(s) that are not pushed"
+  [[ "$commit" == - ]] || return 0
+  if ! base="$(git -C "$top" merge-base "refs/remotes/$target" HEAD)"; then
+    fail "$lineno" "As of: $location shares no history with $target"
+    return 0
+  fi
+  while IFS= read -r -d '' file; do
+    files+=("$file")
+  done < <(git -C "$top" diff -z --name-only "$base" HEAD -- . "$others")
+  [[ ${#files[@]} -gt 0 ]] || return 0
+  missing="$(git -C "$top" diff --name-only HEAD "refs/remotes/$target" -- "${files[@]}")"
+  [[ -z "$missing" ]] || fail "$lineno" "As of: $location has committed changes that are not on $target: $(printf '%s' "$missing" | tr '\n' ' ' | sed 's/ $//; s/ /, /g')"
 }
 
 hash_re='^[0-9a-f]{7,40}$'
+records="$(awk "$parse" "$note")"
+
+# "As of" rows go first, because --remote checks every other path against the
+# remote branch of its repository.
+while IFS=$'\t' read -r lineno kind section value; do
+  [[ "$kind" == asof ]] || continue
+  IFS=$'\037' read -r location remote_url branch commit tree <<<"$value"
+  check_as_of "$lineno" "$location" "$remote_url" "$branch" "$commit" "$tree"
+done <<<"$records"
+
 while IFS=$'\t' read -r lineno kind section value; do
   case "$kind" in
     heading)
@@ -293,10 +385,6 @@ while IFS=$'\t' read -r lineno kind section value; do
       ;;
     placeholder)
       fail "$lineno" "placeholder left in: $value"
-      ;;
-    asof)
-      IFS=$'\037' read -r location commit tree <<<"$value"
-      check_as_of "$lineno" "$location" "$commit" "$tree"
       ;;
     code)
       value="$(printf '%s' "$value" | sed -E 's/^[[:space:]]+//; s/[[:space:]]+$//')"
@@ -347,7 +435,7 @@ while IFS=$'\t' read -r lineno kind section value; do
       fi
       ;;
   esac
-done < <(awk "$parse" "$note")
+done <<<"$records"
 
 for section in "${required_sections[@]}"; do
   if [[ "$headings" != *$'\n'"$section"$'\n'* ]]; then
@@ -359,10 +447,12 @@ done
 
 if [[ $remote -eq 1 ]]; then
   reason="$(unpushed_reason "$note_dir/$note_name")"
+  target="$(target_for "$(git -C "$note_dir" rev-parse --show-toplevel 2>/dev/null)")"
   if [[ -n "$reason" ]]; then
     fail 0 "the note $reason"
-  elif ! git -C "$note_dir" diff --quiet '@{upstream}' -- "$note_name" 2>/dev/null; then
-    fail 0 "the note has changes that are not pushed"
+  elif [[ -n "$target" && "$target" != - ]] &&
+    ! git -C "$note_dir" diff --quiet "refs/remotes/$target" -- "$note_name" 2>/dev/null; then
+    fail 0 "the note has changes that are not on $target"
   fi
 fi
 

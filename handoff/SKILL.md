@@ -192,7 +192,7 @@ If no reviewer can be started, or the session cannot fit one more round, skip to
      bash <this skill's folder>/check-note.sh --remote <pickup note> <brain root> <repository root> ...
      ```
 
-     It also fails on a path, link, or commit that no pushed commit has, on an "As of" repository with unpushed commits or uncommitted changes, and on a pickup note that differs from its pushed copy. Paths under "As of" and "What does not travel" are exempt, because they name local things on purpose. Fix each failure, commit, and push again.
+     For each "As of" row, `--remote` fetches "Branch" from the remote whose URL is in "Remote". It checks against that branch. For a brain that merges through pull requests, set "Branch" to the brain's default branch. Run `--remote` after the merge. The check fails when that branch lacks the row's changes, a path, or a link, or holds a different copy of the pickup note. It also fails on a commit that no remote branch holds, and on uncommitted changes. Paths under "As of" and "What does not travel" are exempt, because they name local things on purpose. Fix each failure, commit, and push again.
 
 If the user declines a push, or a repository has no remote, say plainly what cannot cross. A brain that exists only on this machine cannot reach another one. Code that is not pushed can be read about but not continued. Name what is missing from the remote.
 

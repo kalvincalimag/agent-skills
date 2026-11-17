@@ -168,6 +168,8 @@ commit_all "$live" two
 new="$(git -C "$live" rev-parse --short HEAD)"
 mkdir -p "$live/plans"
 live_note="$live/plans/handoff.md"
+live_branch="$(git -C "$live" branch --show-current)"
+live_remote=none
 
 # Writes the live note. Arguments: the "As of" commit and working tree cells,
 # then extra text for "State" and for "What does not travel".
@@ -187,7 +189,7 @@ Ship it.
 
 | Repository | Location | Remote | Branch | Commit | Working tree |
 | --- | --- | --- | --- | --- | --- |
-| live | \`$live\` | none | \`main\` | \`$1\` | $2 |
+| live | \`$live\` | \`$live_remote\` | \`$live_branch\` | \`$1\` | $2 |
 
 ## State
 
@@ -241,11 +243,19 @@ commit_all "$live" "save the note"
 run "$live_note" "$live"
 expect_status 0 "a later commit that changes only the note still matches"
 
-# --remote: the next machine must be able to get everything the note names.
+run --remote "$live_note" "$live"
+expect_status 1 "--remote fails on a repository with no remote"
+expect_out "As of: $live has no remote, so it cannot reach another machine" "the missing remote is reported"
+
+# --remote: the next machine must be able to get everything the note names,
+# from the remote and branch that "As of" names.
 git init -q --bare "$tmp/live.git"
 git -C "$live" remote add origin "$tmp/live.git"
+live_remote="$(git -C "$live" remote get-url origin)"
+upstream="origin/$live_branch"
+write_live_note "$new" clean
+commit_all "$live" "save the note with its remote"
 git -C "$live" push -q -u origin HEAD 2>/dev/null
-upstream="origin/$(git -C "$live" branch --show-current)"
 
 run --remote "$live_note" "$live"
 expect_status 0 "a pushed note passes --remote"
@@ -260,13 +270,82 @@ expect_status 1 "unpushed references fail --remote"
 expect_out "not pushed: ./local.txt is not in $upstream" "an ignored file is reported"
 expect_out "not pushed: $plain/plain.md is in no repository" "a file outside every repository is reported"
 expect_out "commit not on any remote branch: $orphan" "an unpushed commit is reported"
-expect_out "the note has changes that are not pushed" "an unpushed note is reported"
+expect_out "the note has changes that are not on $upstream" "an unpushed note is reported"
 expect_no_out "secret.txt" "What does not travel is exempt"
 expect_out "failed with 4 issue(s)" "each unpushed reference is reported once"
 
-commit_all "$live" "keep the note local"
+printf 'four\n' >>"$live/a.txt"
+commit_all "$live" four
+four="$(git -C "$live" rev-parse --short HEAD)"
+write_live_note "$four" clean
 run --remote "$live_note" "$live"
-expect_out "As of: $live has 1 commit(s) that are not pushed" "an unpushed commit in an As of repository is reported"
+expect_status 1 "an unpushed As of commit fails --remote"
+expect_out "As of: $upstream is at $(git -C "$live" rev-parse --short "$upstream"), not $four" "the branch the next machine gets is reported"
+
+# A brain that merges through pull requests. The next machine reads the
+# default branch, so --remote checks that branch, not the one this session pushed.
+pr="$tmp/pr"
+mkdir -p "$pr/memory" "$pr/planning/active"
+printf '# Memory\n' >"$pr/memory/MEMORY.md"
+git -C "$pr" init -q
+git -C "$pr" config core.autocrlf false
+commit_all "$pr" base
+git init -q --bare "$tmp/pr.git"
+git -C "$pr" remote add origin "$tmp/pr.git"
+git -C "$pr" push -q -u origin HEAD 2>/dev/null
+pr_default="$(git -C "$pr" branch --show-current)"
+git -C "$pr" checkout -q -b handoff
+printf '# Topic\n' >"$pr/memory/topic.md"
+pr_note="$pr/planning/active/note.md"
+cat >"$pr_note" <<EOF
+# Pickup: pull request
+
+## How to pick this up
+
+1. Read this note.
+
+## End goal
+
+Ship it.
+
+## As of
+
+| Repository | Location | Remote | Branch | Commit | Working tree |
+| --- | --- | --- | --- | --- | --- |
+| brain | \`$pr\` | \`$(git -C "$pr" remote get-url origin)\` | \`$pr_default\` | - | - |
+
+## State
+
+Read \`memory/topic.md\`.
+
+## Next steps
+
+1. Run it.
+
+## Fixed decisions
+
+- None.
+
+## Fences
+
+- None.
+EOF
+commit_all "$pr" handoff
+git -C "$pr" push -q -u origin handoff 2>/dev/null
+
+run --remote "$pr_note" "$pr"
+expect_status 1 "an unmerged pull request fails --remote"
+expect_out "not pushed: memory/topic.md is not in origin/$pr_default" "a file only on the pull request branch is reported"
+expect_out "the note is not in origin/$pr_default" "a note only on the pull request branch is reported"
+expect_out "As of: $pr has committed changes that are not on origin/$pr_default: memory/topic.md" "unmerged brain changes are reported"
+
+# Squash-merge the pull request from another clone, as a hosting service would.
+git clone -q "$tmp/pr.git" "$tmp/pr-merge"
+git -C "$tmp/pr-merge" merge -q --squash origin/handoff >/dev/null
+git -C "$tmp/pr-merge" -c user.name=test -c user.email=test@example.com commit -qm "squash the handoff"
+git -C "$tmp/pr-merge" push -q 2>/dev/null
+run --remote "$pr_note" "$pr"
+expect_status 0 "a squash-merged pull request passes --remote without a pull"
 
 if [[ $failures -gt 0 ]]; then
   printf '%s test(s) failed\n' "$failures" >&2
