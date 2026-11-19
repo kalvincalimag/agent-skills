@@ -19,6 +19,7 @@ Reusable skills in the open [Agent Skills](https://agentskills.io) format. They 
 | `plain` | Plain-English responses |
 | `go-all-out-design` | Explicit-only product design and polish workflow |
 | `mascot-design` | Product mascots held to a reference-character quality bar |
+| `product-naming` | Product and project names from metaphor territories, with checked availability |
 | `handoff` | Hand in-progress work to a fresh session or another provider through a brain sync and an opening prompt |
 | `standup` | Spoken standup updates, written to the user's standup block |
 | `new-brain` | Create a local knowledge brain from brain-template, improving the template first |

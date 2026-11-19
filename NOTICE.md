@@ -14,12 +14,15 @@ previously carried by `code-shape`, `type-and-boundary-design`, and `code-cleanu
 `implement`; by `design-exploration` in `plan`; by `debugging-judgment` in `bugfix`; by
 `blast-radius` in `verify`; by `investigation` in `investigate`; and by `pr-mechanics` in `ship`.
 
+`product-naming` was rewritten and condensed in November 2026 from a single upstream skill.
+
 ## Upstream sources
 
 | Included work | Upstream | Copyright | License |
 | --- | --- | --- | --- |
 | The principles consolidated into `implement`, `bugfix`, `test-design`, and `plan`; the slop catalog and technical-writing layers in `writing-discipline`; `investigate`; the blast-radius material in `verify` | [cursor/plugins/pstack](https://github.com/cursor/plugins/tree/main/pstack), via the [pstack-claude](https://github.com/michael-denyer/pstack-claude) port | (c) 2026 Lauren Tan | MIT |
 | The code-slop rules now in `implement` Part 4 and the workflows now in `ship` Part 1 | [cursor/plugins/cursor-team-kit](https://github.com/cursor/plugins/tree/main/cursor-team-kit) | (c) 2026 Cursor | MIT |
+| `product-naming`: its process, reference material, and availability script | [glacierphonk/naming](https://github.com/glacierphonk/naming) | (c) 2026 GlacierPhonk | MIT |
 
 ## MIT License
 

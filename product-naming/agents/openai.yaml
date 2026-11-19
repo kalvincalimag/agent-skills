@@ -1,0 +1,4 @@
+interface:
+  display_name: "Product Naming"
+  short_description: "Name products with metaphors and checked availability"
+  default_prompt: "Use $product-naming to find three to five names for this product, with origin stories and availability checked today."
