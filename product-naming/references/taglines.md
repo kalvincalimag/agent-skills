@@ -1,6 +1,6 @@
 # Taglines
 
-Load this at step 7 to write one or two taglines per finalist. A name and its tagline work as a pair. The name supplies the image and the recall. The tagline answers the question the name leaves open: what does this actually do?
+Load this at step 8 to write one or two taglines per finalist. A name and its tagline work as a pair. The name supplies the image and the recall. The tagline answers the question the name leaves open: what does this actually do?
 
 | Name supplies | Tagline supplies |
 | --- | --- |

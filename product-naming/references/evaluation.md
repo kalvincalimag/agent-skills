@@ -1,6 +1,8 @@
 # Scoring and presenting
 
-Load this at step 6 and keep it for step 7. Score only candidates that cleared the red flags in [anti-patterns.md](anti-patterns.md) and the availability gate in [availability.md](availability.md).
+Load this at step 6 and keep it for step 8. Score only candidates that cleared the red flags in [anti-patterns.md](anti-patterns.md) and the availability gate in [availability.md](availability.md).
+
+The user's tests are gates, not weights. A candidate that fails one is cut, whatever its score.
 
 ## Rubric
 
@@ -27,8 +29,9 @@ Score each criterion from 1 to 5, then multiply by its weight.
 | Global use | Can the audience's languages say it, with no bad meanings? | 1 |
 | Crowding | 5 means no other organizations nearby use it. 1 means it is established in the target industry. | 1 |
 | Family fit | Does it belong beside the existing names? Drop this row for a standalone name. | 1 |
+| Character fit | Does it work as the character's name and match its look and story? Use this row only when the name is shared with a mascot or character. | 2 |
 
-The score is the weighted sum divided by the weighted maximum of the rows used, times 100. With every row, the maximum is 105. Without family fit, it is 100.
+The score is the weighted sum divided by the weighted maximum of the rows used, times 100. The rows that always apply have a maximum of 100. Family fit adds 5 and character fit adds 10, so with every row the maximum is 115.
 
 - 80 or more is exceptional.
 - 70 or more is strong.
@@ -70,6 +73,7 @@ Sound: how it feels said aloud
 Score: N / 100
 Availability (checked YYYY-MM-DD): domain ..., GitHub ..., app store ...
   Each entry says free, taken, a workaround such as getname.com, or unconfirmed.
+Review: "passed every test", or the failures it carries; "unverified" if no fresh reviewer ran
 Risks: trade-offs and anything unchecked
 Taglines: one or two
 Sentence: "Have you tried NAME? It [does what]."
@@ -97,6 +101,7 @@ Before the decision is final, confirm:
 
 - it has a clear origin story;
 - it scored 70 or more;
+- it passed every one of the user's tests in a fresh reviewer's check;
 - it passes the phone test;
 - it is free on every must-have platform, or has an accepted workaround;
 - it matches none of the anti-patterns;

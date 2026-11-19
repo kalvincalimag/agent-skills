@@ -1,6 +1,6 @@
 # Families and product types
 
-Load this at step 1 when the thing being named is a feature, belongs to a family of existing names, is open source or a developer tool, or is an internal tool.
+Load this at step 1 when the thing being named is a feature, belongs to a family of existing names, shares its name with a mascot or character, is open source or a developer tool, or is an internal tool.
 
 ## Name or label?
 
@@ -44,6 +44,30 @@ Family checklist:
 - It cannot be confused with a sibling.
 - It keeps the family's tone.
 - It is pitched at the right level: a name or a label.
+
+## Shared with a mascot or character
+
+When a product and its mascot share one name, people remember them as one. The name then has two jobs: it heads the store listing, and it is what people call the character. Many names that pass every other rule fail the second job. Add these four tests to the brief unless the user sets others:
+
+1. **Character name.** It sounds like something you would call a character: short, warm, and shaped like a pet name, often ending in a vowel or in a -y, -ie, -i, -o, or -oo sound. Verbs, dish names, places, and category words sound like labels, even when they are fun to say.
+2. **Recognized root.** People in every target market can tell what it comes from: a word in the language they share, or a thing known everywhere. A word that only one market knows fails everywhere else.
+3. **Home nod**, when the brief wants one. People in the home market catch a reference to their own culture.
+4. **Fits the character.** It matches the character's existing look and story, so the art needs no change.
+
+A word can be fun and still fail tests 1 or 2. Say every candidate aloud as "I'm ___" before keeping it.
+
+### Plays on a favourite
+
+When the user loves one word and wants versions of it, generate variants with each of these patterns. Keep any limit the user set, such as keeping the word's sound whole.
+
+- **Pet-name ending.** Add -y, -ie, -o, or -oo, the way cuddle becomes cuddly.
+- **Truncation.** Cut the word and end it on a vowel, the way many animal mascots are named.
+- **The audience's own affixes.** Use the nickname endings and prefixes of the audience's language. They give a home nod for free.
+- **Diminutives.** -let, -kin, -kins, the way a booklet is a little book.
+- **Compounds.** Add a short, concrete word: an object from the character's design, or a food.
+- **Blends into known words or phrases.** Fold the word into an idiom or a word people already know, keeping it audible.
+
+Say each variant in a sentence and as a character's name. Drop variants that blur the favourite's sound or meaning.
 
 ## By product type
 
