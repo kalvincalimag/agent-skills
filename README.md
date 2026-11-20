@@ -24,6 +24,7 @@ Reusable skills in the open [Agent Skills](https://agentskills.io) format. They 
 | `standup` | Spoken standup updates, written to the user's standup block |
 | `new-brain` | Create a local knowledge brain from brain-template, improving the template first |
 | `sync-skills` | Sync the skills folder with this repository, and check every skill |
+| `disk-cleanup` | Free disk space safely: measure first, keep live and unsaved work, list the user's choices |
 
 ## Install
 

@@ -36,6 +36,8 @@ Every animation passes three questions, in order. Record the answers for the rev
    | Rare, such as first use, empty states, success, and completion | Delight allowed. The screen's one surprise lives here. |
 
 2. **What is its purpose?** Name one: feedback, spatial consistency (showing where something came from or went), state indication, preventing a jarring change, or explanation in onboarding and marketing. Delight counts only in the rare tier. "It looks good" is not a purpose.
+Fun that is not motion, such as direct manipulation, live previews, voice and character reactions, follows [fun.md](fun.md).
+
 3. **Does it move data the user is reading or acting on?** Charts, tables, amounts, and counts do not move for style. Animate a number only when its value changes because of the user's action, from the old value to the new one.
 
 ## Timing and easing

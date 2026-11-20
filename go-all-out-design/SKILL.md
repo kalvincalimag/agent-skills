@@ -1,6 +1,6 @@
 ---
 name: go-all-out-design
-description: "Use only when the user explicitly invokes $go-all-out-design. Turn a product brief and existing design work into one deeply developed, intuitive, memorable design direction per invocation. Apply a concept-first, restrained, tactile house style with a neutral canvas, borrowed color, purposeful motion, and one crafted surprise per screen without making the product harder to use. Never select this skill implicitly."
+description: "Use only when the user explicitly invokes $go-all-out-design. Turn a product brief and existing design work into one deeply developed, intuitive, memorable design direction per invocation. Apply a concept-first, restrained, tactile house style with a neutral canvas, borrowed color, purposeful motion, one crafted surprise per screen, and fun where it adds value, without making the product harder to use. Never select this skill implicitly."
 disable-model-invocation: true
 argument-hint: "[product, flow, screen, site, or app]"
 ---
@@ -16,9 +16,9 @@ Use this priority order:
 3. The user completes the main task with little effort.
 4. The user can understand, correct, and recover from mistakes.
 5. The product has a clear, memorable identity.
-6. The product feels polished, responsive, or playful where useful.
+6. The product feels polished and responsive, and fun where fun adds value.
 
-A later quality cannot make up for an earlier failure. Visual polish cannot rescue a confusing journey. Novel interaction cannot replace a clear control. Personality cannot replace useful labels. Calm, familiar, conceptually coherent, and carefully finished can be the strongest direction.
+A later quality cannot make up for an earlier failure. Visual polish cannot rescue a confusing journey. Novel interaction cannot replace a clear control. Personality cannot replace useful labels. Calm, familiar, conceptually coherent, and carefully finished can be the strongest direction. But polish alone can still feel like a chore: [references/fun.md](references/fun.md) finds those moments.
 
 ## Workflow
 
@@ -28,7 +28,7 @@ For a full product task, work in this order. Do not force the full process onto 
 2. Make the plain journey work, then run the beginner check in [references/novice-usability.md](references/novice-usability.md).
 3. Choose one direction under the art direction in [references/art-direction.md](references/art-direction.md).
 4. Build the shared parts, then the screens, in the design file.
-5. Add identity, then motion and feedback from [references/aliveness.md](references/aliveness.md).
+5. Add identity, then fun from [references/fun.md](references/fun.md), then motion and feedback from [references/aliveness.md](references/aliveness.md).
 6. Cover states and worst-case content.
 7. Verify with [references/polish-rubric.md](references/polish-rubric.md), then [references/adversarial-review.md](references/adversarial-review.md).
 8. Report, and stop for approval.
@@ -134,6 +134,10 @@ Consider a mascot or recurring character unless that would be inappropriate. Giv
 - If the project's notes put identity work on hold, such as the mascot, use the current placeholder as it is. Do not redesign it or start the `mascot-design` skill.
 - If the project's notes record an approved character, place only its approved poses. When a screen needs a pose that does not exist yet, get it through the `mascot-design` skill's extension step. Never generate the character from text alone.
 
+## Make it fun where it adds value
+
+After the identity is in place, read and apply [references/fun.md](references/fun.md). Run its chore test on every screen. Give each input, decision, empty state, wait, finish, repeated chore and mistake a fun move that adds value, or record why none fits. Fun changes how a required task feels; it never adds scope, pressure or delay.
+
 ## Add motion and feedback
 
 After the direction passes the beginner check, read and apply [references/aliveness.md](references/aliveness.md). It decides what moves, how fast, and with which curve, and it covers gestures, haptics, and reduced motion.
@@ -160,7 +164,7 @@ Before calling a direction approval-ready or a product polished, read and apply 
 
 Inspect the real artifact at the target size with annotations hidden. Do not claim a design is intuitive from the designer's own review.
 
-Do not present a direction for approval if it needs a spoken explanation, hides the next action, depends on a hidden gesture, assumes unexplained knowledge, leaves results unclear, uses polish to hide an unfinished journey, or has no recognizable identity beyond generic components.
+Do not present a direction for approval if it needs a spoken explanation, hides the next action, depends on a hidden gesture, assumes unexplained knowledge, leaves results unclear, uses polish to hide an unfinished journey, makes a required input or decision feel like a chore when a move from [references/fun.md](references/fun.md) fits, or has no recognizable identity beyond generic components.
 
 ## Report
 

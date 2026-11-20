@@ -65,6 +65,11 @@ Look for counterexamples to every claim the design makes.
 - Check every screen against the user's recorded taste, and look for any failing quality of their rejected examples.
 - Check every screen against the Guardrails in the main skill: added scope, mixed imagery, competing numbers, unreal content or typos, and copied reference material.
 
+### Fun
+
+- Run the fun audit in [fun.md](fun.md). Look for any input, decision, empty state, wait, finish or mistake that feels like a chore.
+- Look for playful elements that slow a frequent action, hide meaning, distort a number, or add pressure such as streaks or guilt.
+
 ### Interaction, motion, and accessibility
 
 - Check touch, pointer, keyboard, focus, screen-reader meaning, reduced motion, zoom, and non-color cues where relevant.
@@ -100,7 +105,7 @@ When the user asks for a review of a product that is already built, these steps 
 - Walk the main journeys in the real implementation, from entry to result, using the checks above. Look hardest for anything that could confuse users, slow them down, or cause mistakes.
 - Look in particular for inconsistencies between screens, such as the same action labelled, placed, or confirmed differently. Also look for friction that adds steps or waiting, unclear or missing feedback after an action, and missing states.
 - Ground every finding in the current implementation. Name the screen or flow, and give what the user sees or the steps that reproduce it. Leave out speculative problems.
-- Rank usability gains above cosmetic polish. Skip the Identity checks unless the user asks for them.
+- Rank usability gains above cosmetic polish. Skip the Identity and Fun checks unless the user asks for them.
 - Recommend the simplest effective improvement for each finding, not a broad redesign.
 - Shortlist no more than seven findings, ranked by impact. Keep the rest available on request.
 

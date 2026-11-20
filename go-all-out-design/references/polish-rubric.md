@@ -75,6 +75,7 @@ Score them in this order and fix failures before moving on.
 - The interface is clean, consistent, and suits the audience.
 - Every animation passes the gate in [aliveness.md](aliveness.md) and uses its timing and easing.
 - Reduced-motion behavior is complete.
+- Spacing is measured, not eyeballed: no element sits outside its parent's padding, matching sides have matching padding, and no line ends with a single orphan word.
 
 ### 9. States and worst-case content
 
@@ -98,6 +99,12 @@ Score them in this order and fix failures before moving on.
 - The working result matches the approved design and content, with realistic data rather than a staged example.
 - Layout stays stable and feedback is immediate.
 - Broken links, errors, clipping, overflow, and avoidable delays are fixed.
+
+### 13. Fun and lightness
+
+- Every screen passes the chore test in [fun.md](fun.md), or its record says why no fun move fits.
+- Inputs, decisions, empty states, waits, finishes, repeated chores and mistakes use a fun move that adds value.
+- No fun move breaks the guardrails in [fun.md](fun.md): it stays fast, clear, honest, accessible and free of pressure.
 
 ## Interaction gate
 
