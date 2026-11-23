@@ -62,6 +62,7 @@ Look at these moments first. For each one, apply one move from the table, or rec
 - **Accessible.** Works with a screen reader, larger text and reduced motion. A dial also accepts typed input and step buttons.
 - **Wears well.** Picture the 50th use. If the moment would annoy by then, make it quieter or rarer.
 - **Fits the audience.** Humour and references suit the user's culture and the weight of the task. Health, money and safety moments stay calm and exact.
+- **Calm at rest.** Fun lives in moments, not on every row. A playful object repeated across a list is clutter; see [clean.md](clean.md).
 - **Scope.** Fun changes how a required task feels. It does not add features. Propose a new feature separately, as added scope.
 
 ## Review

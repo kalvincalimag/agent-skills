@@ -65,6 +65,12 @@ Look for counterexamples to every claim the design makes.
 - Check every screen against the user's recorded taste, and look for any failing quality of their rejected examples.
 - Check every screen against the Guardrails in the main skill: added scope, mixed imagery, competing numbers, unreal content or typos, and copied reference material.
 
+### Clean
+
+- Measure the busiest everyday screens against the targets in [clean.md](clean.md), and list what makes each miss.
+- Look for camouflaged actions, cropped pictures, outlines and nested cards that could become fills and spacing, and more than one saturated block per screen.
+- Check that the clean pass left one signature identity element on every screen.
+
 ### Fun
 
 - Run the fun audit in [fun.md](fun.md). Look for any input, decision, empty state, wait, finish or mistake that feels like a chore.

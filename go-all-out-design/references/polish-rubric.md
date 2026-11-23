@@ -106,6 +106,12 @@ Score them in this order and fix failures before moving on.
 - Inputs, decisions, empty states, waits, finishes, repeated chores and mistakes use a fun move that adds value.
 - No fun move breaks the guardrails in [fun.md](fun.md): it stays fast, clear, honest, accessible and free of pressure.
 
+### 14. Calm and clean
+
+- Resting screens meet the targets in [clean.md](clean.md), or the record names the reason: strong edges 7% or less, quiet area 60% or more, pictures 4 or fewer, outlines 3 or fewer, text sizes 5 or fewer, one level of cards.
+- Each screen has one hero and one signature identity element, not several competing blocks.
+- No action is camouflaged against its background, and no picture is cropped by a mask, ring or card edge.
+
 ## Interaction gate
 
 For an interactive product, static screens can support review but cannot prove interaction. Each important action must show its response loop, quiet or not. Decorative animation does not count. If the design tool cannot demonstrate an important behavior, build a small working prototype for that part, after the beginner gate passes.

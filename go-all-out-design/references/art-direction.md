@@ -7,8 +7,8 @@ These rules define the skill's house style. The main skill sets their rank: they
 1. **Concept first.** Choose one concrete metaphor, such as an alarm clock or paper and physical objects. Make it structural. It must shape layout, components, illustration or objects, and motion. A concept that appears only in the name, headline, copy, or annotations does not count.
 2. **Restraint with one surprise.** Keep every screen or section calm: stable layout, clear state changes, and generous whitespace. Give it at most one crafted surprise, such as an expressive interaction, a crafted object, a mascot scene, or a delightful response. The surprise makes the concept memorable and never slows or competes with the task.
 3. **Thematic progress.** On long scrolling pages, such as a marketing site, replace or supplement the ordinary scrollbar with an on-theme indicator derived from the metaphor, such as a dial, ruler, or ticket edge. It must show real progress, stay unobtrusive, and have a reduced-motion treatment. In app screens, keep the platform's scroll indicator.
-4. **Neutral canvas, borrowed color.** Build on grayscale. Color enters through illustrations, objects, content, or one warm accent, never through a multicolor interface palette. Draw a small set of illustrations of the product's own subject matter, such as dishes for a meal planner or places for a travel app, in the product's one imagery style. Save them as components and let them carry most of the color.
-5. **Hierarchy through contrast.** Prefer weight, spacing, alignment, and tonal contrast over many sizes or colors. Use the text tokens below.
+4. **Neutral canvas, borrowed color.** Build on grayscale, with an untinted near-white canvas and white cards separated by tone, as [clean.md](clean.md) describes. Color enters through illustrations, objects, content, or one warm accent, never through a multicolor interface palette. Draw a small set of illustrations of the product's own subject matter, such as dishes for a meal planner or places for a travel app, in the product's one imagery style. Save them as components and let them carry most of the color.
+5. **Hierarchy through contrast.** Prefer weight, spacing, alignment, and tonal contrast over many sizes or colors. Give each screen one hero that is clearly the largest, and keep the rest small and light. Use the text tokens below.
 6. **Show, do not tell.** Demonstrate value with live interactions, realistic product tiles, object behavior, or mascot scenes. Replace walls of claims and feature bullets with evidence.
 7. **Tactile materiality.** Suggest a physical surface with restrained grain, torn or zigzag edges, tape stripes, cut-paper layers, or realistic objects against flat interface. Material cues serve the metaphor and never reduce readability.
 8. **Character as a system.** If a mascot appears, use the same character everywhere, with one prop per idea and a useful role. Stage it inside the product's own objects and scenes, not peeking over a card edge, which is a common reference pose. The `mascot-design` skill designs the character, and the main skill decides its jobs.
@@ -26,8 +26,8 @@ The neutral canvas below is the default. When the user asks for a different canv
 - `canvas/well` `#F4F4F4` / `#1C1C1C`: recessed areas inside a raised card, such as chips and empty-state panels.
 - `canvas/sunken` `#E2E2E2` / `#2A2A2A`: recessed areas on the base, such as inactive tabs and segmented-control tracks.
 - `canvas/shape` `#D8D8D8` / `#2E2E2E`: large decorative shapes on the canvas.
-- `canvas/faint` `#BFBFBF` / `#4A4A4A`: faint decoration and dashed outlines of empty slots.
-- `canvas/edge` `#E0E0E0` / `#333333`: hairline dividers and card outlines.
+- `canvas/faint` `#BFBFBF` / `#4A4A4A`: faint decoration, and the dashed outline of a drop target.
+- `canvas/edge` `#E0E0E0` / `#333333`: hairline dividers between rows. Cards and chips get no outline.
 - `text/strong` `#111111` / `#F2F2F2` for headings, `text/body` `#6B6B6B` / `#A3A3A3` for body copy, and a quieter gray for metadata.
 - Shadows: soft (y 4, blur 16, black 6%) and lifted (y 12, blur 32, black 12%).
 
@@ -36,7 +36,7 @@ The canvas is flat by default. Add a subtle monochrome grain only when the metap
 - **Accent:** one restrained warm family, such as orange, amber, rust, or a warm red. Borrow other color only from meaningful illustrations, objects, or content.
 - **Type:** a heavy rounded geometric display face, such as Nunito Black, for playful moments, and a neutral grotesk, such as Inter, at smaller sizes. Tighten the tracking of large headings slightly. Keep body lines to about 65 characters.
 - **Shapes:** pill controls, cards with roughly 24 to 32 px radii, and soft or no shadows.
-- **Buttons:** one solid primary pill filled with the accent, or near-black when the accent fails text contrast. An outlined secondary pill with an accent-colored label.
+- **Buttons:** one solid primary pill filled with the accent, or near-black when the accent fails text contrast. A secondary action is a white pill on the canvas or accent-colored text with at least 3:1 contrast, never a light grey pill on a light grey canvas.
 - **Lists:** label left, muted metadata right, and hairline dividers between rows.
 
 ## Identity layer

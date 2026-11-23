@@ -1,6 +1,6 @@
 ---
 name: go-all-out-design
-description: "Use only when the user explicitly invokes $go-all-out-design. Turn a product brief and existing design work into one deeply developed, intuitive, memorable design direction per invocation. Apply a concept-first, restrained, tactile house style with a neutral canvas, borrowed color, purposeful motion, one crafted surprise per screen, and fun where it adds value, without making the product harder to use. Never select this skill implicitly."
+description: "Use only when the user explicitly invokes $go-all-out-design. Turn a product brief and existing design work into one deeply developed, intuitive, memorable design direction per invocation. Apply a concept-first, restrained, tactile house style with a neutral canvas, borrowed color, calm and clean resting screens, purposeful motion, one crafted surprise per screen, and fun where it adds value, without making the product harder to use. Never select this skill implicitly."
 disable-model-invocation: true
 argument-hint: "[product, flow, screen, site, or app]"
 ---
@@ -28,7 +28,7 @@ For a full product task, work in this order. Do not force the full process onto 
 2. Make the plain journey work, then run the beginner check in [references/novice-usability.md](references/novice-usability.md).
 3. Choose one direction under the art direction in [references/art-direction.md](references/art-direction.md).
 4. Build the shared parts, then the screens, in the design file.
-5. Add identity, then fun from [references/fun.md](references/fun.md), then motion and feedback from [references/aliveness.md](references/aliveness.md).
+5. Keep resting screens calm with [references/clean.md](references/clean.md), then add identity, then fun from [references/fun.md](references/fun.md), then motion and feedback from [references/aliveness.md](references/aliveness.md).
 6. Cover states and worst-case content.
 7. Verify with [references/polish-rubric.md](references/polish-rubric.md), then [references/adversarial-review.md](references/adversarial-review.md).
 8. Report, and stop for approval.
@@ -95,7 +95,7 @@ Explain why the direction is the strongest fit, including its risks and hypothes
 These hold for every direction, alongside the art direction.
 
 - **Scope.** Add no feature, screen, or control the approved requirements do not include, such as an AI chat bar, streaks, badges, or scores. Propose it separately and flag it as added scope.
-- **One imagery style.** Use one imagery style for content across the product. Do not mix photographs with drawn characters or illustrations on the same screen.
+- **One imagery style.** Use one imagery style for content across the product, and one icon style for controls. Do not mix photographs with drawn characters or illustrations on the same screen, or put 3D pictures and line icons side by side in one row.
 - **Quiet numbers.** Show the one number that drives the user's next decision and move the rest into a detail view. Prefer a plain sentence to a chart. Every chart says what it measures and in what units. Avoid stacked or multi-ring gauges.
 - **Real content.** Use real day names and dates and everyday content for the audience and place, not aspirational stock imagery or slogans. Spell-check every visible string before taking review screenshots.
 - **References inform, never copied.** Take principles from references. Never copy a reference's layout, assets, images, text, palette, or signature components. Before building from a reference's qualities, write down how each quality translates into the product's own world. For example, the reference's black tiles become a material from the product's metaphor, and its accent pill tags become the product's own kind of label. Build the translation, not the original. Before presenting, run the replica check in [references/adversarial-review.md](references/adversarial-review.md).
@@ -134,6 +134,10 @@ Consider a mascot or recurring character unless that would be inappropriate. Giv
 - If the project's notes put identity work on hold, such as the mascot, use the current placeholder as it is. Do not redesign it or start the `mascot-design` skill.
 - If the project's notes record an approved character, place only its approved poses. When a screen needs a pose that does not exist yet, get it through the `mascot-design` skill's extension step. Never generate the character from text alone.
 
+## Keep resting screens calm and clean
+
+Read and apply [references/clean.md](references/clean.md) before identity and fun, and again before presenting. Resting screens get one hero, a neutral canvas, one accent, one level of cards, almost no outlines, and pictures only where the content is the subject. Keep one signature identity element per screen. Check every action for contrast against its own background, and every picture for cropping.
+
 ## Make it fun where it adds value
 
 After the identity is in place, read and apply [references/fun.md](references/fun.md). Run its chore test on every screen. Give each input, decision, empty state, wait, finish, repeated chore and mistake a fun move that adds value, or record why none fits. Fun changes how a required task feels; it never adds scope, pressure or delay.
@@ -164,7 +168,7 @@ Before calling a direction approval-ready or a product polished, read and apply 
 
 Inspect the real artifact at the target size with annotations hidden. Do not claim a design is intuitive from the designer's own review.
 
-Do not present a direction for approval if it needs a spoken explanation, hides the next action, depends on a hidden gesture, assumes unexplained knowledge, leaves results unclear, uses polish to hide an unfinished journey, makes a required input or decision feel like a chore when a move from [references/fun.md](references/fun.md) fits, or has no recognizable identity beyond generic components.
+Do not present a direction for approval if it needs a spoken explanation, hides the next action, depends on a hidden gesture, assumes unexplained knowledge, leaves results unclear, uses polish to hide an unfinished journey, makes a required input or decision feel like a chore when a move from [references/fun.md](references/fun.md) fits, misses the clean targets in [references/clean.md](references/clean.md) without a reason, camouflages an action against its background, crops content by accident, or has no recognizable identity beyond generic components.
 
 ## Report
 
