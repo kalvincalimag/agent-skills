@@ -17,6 +17,7 @@ Two clean reference apps, a travel booking app and an alarm app, were measured a
 | Outlines per screen | almost none | 16–25 |
 | Text sizes per screen | 4–5 | 6–10 |
 | Levels of nested cards | 1 | up to 4 |
+| Visible text | 0–1 short lines; mostly labels, numbers and data | about 400 characters, many full sentences |
 
 A clean pass on the draft lowered strong edges to about 7.5% and raised quiet area to about 59%, and the user preferred the result at once. Treat the targets below as review gates, not as style.
 
@@ -31,6 +32,7 @@ A clean pass on the draft lowered strong edges to about 7.5% and raised quiet ar
 7. **Few text styles.** Use four or five sizes per screen and two weights. Secondary text uses one grey.
 8. **Few shapes.** Use two or three corner radii (card, control, pill) and one icon style.
 9. **Quiet space is a feature.** At least 60% of a resting screen should be quiet.
+10. **Show the workflow, don't explain it.** People skim; they do not read sentences. On a resting screen use no sentences and at most one short line of 8 words or fewer, only where it prevents a mistake. Titles are 1–4 words, labels and buttons 1–3 words, and metadata is short tokens ("2 servings · 25 min", "12 items"). Let structure, position, pictures, numbers, checkmarks and a step guide carry the meaning. Delete instructions such as "Tap a dish to…" when the control already shows it. Sheets get a short title and options of 2–5 words; money, health and safety keep each price, date, limit and consequence, as one short line, not a paragraph.
 
 ## Keep identity while cleaning
 
@@ -44,6 +46,7 @@ Clean does not mean generic. Keep one signature identity element on each screen,
 - Outlined chips, outlined amount pills, and dashed "add" boxes.
 - A picture or sticker on every row; 3D pictures and line icons side by side in the same row.
 - Several bold headlines competing on one screen.
+- Sentences that explain what the layout already shows, helper paragraphs under titles, and labels longer than the thing they label.
 - A card inside a card inside a card.
 - **Camouflaged actions.** A light grey button on a light grey canvas disappears. Every action needs contrast against its own background: the primary action is filled with the accent; a secondary action is a white surface on the canvas, or accent-coloured text that meets 3:1 contrast.
 - **Cropped content.** A circular mask, a ring or a card edge that cuts through a dish, an illustration or a sticker's outline. Keep the whole object inside its frame with padding, or crop on purpose as a full-bleed image, never halfway.
@@ -59,7 +62,7 @@ Measure at the target size with a screenshot, before and after:
 
 1. Strong edges: the share of pixels where an edge filter exceeds a fixed threshold. Target 7% or less on resting screens.
 2. Quiet area: the share of 10 px blocks whose luminance standard deviation is below 2. Target 60% or more.
-3. Count pictures, outlines (excluding checkboxes, inputs and selected states), text sizes, colour families and nesting depth from the design file. Targets: pictures 4 or fewer except in pickers and galleries, outlines 3 or fewer, text sizes 5 or fewer, nesting 1.
+3. Count pictures, outlines (excluding checkboxes, inputs and selected states), text sizes, colour families, nesting depth and visible characters from the design file. Targets: pictures 4 or fewer except in pickers and galleries, outlines 3 or fewer, text sizes 5 or fewer, nesting 1, about 150 visible characters or fewer on a resting screen and no full sentences (lists may need more for their items).
 
 A screen that misses a target needs a reason, such as a picker, a gallery or a dense data view the requirements call for.
 

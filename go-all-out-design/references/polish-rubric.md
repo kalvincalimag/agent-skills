@@ -110,6 +110,7 @@ Score them in this order and fix failures before moving on.
 
 - Resting screens meet the targets in [clean.md](clean.md), or the record names the reason: strong edges 7% or less, quiet area 60% or more, pictures 4 or fewer, outlines 3 or fewer, text sizes 5 or fewer, one level of cards.
 - Each screen has one hero and one signature identity element, not several competing blocks.
+- A resting screen can be understood without reading a sentence: labels, numbers, pictures and structure carry the workflow.
 - No action is camouflaged against its background, and no picture is cropped by a mask, ring or card edge.
 
 ## Interaction gate
