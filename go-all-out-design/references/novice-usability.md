@@ -14,6 +14,14 @@ Show the first useful screen for five seconds, then hide it. Ask:
 
 Fail the check if the reviewer needs a spoken explanation, mistakes decoration for the main action, or cannot name the next step.
 
+## First use without help
+
+- **No tours or coach marks.** If a first screen needs a guided tour, arrows or a step guide to be understood, the screen fails. Fix the screen.
+- **Open the real product, already filled.** The first open lands on the same home screen and navigation a returning user has. It is filled with a clearly labelled sample, so the person sees what a finished result looks like. Offer Keep or Start empty, and change nothing real until Keep.
+- **Ask for an account when saving matters.** Unless the requirements need it earlier, ask the first time the person saves something worth keeping. Ask softly, with a way to decline, and never before they have seen value.
+
+Fail the first look if the reviewer can only explain the product after reading a tour or a guide.
+
 ## Main task
 
 Give the reviewer one goal in everyday language. Do not tell them which control to use. Watch for:

@@ -71,6 +71,18 @@ Look for counterexamples to every claim the design makes.
 - Look for camouflaged actions, cropped pictures, outlines and nested cards that could become fills and spacing, and more than one saturated block per screen.
 - Check that the clean pass left one signature identity element on every screen.
 
+### Native feel and alignment
+
+- Check every phone screen against [native-feel.md](native-feel.md). Look for:
+  - menus floating mid-screen;
+  - glyphs inside circles;
+  - the wrong control for a choice;
+  - repeated weekday rows;
+  - decorated calendar cells.
+- Look for rows that start at different insets, headers inside groups on one screen but above them on its sibling, extra side insets, lopsided pairs, dead space, cards parked far from their content, and clipped descenders.
+- Compare look-alike screens and an element built by different workers. They must match.
+- Check that the review page holds only review material, with no stray layers, and that captions hold no change notes.
+
 ### Fun
 
 - Run the fun audit in [fun.md](fun.md). Look for any input, decision, empty state, wait, finish or mistake that feels like a chore.

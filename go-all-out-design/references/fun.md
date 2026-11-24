@@ -53,6 +53,20 @@ Look at these moments first. For each one, apply one move from the table, or rec
 - **Voice.** One warm, specific line beats a paragraph. Be playful, but never less precise about what an action does.
 - **Sound and haptics.** Optional and subtle, tied to an action, and off when the system says so.
 
+## Turn forms into pictures
+
+A screen of label-and-value rows, such as "Who's eating: 2 people ›", reads as a corporate form. When a screen sets something up or asks for a choice, show the real things instead:
+
+- **People** as their own avatars or objects, with their names. **Food, products or places** as the product's stickers or pictures. **Empty slots** as the empty object waiting to be filled, such as an empty plate for each day.
+- **A choice between two outcomes** as two equal picture tiles, each with a short label and one line of consequence. The chosen tile gets the accent ring. Do not use two text buttons.
+- **The effect of an action, as a picture.**
+  - Copying a week: two mini weeks with an arrow between them, and any clash ringed.
+  - Saved items: cards that preview their contents.
+  - A range choice: tiles whose mini calendars grow from one row to five.
+- **An explanation of data** as meters against the person's limits, with a check where a value fits. Every number, limit and consequence stays visible.
+
+Keep these screens calm: one picture style, one accent and no mascot where the rules exclude it, such as next to an AI feature or a health limit.
+
 ## Guardrails
 
 - **Frequency decides.** Use the frequency table in [aliveness.md](aliveness.md). Frequent actions stay fast, and their fun is a crisp response, not a show. Bigger moments are for rare events.

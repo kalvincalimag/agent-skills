@@ -1,6 +1,6 @@
 ---
 name: go-all-out-design
-description: "Use only when the user explicitly invokes $go-all-out-design. Turn a product brief and existing design work into one deeply developed, intuitive, memorable design direction per invocation. Apply a concept-first, restrained, tactile house style with a neutral canvas, borrowed color, calm and clean resting screens, purposeful motion, one crafted surprise per screen, and fun where it adds value, without making the product harder to use. Never select this skill implicitly."
+description: "Use only when the user explicitly invokes $go-all-out-design. Turn a product brief and existing design work into one deeply developed, intuitive, memorable design direction per invocation. Apply a concept-first, restrained, tactile house style with a neutral canvas, borrowed color, calm and clean resting screens, a native platform feel, purposeful motion, one crafted surprise per screen, and fun where it adds value, without making the product harder to use. Never select this skill implicitly."
 disable-model-invocation: true
 argument-hint: "[product, flow, screen, site, or app]"
 ---
@@ -28,7 +28,7 @@ For a full product task, work in this order. Do not force the full process onto 
 2. Make the plain journey work, then run the beginner check in [references/novice-usability.md](references/novice-usability.md).
 3. Choose one direction under the art direction in [references/art-direction.md](references/art-direction.md).
 4. Build the shared parts, then the screens, in the design file.
-5. Keep resting screens calm with [references/clean.md](references/clean.md), then add identity, then fun from [references/fun.md](references/fun.md), then motion and feedback from [references/aliveness.md](references/aliveness.md).
+5. Keep resting screens calm with [references/clean.md](references/clean.md) and native to the platform with [references/native-feel.md](references/native-feel.md). Then add identity, then fun from [references/fun.md](references/fun.md), then motion and feedback from [references/aliveness.md](references/aliveness.md).
 6. Cover states and worst-case content.
 7. Verify with [references/polish-rubric.md](references/polish-rubric.md), then [references/adversarial-review.md](references/adversarial-review.md).
 8. Report, and stop for approval.
@@ -66,6 +66,9 @@ Before exploring the visual direction, design the shortest understandable path f
 - Keep essential controls visible. Gestures may be shortcuts, never the only path.
 - Use helpful defaults and support review, correction, undo, and retry.
 - Do not use onboarding text to explain an interface that should explain itself.
+- No tours, coach marks or step guides. If a screen needs one, fix the screen.
+- First use opens the real product, with the navigation a returning user has, already filled with a clearly labelled sample to keep or clear.
+- Ask for an account when saving first matters, with a way to decline, unless the requirements need it earlier. See "First use without help" in [references/novice-usability.md](references/novice-usability.md).
 
 The interface must make sense without designer annotations. Run the beginner check in [references/novice-usability.md](references/novice-usability.md) before choosing a visual direction, and fix the journey if it fails.
 
@@ -96,7 +99,7 @@ These hold for every direction, alongside the art direction.
 
 - **Scope.** Add no feature, screen, or control the approved requirements do not include, such as an AI chat bar, streaks, badges, or scores. Propose it separately and flag it as added scope.
 - **One imagery style.** Use one imagery style for content across the product, and one icon style for controls. Do not mix photographs with drawn characters or illustrations on the same screen, or put 3D pictures and line icons side by side in one row.
-- **Quiet numbers.** Show the one number that drives the user's next decision and move the rest into a detail view. Prefer a plain sentence to a chart. Every chart says what it measures and in what units. Avoid stacked or multi-ring gauges.
+- **Quiet numbers.** Show the one number that drives the user's next decision and move the rest into a detail view. On a resting screen, prefer one number to a chart. When a trend is the point, draw the chart as [references/charts.md](references/charts.md) describes. Every chart says what it measures and in what units. Avoid stacked or multi-ring gauges.
 - **Real content.** Use real day names and dates and everyday content for the audience and place, not aspirational stock imagery or slogans. Spell-check every visible string before taking review screenshots.
 - **References inform, never copied.** Take principles from references. Never copy a reference's layout, assets, images, text, palette, or signature components. Before building from a reference's qualities, write down how each quality translates into the product's own world. For example, the reference's black tiles become a material from the product's metaphor, and its accent pill tags become the product's own kind of label. Build the translation, not the original. Before presenting, run the replica check in [references/adversarial-review.md](references/adversarial-review.md).
 - **Ask before spending.** Ask before using paid credits, a paid model, or a paid plan.
@@ -112,6 +115,10 @@ Put the direction on its own new page or file. Do not edit, move, or delete exis
 - **One story.** All screens follow one continuous scenario with realistic content for the product's audience and place. A detail that appears on one screen must be explained by an earlier screen.
 - **Prototype the motion.** Set every prototype transition's curve and duration from [references/aliveness.md](references/aliveness.md). Never leave the tool's default.
 - **Small batches.** Build at most three screens at a time. After each batch, screenshot the screens at their target size and fix clipping, overlap, contrast, and missing elements before continuing. If a build step fails partway, remove what it left behind before retrying.
+- **Review page, review material only.** Samples, explorations, prototype-only copies and scratch layers stay off the page the user reviews; move them to an archive page. Before moving a frame, repoint every prototype link into it to the matching review screen. Delete empty layers that scripts leave behind.
+- **Captions describe, annotations record.** A caption says what the screen shows. Change notes and build notes go in the frame's annotation, never in the caption.
+- **Look-alikes change together.** Screens that show the same thing in two states, such as a tab and its first-use version, change in the same pass. So do a component and any detached copies of it.
+- **Close gaps, leave overlays alone.** When hiding or resizing a node in a frame without auto layout, move the content below it to close the gap. Never move sheets, menus, scrims, toasts or floating bars while doing so.
 
 Once the shared parts exist, building or restyling many screens is parallel work. When subagents or separate sessions are available, use them:
 
@@ -119,7 +126,7 @@ Once the shared parts exist, building or restyling many screens is parallel work
 2. Split the remaining screens into groups that share no screens, such as by flow. Give each worker its screens, the pilot's node IDs, the rules from this skill and the project's taste notes, and the checks it must run: screenshots in every mode and a spacing measurement.
 3. Give each shared component and variable one owner. Workers edit only their own screens and assigned components, and report a needed change to a shared part instead of making it.
 4. Do independent work, such as notes and briefs, while the workers run.
-5. Integrate the results yourself: check cross-screen consistency, then update the About and Identity boards and the captions.
+5. Integrate the results yourself. Sweep for consistency: the same element is built the same way on every screen, whichever worker built it. Then update the About and Identity boards and the captions.
 
 Do not split a small correction or a single screen across workers. Without a parallel tool, work in the same order sequentially.
 
@@ -137,6 +144,10 @@ Consider a mascot or recurring character unless that would be inappropriate. Giv
 ## Keep resting screens calm and clean
 
 Read and apply [references/clean.md](references/clean.md) before identity and fun, and again before presenting. Resting screens get one hero, a neutral canvas, one accent, one level of cards, almost no outlines, and pictures only where the content is the subject. Keep one signature identity element per screen. Check every action for contrast against its own background, and every picture for cropping.
+
+## Feel native on the platform
+
+Read and apply [references/native-feel.md](references/native-feel.md) for every phone screen. Use the platform's titles, grouped lists, sheets, switches, date strips and system greys. Match each choice to its control. Keep the signature elements the user likes, and ask before replacing one with a stock component.
 
 ## Make it fun where it adds value
 
@@ -166,7 +177,7 @@ Use common platform patterns when they improve familiarity. Break a convention o
 
 Before calling a direction approval-ready or a product polished, read and apply [references/polish-rubric.md](references/polish-rubric.md), then run [references/adversarial-review.md](references/adversarial-review.md). The adversarial review holds the rules for fresh reviewers and for reviewing again after changes.
 
-Inspect the real artifact at the target size with annotations hidden. Do not claim a design is intuitive from the designer's own review.
+Inspect the real artifact at the target size with annotations hidden. Judge layout from a full-size screenshot, because a downscaled render can hide a problem or invent one. Do not claim a design is intuitive from the designer's own review.
 
 Do not present a direction for approval if it needs a spoken explanation, hides the next action, depends on a hidden gesture, assumes unexplained knowledge, leaves results unclear, uses polish to hide an unfinished journey, makes a required input or decision feel like a chore when a move from [references/fun.md](references/fun.md) fits, misses the clean targets in [references/clean.md](references/clean.md) without a reason, camouflages an action against its background, crops content by accident, or has no recognizable identity beyond generic components.
 
@@ -174,9 +185,15 @@ Do not present a direction for approval if it needs a spoken explanation, hides 
 
 Open with a short summary of a few bullets. Then say what was produced, tested, changed, and left unverified, and name each screen and mode that did not get a fresh review. End with any rule in this skill that was unclear, conflicted with another rule, or could not be followed, so the skill can be fixed.
 
+Ask each open decision on its own, so it can be answered without earlier context:
+- name the screen and what it does;
+- give a concrete example of the situation;
+- list the options, with their tradeoffs;
+- recommend one.
+
 ## Refine a direction
 
-When the user reviews a direction and raises concerns, answer each one with a recommendation, a short reason, and the design change it needs. Flag any recommendation that adds scope beyond the approved requirements. Wait for approval before changing the design. Reuse existing patterns and components before adding screens or controls.
+When the user reviews a direction and raises concerns, answer each one with a recommendation, a short reason, and the design change it needs. Flag any recommendation that adds scope beyond the approved requirements. When the user asks to remove something that may not be in the requirements, check the requirements first and answer with the source before removing anything. Wait for approval before changing the design. Reuse existing patterns and components before adding screens or controls.
 
 When the user asks to revamp the identity of an existing direction, such as when it looks plain, white, or repetitive, keep its journey, labels, and approved decisions. Change the identity layer described in [references/art-direction.md](references/art-direction.md), in place on the direction's page, and record what changed.
 

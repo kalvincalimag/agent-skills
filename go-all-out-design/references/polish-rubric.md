@@ -69,6 +69,11 @@ Score them in this order and fix failures before moving on.
 - Controls look actionable and behave familiarly.
 - Essential actions have a visible tap, click, or keyboard path.
 - Focus, pressed, selected, disabled, and keyboard behavior are covered where relevant, and hover on pointer devices.
+- Phone screens follow [native-feel.md](native-feel.md):
+  - each choice uses the control that matches it;
+  - menus and options open as bottom sheets;
+  - lists, switches, navigation buttons and date strips follow the platform.
+- Signature elements the user likes are kept.
 
 ### 8. Motion and polish
 
@@ -76,6 +81,8 @@ Score them in this order and fix failures before moving on.
 - Every animation passes the gate in [aliveness.md](aliveness.md) and uses its timing and easing.
 - Reduced-motion behavior is complete.
 - Spacing is measured, not eyeballed: no element sits outside its parent's padding, matching sides have matching padding, and no line ends with a single orphan word.
+- Toasts, custom floating buttons and sign-in buttons are finished to system quality, as "Small parts, finished" in [clean.md](clean.md) describes.
+- Charts follow [charts.md](charts.md).
 
 ### 9. States and worst-case content
 
@@ -105,6 +112,7 @@ Score them in this order and fix failures before moving on.
 - Every screen passes the chore test in [fun.md](fun.md), or its record says why no fun move fits.
 - Inputs, decisions, empty states, waits, finishes, repeated chores and mistakes use a fun move that adds value.
 - No fun move breaks the guardrails in [fun.md](fun.md): it stays fast, clear, honest, accessible and free of pressure.
+- Setup and choice screens show the real things as pictures, as "Turn forms into pictures" in [fun.md](fun.md) describes, not rows of labels and values.
 
 ### 14. Calm and clean
 
@@ -112,6 +120,12 @@ Score them in this order and fix failures before moving on.
 - Each screen has one hero and one signature identity element, not several competing blocks.
 - A resting screen can be understood without reading a sentence: labels, numbers, pictures and structure carry the workflow.
 - No action is camouflaged against its background, and no picture is cropped by a mask, ring or card edge.
+- Every screen passes "Align and balance" in [clean.md](clean.md):
+  - one left edge inside each card or sheet, and one side margin;
+  - symmetric alternatives;
+  - no dead space or floating cards;
+  - no clipped text.
+- Labels pass "Words in the layout": no look-alike options, no empty placeholder rows, and one-line disclaimers.
 
 ## Interaction gate
 

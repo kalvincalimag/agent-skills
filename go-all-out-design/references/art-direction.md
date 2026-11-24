@@ -19,7 +19,7 @@ These rules define the skill's house style. The main skill sets their rank: they
 
 ## Visual tokens
 
-The neutral canvas below is the default. When the user asks for a different canvas, or the project's notes record one, use that instead. Save every token as a variable, as the main skill describes. Values are light / dark.
+The neutral canvas below is the default. When the user asks for a different canvas, or the project's notes record one, use that instead. When the user asks for a platform's native feel, use that platform's system greys from [native-feel.md](native-feel.md). Save every token as a variable, as the main skill describes. Values are light / dark.
 
 - `canvas/base` `#EDEDED` / `#161616`: page and screen background.
 - `canvas/raised` `#FFFFFF` / `#222222`: cards, sheets, and pills.
@@ -37,7 +37,7 @@ The canvas is flat by default. Add a subtle monochrome grain only when the metap
 - **Type:** a heavy rounded geometric display face, such as Nunito Black, for playful moments, and a neutral grotesk, such as Inter, at smaller sizes. Tighten the tracking of large headings slightly. Keep body lines to about 65 characters.
 - **Shapes:** pill controls, cards with roughly 24 to 32 px radii, and soft or no shadows.
 - **Buttons:** one solid primary pill filled with the accent, or near-black when the accent fails text contrast. A secondary action is a white pill on the canvas or accent-colored text with at least 3:1 contrast, never a light grey pill on a light grey canvas.
-- **Lists:** label left, muted metadata right, and hairline dividers between rows.
+- **Lists:** label left, muted metadata right, and hairline dividers between rows, in inset groups with headers above them, as [native-feel.md](native-feel.md) describes.
 
 ## Identity layer
 

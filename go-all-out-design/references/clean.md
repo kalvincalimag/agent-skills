@@ -34,6 +34,32 @@ A clean pass on the draft lowered strong edges to about 7.5% and raised quiet ar
 9. **Quiet space is a feature.** At least 60% of a resting screen should be quiet.
 10. **Show the workflow, don't explain it.** People skim; they do not read sentences. On a resting screen use no sentences and at most one short line of 8 words or fewer, only where it prevents a mistake. Titles are 1–4 words, labels and buttons 1–3 words, and metadata is short tokens ("2 servings · 25 min", "12 items"). Let structure, position, pictures, numbers, checkmarks and a step guide carry the meaning. Delete instructions such as "Tap a dish to…" when the control already shows it. Sheets get a short title and options of 2–5 words; money, health and safety keep each price, date, limit and consequence, as one short line, not a paragraph.
 
+## Align and balance
+
+1. **One left edge.** Inside a card or sheet, every row, label and action starts at the same inset. Do not mix a stray pill or side-by-side text links into a list.
+2. **Actions in a list.** A sheet's secondary actions form one grouped list. A destructive action gets its own group, in the accent or warning colour.
+3. **Headers above groups.** A group's header sits above it, outside the card. Build it the same way on every sibling screen.
+4. **One side margin.** Cards, hero tiles, lists and buttons on a screen share one side margin. A nested container must not add its own extra inset.
+5. **Symmetric alternatives.** Options shown side by side get equal tile sizes, equal picture areas and the same number of text lines. Nothing, not even a mascot, overlaps one of them.
+6. **No dead space, no floating cards.** Fill a large empty area with content the user needs at that moment, or move the next element up. Do not park a card at the bottom of the screen far from the content it belongs to.
+7. **Lists scroll under floating bars.** A long list continues under a floating tab bar and fades. Do not cut it mid-row inside a fixed box.
+8. **Text is never clipped.** After any type or size change, check descenders (g, y, p) and long words. A text box never clips its own text.
+
+## Words in the layout
+
+1. **Menu items are a verb and an object.** Give each a 2–5-word line underneath that tells it apart from its siblings, such as "Plan a meal · Pick a dish for a day" beside "New recipe · Write your own". Two options that a beginner could mistake for each other fail.
+2. **Context once.** Put shared context in the title, such as the day being edited, and keep each option short. Do not repeat the context in every option.
+3. **No empty placeholder rows.** When a global add action exists, a screen shows only what is there. It does not show a row per empty slot with its own "Add".
+4. **Small beside large.** A badge or quick link, such as "Today", is smaller than the text it sits beside. Put it in a quiet neutral pill, and darken the accent if the pill lowers the contrast.
+5. **Disclaimers are one line.** A legal, medical or money disclaimer is one short line in secondary text next to what it qualifies. Never make it a block that takes a large share of the screen.
+
+## Small parts, finished
+
+- **Light confirmations.** A toast after an action is a white surface with a soft shadow, a small success mark and the accent action, such as Undo. A dark slab adds a new colour block to the screen.
+- **A custom main action at system quality.** A custom floating button, such as a centred add button, is a raised white circle with layered soft shadows and a crisp glyph in the accent colour. Never a flat disc inside a ring.
+- **Provider marks.** "Continue with" sign-in buttons show each provider's official mark. Platform rules require it, and people look for the mark.
+- **A mark for AI.** An entry point to an AI feature carries a recognisable AI mark, such as a sparkle, and looks like a button, not bare text. A mascot never fronts it.
+
 ## Keep identity while cleaning
 
 Clean does not mean generic. Keep one signature identity element on each screen, such as the product's material as the hero surface, a mascot at a meaningful moment, or a crafted object. Remove the rest of the decoration. If removing everything decorative leaves a screen that could belong to any app, the signature element is missing. Restore one; do not restore all.
@@ -51,6 +77,13 @@ Clean does not mean generic. Keep one signature identity element on each screen,
 - **Camouflaged actions.** A light grey button on a light grey canvas disappears. Every action needs contrast against its own background: the primary action is filled with the accent; a secondary action is a white surface on the canvas, or accent-coloured text that meets 3:1 contrast.
 - **Cropped content.** A circular mask, a ring or a card edge that cuts through a dish, an illustration or a sticker's outline. Keep the whole object inside its frame with padding, or crop on purpose as a full-bleed image, never halfway.
 - Cleaning by deleting meaning: a removed picture or colour that carried state must be replaced by a label or a quiet indicator.
+- **Floating mid-screen menus.** Option lists and short tasks open as bottom sheets; see [native-feel.md](native-feel.md).
+- **Black toasts and slabs** that add a colour block for a passing message.
+- **Misaligned rows**, such as a value in a grey pill whose text starts further in than the rows around it.
+- **Lopsided pairs**, such as two option tiles of different sizes, or a character overlapping one of them.
+- **Repeated weekday letters** on every row of a multi-week calendar, and rings, pictures or connector lines inside calendar cells.
+- **Look-alike labels**, such as "Meal" and "Your own recipe" in one menu.
+- **A disclaimer box** that is bigger than the content it qualifies.
 
 ## Clean and fun together
 
