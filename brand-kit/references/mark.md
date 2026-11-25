@@ -23,6 +23,9 @@ The best small-app character icons share one method. Borrow the method, never a 
 9. **Stay close to the character.** Put the mark beside the master at the same size. The defining traits must match its real shapes, such as a hood that drapes wide rather than a pointed cap.
 10. **Keep the character, not a stand-in.** A user rejected a lettermark built from the character's signature trait, and an everyday object given the character's face. Both lose who the character is.
 11. **Expressions as designed shapes, not emoji.** A wink drawn as a ">" chevron, or a ":)" smile, reads as a stock emoji and owns nothing. Use a shape the character owns, such as a curved closed-eye arc in the same weight as the open eye.
+12. **Simple is not the same as plain.** A user rejected flat geometric reductions that kept only a hood and two eye marks as "plain and ugly and uncreatively boring", and rejected a monoline version as a logo style. Keep the character's personality: its expression, its signature trait drawn with character, and at least one surprising detail.
+13. **Zoom in like the references, but keep the face whole.** Admired character icons are framed tight, so the tile edges cut the head. Crop so the defining trait and the expression stay in view: a crop that cut off half the mouth was rejected.
+14. **Stay in the character's palette.** Greens brighter or more saturated than the master's read as a different character to a user. Sample the master's colours and give them to the generator as exact values.
 
 Without a mascot, the same rules apply to the product's one most specific object: one bold flat shape, cropped large, in three or four colours.
 
