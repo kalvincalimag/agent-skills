@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Tests scripts/icon_sheet.py: the size sheet, the home-screen mock, the
 # rounded mask, and the rejection of bad input.
-# Usage: bash logo-design/tests/test-icon-sheet.sh
+# Usage: bash brand-kit/tests/test-icon-sheet.sh
 set -euo pipefail
 
 here="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"

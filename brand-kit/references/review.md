@@ -1,4 +1,4 @@
-# Testing and reviewing marks
+# Testing and reviewing the set
 
 ## Size sheet
 
@@ -24,11 +24,25 @@ At 29 and 20 px, ask two things. Can you still see the defining trait? Can you s
 3. Look at it at real phone size, not zoomed. The option must be findable in about a second, and it must not read as a sibling of any neighbour.
 4. For proof, show 8 to 10 people the grid for 5 seconds. Ask "which app is for <the product's job>?", then a minute later "what was it called?". Run once per finalist.
 
+## Launch and welcome test
+
+- Put the launch screen next to the Android system splash with the same colour and icon. They must look the same, with no text, and the mark must not read as a head cut off at the neck.
+- Open the welcome scene cold, with no explanation, and ask a fresh viewer for their first look in their own words: what is this app, and what is the character like? Both answers must be right without help.
+- Count the words on the welcome scene. The name and one short line are enough.
+
+## Onboarding test
+
+- Count the taps from opening the app to the real product: four or fewer through the story, and one through Skip.
+- Check that Skip is visible on every beat and reachable first with a screen reader.
+- Count the words in the story. The beats are wordless; only the hint and Skip have text.
+- Check that the story ends on real or sample content, and that the greeting appears once, by the mascot's name.
+- Compare the beats side by side with every admired app's onboarding. No beat may repeat a reference's beat.
+
 ## Fresh adversarial review
 
-Give a reviewer who did not design the options:
-- the size sheets and home-screen grids, without your rationale or your favourite;
-- the user's reference icons and anything they rejected;
+Run one per piece: the mark, the launch and welcome screens, and the story. Give a reviewer who did not design the options:
+- the size sheets, home-screen grids and screen exports, without your rationale or your favourite;
+- the user's reference apps (icon, launch and onboarding screenshots) and anything they rejected;
 - the platform rules in [platforms.md](platforms.md).
 
 Ask them to:
@@ -36,7 +50,7 @@ Ask them to:
 - name anything that looks like a reference or a rival, comparing palette, composition and features side by side;
 - name anything that reads as a generic symbol rather than this character;
 - check contrast and colour blindness for the defining trait and the eyes;
-- check every rule in "The character mark" in the main skill.
+- check every rule in "The character mark" in [mark.md](mark.md).
 
 Fix what they find before presenting. If no fresh reviewer is available, say so.
 

@@ -1,4 +1,0 @@
-interface:
-  display_name: "Logo Design"
-  short_description: "Design app icons and logos people recognise"
-  default_prompt: "Use $logo-design to design four to six square mark options for this app from its mascot, with a size sheet and a home-screen test."

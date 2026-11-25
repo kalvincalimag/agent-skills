@@ -1,0 +1,4 @@
+interface:
+  display_name: "Brand Kit"
+  short_description: "Logo, launch screen and onboarding from a mascot"
+  default_prompt: "Use $brand-kit to make this app's logo, launch screen, welcome scene and mascot onboarding from its mascot, after asking me for the mascot and the apps I admire."
