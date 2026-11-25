@@ -17,8 +17,10 @@ The best small-app character icons share one method. Borrow the method, never a 
 3. **About five big flat shapes.** Near-perfect circles, pills and a few clean curves. No gradients, textures, 3D shading, inner lines, or details that vanish at 29 px.
 4. **Three or four colours.** Either the field is the character's own body colour, so the tile becomes the character, or the field is the brand colour and the character sits on it in one light colour.
 5. **The interface accent inside the mark.** Repeat the app's own accent colour, so the icon and the app read as one product.
-6. **Life with almost nothing.** Eyes with one highlight each, or a clear gaze. Front-facing and symmetric reads cleanest at small sizes; a tilt or a wink is optional.
+6. **Life, not an ID photo.** A face that is centred, front-facing and symmetric, head and shoulders, reads like a passport photo, and a user rejected exactly that as uncreative. Give it life: an off-centre crop that runs off an edge, a tilt, a wink or a gaze, or an extreme close-up. Eyes with one highlight each.
 7. **No text.** No letters, initials or name in the mark.
+8. **Check the outline alone.** Fill the mark's silhouette in one colour and look at it small and upside down. A tall rounded dome over a round base can read as a phallus; a user saw exactly that. Widen the top, tilt it, or break the outline with the crop.
+9. **Stay close to the character.** Put the mark beside the master at the same size. The defining traits must match its real shapes, such as a hood that drapes wide rather than a pointed cap.
 
 Without a mascot, the same rules apply to the product's one most specific object: one bold flat shape, cropped large, in three or four colours.
 

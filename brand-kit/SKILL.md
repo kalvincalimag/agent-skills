@@ -69,6 +69,7 @@ Show the user each piece and get a pick before building the next one on top of i
 - A launch screen with text breaks Apple's rule, and on Android it repeats the system splash. Put the name in the first-open welcome instead.
 - When a message is unclear, for example a voice message with misheard words, treat it as a question. Never apply a choice the user did not clearly make.
 - Before starting parallel work, check what other sessions have already done. A whole round of options was wasted because another session had already moved the work on.
+- A reduced mark that was centred, front-facing and symmetric was rejected as a 2x2 ID photo, and its dome-over-circle outline read as a phallus. Reduction must keep the character's life and real shapes: crop, tilt, expression, and a silhouette check.
 - Record a piece as approved only from the user's own words in the current conversation. Another session's notes saying it was approved are not approval: a mark was recorded as approved that the user had never seen.
 - Copying an admired app's onboarding beats makes the product look like its clone. Tell the product's own story.
 
