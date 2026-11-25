@@ -12,15 +12,17 @@ For an app, the logo is the square mark. People see it every day at 20 to 60 poi
 
 The best small-app character icons share one method. Borrow the method, never a reference's composition, palette or feature set.
 
-1. **Face, not body.** Crop so the face fills the tile and runs off at least one edge. Leave out props, unless the prop is the defining trait.
+1. **A symbol built from the character, not a crop of it.** The admired character icons are designed shapes taken from the character's defining traits, such as ring eyes inside an ear outline, or a comb, beak and wattle as three pills. They are not a zoomed crop of the character's illustration. A user rejected cropped portraits of a mascot as "forcing a mascot to be a logo". The mark must work as a badge: a profile picture, a favicon, a pin. Leave out the body and props, unless a prop is the defining trait.
 2. **One defining trait, exaggerated.** Ask what a child would draw to show it is this character, such as huge eyes, a comb and wattle, ears, or a hood. Make that the largest shape after the face.
 3. **About five big flat shapes.** Near-perfect circles, pills and a few clean curves. No gradients, textures, 3D shading, inner lines, or details that vanish at 29 px.
 4. **Three or four colours.** Either the field is the character's own body colour, so the tile becomes the character, or the field is the brand colour and the character sits on it in one light colour.
 5. **The interface accent inside the mark.** Repeat the app's own accent colour, so the icon and the app read as one product.
-6. **Life, not an ID photo.** A face that is centred, front-facing and symmetric, head and shoulders, reads like a passport photo, and a user rejected exactly that as uncreative. Give it life: an off-centre crop that runs off an edge, a tilt, a wink or a gaze, or an extreme close-up. Eyes with one highlight each.
+6. **Life, not an ID photo.** A face that is centred, front-facing and symmetric, head and shoulders, reads like a passport photo, and a user rejected exactly that as uncreative. Give it life: an off-centre crop that runs off an edge, a tilt, a wink or a gaze. Eyes with one highlight each.
 7. **No text.** No letters, initials or name in the mark.
 8. **Check the outline alone.** Fill the mark's silhouette in one colour and look at it small and upside down. A tall rounded dome over a round base can read as a phallus; a user saw exactly that. Widen the top, tilt it, or break the outline with the crop.
 9. **Stay close to the character.** Put the mark beside the master at the same size. The defining traits must match its real shapes, such as a hood that drapes wide rather than a pointed cap.
+10. **Keep the character, not a stand-in.** A user rejected a lettermark built from the character's signature trait, and an everyday object given the character's face. Both lose who the character is.
+11. **Expressions as designed shapes, not emoji.** A wink drawn as a ">" chevron, or a ":)" smile, reads as a stock emoji and owns nothing. Use a shape the character owns, such as a curved closed-eye arc in the same weight as the open eye.
 
 Without a mascot, the same rules apply to the product's one most specific object: one bold flat shape, cropped large, in three or four colours.
 
@@ -30,6 +32,7 @@ Without a mascot, the same rules apply to the product's one most specific object
   - Count how many of the target market's top 100 apps, overall and in the category, use a close colour.
   - Check every direct rival's icon, and keep a clear distance from it. Measure ΔE00 (a standard colour difference; about 10 or less reads as the same colour apart).
   - Check the colour's cultural and political meaning in each launch country.
+- **Keep the field clean and bright.** A muted beige, cream or parchment field made otherwise good marks feel less clean, premium and enticing to a user. Prefer white or a near-white neutral, or one confident brand colour, and judge the field on the home-screen test, not on its own.
 - Check contrast between each key shape and the field. Aim for 3:1 or more for the defining trait and the eyes. Check that red and green shapes survive red-green colour blindness.
 - When the character's own colours sit close to the field, add a thin light outline or change the field.
 
@@ -40,6 +43,8 @@ Without a mascot, the same rules apply to the product's one most specific object
 3. **Test compositions quickly.** Code sketches (SVG) are fine for testing crop, size and colour, but never present them as the mark: shapes placed by coordinates look amateur beside professional icons.
 4. **Make the art from the master,** with an image-editing model and the master image as its source, one composition per run, or with a human illustrator.
    - **Ask for reduction, not fidelity.** A prompt that lists every feature and says "keep the character identical" keeps every feature. Ask for the reference qualities instead: the face, tilted or turned three-quarter with an expression (rule 6), filling the square and running off one edge; about five big flat shapes; three or four colours; no inner lines, veins, brows, blush or extra props unless one is the defining trait.
+   - **Write a construction spec when the tool drifts toward illustration.** Character tools add the mascot's reference to every run, and their style presets often ask for a portrait crop, organic curves or soft shading. Describe the composition as numbered shapes, each with its size as a share of the canvas, its position and its colour. Replace the preset's style text with a custom one: flat geometric shapes, an opaque background filling the canvas, no outlines, shading or texture. Tell it to take only the defining traits from the reference and ignore its rendering, proportions and clothing. This turned cropped illustrations into a designed mark after single-box prompts had failed for several rounds.
+   - **Ask for an opaque background explicitly.** Some presets default to transparency, and a result can come back with no field, or with a checkerboard drawn into the pixels.
    - **Run each prompt on two models and compare.** Models differ in how well they follow a crop: one may keep wide margins while another fills the tile.
    - Offer two or three variants of a single choice the user cares about, such as a wink or open eyes, or one field colour or another.
 5. **Vectorize the chosen image,** for example with Figma's Vectorize. Snap its colours to the brand's exact values, merge stray tones into flat fills, name the layers, and make the mark a component.

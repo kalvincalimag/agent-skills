@@ -72,6 +72,7 @@ Show the user each piece and get a pick before building the next one on top of i
 - A reduced mark that was centred, front-facing and symmetric was rejected as a 2x2 ID photo, and its dome-over-circle outline read as a phallus. Reduction must keep the character's life and real shapes: crop, tilt, expression, and a silhouette check.
 - Record a piece as approved only from the user's own words in the current conversation. Another session's notes saying it was approved are not approval: a mark was recorded as approved that the user had never seen.
 - Copying an admired app's onboarding beats makes the product look like its clone. Tell the product's own story.
+- Cropped portraits of the mascot were rejected as "forcing a mascot to be a logo", and so were a lettermark, an object with the mascot's face, an emoji ">" wink and a muted beige field. What worked was a numbered shape-by-shape spec with a custom flat style: a designed symbol from the character's traits, on a clean field.
 
 ## Done when
 
