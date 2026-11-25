@@ -4,11 +4,19 @@ These are two different screens. The launch screen covers the moment the app loa
 
 ## Launch screen, every start
 
-- **Plain: the mark on its field, with no text.** Apple asks for no text on a launch screen and says it is not a branding opportunity. On Android 12 and later, the system always draws its own splash first: the app icon, centred, on one colour. See [platforms.md](platforms.md).
-- **The same on both platforms.** Build the iPhone launch screen to match the Android system splash, so the brand looks the same everywhere.
-- **Avoid the cut-off bust.** When the mark's field is the same colour as the splash, the mark's square edge vanishes and the cropped face reads as a head cut off at the neck. Either give the splash a slightly deeper shade of the field, or set an icon background colour so the mark sits on its own circle.
+Ask the user which launch screen they want, and recommend the first one. A user rejected the mark on its field on every open as "like going back in 2012".
+
+1. **Recommended: the first screen's empty frame.** Show the screen the app opens on, with its background, bars and tab bar but no content, data or text. It fills in a moment later, so the app seems to open instantly. This is Apple's own guidance: a launch screen should look like the first screen, and it is not a branding opportunity.
+2. **A plain colour.** The app's background colour alone. Use it when the first screen differs by state (signed in or not, light or dark), where an empty frame could show the wrong layout.
+3. **The mark on its field.** Only if the user asks for it. If so, avoid the cut-off bust: when the mark's field matches the splash colour, its square edge vanishes and a cropped face reads as a head cut off at the neck. Use a deeper shade for the splash, or put the mark on its own circle.
+
+Rules for all three:
+
+- **Android shows its own splash.** On Android 12 and later the system always draws a splash first: the app icon, centred, on one colour. For options 1 and 2, set the splash background to the app's background colour and give it a transparent icon, then go straight to the first screen. Note this to the user: it departs from Google's default of showing the icon. See [platforms.md](platforms.md).
+- **No text.** Apple asks for none, and nothing on it is translated.
 - **Static, and fast.** An iPhone launch screen cannot animate. Any motion belongs to the app after it loads.
 - **No second splash on later opens.** A branded screen after the system splash is a duplicate that Google asks apps to remove, and returning users sit through it every time. After the launch screen, go straight to the product.
+- **The brand's moment is the welcome scene,** below, on the first open only.
 
 ## Welcome scene, first open only
 
@@ -23,6 +31,6 @@ The welcome scene is the one place where the name, the character and its world a
 
 ## Checks
 
-- The launch screen has no text, matches the Android splash, and does not read as a cut-off bust.
+- The user chose the launch screen; by default it is the first screen's empty frame, with no logo and no text, and the Android splash is set to match.
 - The welcome scene appears once, shows the name, the mascot and one line, and can be passed with one tap.
 - The scene's world comes from the product's own story.

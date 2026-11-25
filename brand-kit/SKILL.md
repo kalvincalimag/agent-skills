@@ -36,7 +36,7 @@ Before drawing, gather these. Check the project's notes first and ask only for w
 | Silhouette | The mark in one colour | Tinted and themed icons, notifications |
 | Wordmark | The name in a chunky rounded display face, used only for the name | Welcome scene, store art, website |
 | Lockup | Mark beside the wordmark | Only where there is width |
-| Launch screen | The mark on its field, no text | Every app start |
+| Launch screen | The first screen's empty frame, no logo or text (the user chooses; see launch.md) | Every app start |
 | Welcome scene | The mascot in its world, the wordmark, one short line | First open only, and store art |
 | Mascot story | Two to four wordless beats | First open only, skippable |
 | Greeting | The mascot says hello once, by name | The first real screen |
@@ -44,7 +44,7 @@ Before drawing, gather these. Check the project's notes first and ask only for w
 ## Order of work
 
 1. **Mark.** Settle it before anything else ([mark.md](references/mark.md)). Every other piece reuses it.
-2. **Launch screen,** derived from the mark ([launch.md](references/launch.md)).
+2. **Launch screen:** ask, and recommend the first screen's empty frame ([launch.md](references/launch.md)).
 3. **Welcome scene and wordmark** ([launch.md](references/launch.md)).
 4. **Mascot story** ([onboarding.md](references/onboarding.md)).
 5. **Greeting** on the first real screen ([onboarding.md](references/onboarding.md)).
@@ -67,6 +67,7 @@ Show the user each piece and get a pick before building the next one on top of i
 - Code-drawn vector art was judged amateur next to professional icons. Make the art from the master.
 - An image prompt that says "keep the character identical" keeps every detail, and the result reads as clip art. Ask for reduction: the face only, about five shapes, three or four colours, no inner lines.
 - A launch screen with text breaks Apple's rule, and on Android it repeats the system splash. Put the name in the first-open welcome instead.
+- A user called the logo on the launch screen "like going back in 2012". Default to the first screen's empty frame, and ask.
 - When a message is unclear, for example a voice message with misheard words, treat it as a question. Never apply a choice the user did not clearly make.
 - Before starting parallel work, check what other sessions have already done. A whole round of options was wasted because another session had already moved the work on.
 - A reduced mark that was centred, front-facing and symmetric was rejected as a 2x2 ID photo, and its dome-over-circle outline read as a phallus. Reduction must keep the character's life and real shapes: crop, tilt, expression, and a silhouette check.
@@ -77,7 +78,7 @@ Show the user each piece and get a pick before building the next one on top of i
 ## Done when
 
 - The mark is square, survives a round crop, reads at 20 px, passes the market and rival checks, and was chosen from labelled options.
-- The silhouette, launch screen, wordmark and lockup are built from the mark, and the platform rules are met.
+- The silhouette, wordmark and lockup are built from the mark, the launch screen is the one the user chose, and the platform rules are met.
 - The welcome scene and the story show the mascot in the product's own world, can be skipped, and end on the real product.
 - The mascot greets the user once, by name.
 - A fresh reviewer tried to break each piece, and the user picked every one.
