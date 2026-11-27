@@ -47,9 +47,11 @@ Leave `C:\Windows\Installer`, `C:\Windows\WinSxS` and `pagefile.sys` alone. Use 
 
 `docker system df` shows what is inside the image file and how much is reclaimable. Pruning frees space inside the file only. Running `fstrim` inside the Docker VM does not shrink it either.
 
+Prune in the foreground. A `docker` command inside a PowerShell `Start-Job` dies when the shell that started it exits, so a long `docker volume prune` stops partway. Unused anonymous volumes and old build cache are often most of the reclaimable space: on one laptop they held 39 GB while the images held 20 GB.
+
 To shrink the file, wait until no session needs containers, then:
 
-1. Quit Docker Desktop from its tray icon.
+1. Quit Docker Desktop from its tray icon, or run `docker desktop stop` (`docker desktop start` brings it back).
 2. Run `wsl --shutdown`.
 3. In an administrator shell, run `diskpart` and enter:
 
@@ -62,5 +64,7 @@ To shrink the file, wait until no session needs containers, then:
    ```
 
    `diskpart` does not expand `%LOCALAPPDATA%`, so type the full path. `Optimize-VHD` needs the Hyper-V module, which Windows Home does not have.
+
+   An agent can save those lines to a script file and run `Start-Process powershell -Verb RunAs -Wait -ArgumentList "-NoProfile -Command diskpart /s <script> *> <log>"`. The user then clicks Yes on the Windows admin prompt, and the log shows the result.
 
 4. Start Docker Desktop again.
