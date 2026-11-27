@@ -37,6 +37,8 @@ Free real disk space on the user's computer without losing work or breaking a se
 - **Container disk images only grow.** Pruning frees space inside the image file, not on the host. Shrinking the file needs the engine stopped, so it is the user's call while any session uses containers.
 - **Prune caches by age.** For example, `docker builder prune -f --filter until=24h` keeps the cache that running work just built. `docker volume prune -f` removes only unused anonymous volumes; named volumes need `-a`, so leave them unless the user asks.
 - **Crash dumps recur.** A large crash-dump folder means something keeps crashing, often a memory-starved process in a container or VM. Tell the user, since the space will fill again.
+- **Low memory can stop a background deletion halfway.** Some agent hosts stop background commands when the computer runs short of memory, which can leave a folder half deleted. When free memory is low, delete one item per foreground command, and check the item that was being deleted when a run stopped.
+- **The container disk image can outweigh everything else.** On one laptop, 26 finished worktrees freed about 3 GB, while compacting Docker's disk image freed 53 GB. Measure the disk image early, and offer compaction even when the worktree list looks bigger.
 
 ## References
 
